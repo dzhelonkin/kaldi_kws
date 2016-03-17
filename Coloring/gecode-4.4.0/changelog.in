@@ -1,0 +1,7829 @@
+#
+#  Main authors:
+#     Christian Schulte <schulte@gecode.org>
+#
+#  Copyright:
+#     Christian Schulte, 2005
+#
+#  Last modified:
+#     $Date: 2015-03-19 13:39:40 +0100 (Thu, 19 Mar 2015) $ by $Author: schulte $
+#     $Revision: 14464 $
+#
+#  This file is part of Gecode, the generic constraint
+#  development environment:
+#     http://www.gecode.org
+#
+#  Permission is hereby granted, free of charge, to any person obtaining
+#  a copy of this software and associated documentation files (the
+#  "Software"), to deal in the Software without restriction, including
+#  without limitation the rights to use, copy, modify, merge, publish,
+#  distribute, sublicense, and/or sell copies of the Software, and to
+#  permit persons to whom the Software is furnished to do so, subject to
+#  the following conditions:
+#
+#  The above copyright notice and this permission notice shall be
+#  included in all copies or substantial portions of the Software.
+#
+#  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+#  EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+#  MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+#  NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+#  LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+#  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+#  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+#
+
+# 
+# This file contains entries for changelogs
+#
+# There are two kinds of entries: one marking releases and the others 
+# being actual entries.
+#
+# All the lines for describing entries must start at the beginning.
+#
+# A release is described as follows:
+#   [RELEASE]
+#   Version: <version string>
+#   Date:    <when release>
+#   [DESCRIPTION]
+#   ... All the text up to the next [ENTRY] is included 
+#   as description
+#
+# An entry is described as follows:
+#   [ENTRY]
+#   Module: 
+#     kernel|search|int|set|cpltset|example|minimodel|iter|support|
+#     scheduling|driver|test|gist|flatzinc|other
+#   What:   bug|documentation|performance|new|removed|change
+#   Rank:   minor|major
+#   Bug:    <optional, for number from bugzilla>
+#   Thanks: <optional, who reported etc>
+#   [DESCRIPTION]
+#   ... All the text up to the next [ENTRY] or [RELEASE] is included 
+#   as description
+#   [MORE]
+#    ... If a more section is included, then it will be displayed as an
+#    optional section in the html page.
+#
+
+[RELEASE]
+Version: 4.4.0
+Date: 2015-03-20
+[DESCRIPTION]
+This release fixes some bugs and improves some search-related aspects.
+
+Note that you will have to change all scripts that inherit from
+the pre-defined script classes (Script, IntMinimizeScript,
+IntMaximizeScript, FloatMinimizeScript, FloatMaximizeScript). The
+change is easy: in your constructor you have to add a call to the
+constructor of the pre-defined script class with the command line
+options as argument. Just check any of the Gecode example for how
+it is done.
+
+
+[ENTRY]
+Module: flatzinc
+What:   new
+Rank:   minor
+Thanks: Mark Manser 
+[DESCRIPTION]
+An option -step now can pass an improvement step for
+optimization of float problems.
+
+[ENTRY]
+Module: driver
+What:   change
+Rank:   major
+[DESCRIPTION]
+All scripts now must call the constructor of their base class
+with an option argument. 
+
+Note that you will have to change your models by a call to the
+constructor of the script class with an option argument!
+
+[ENTRY]
+Module: driver
+What:   new
+Rank:   minor
+Thanks: Mark Manser 
+[DESCRIPTION]
+An option -step now can pass an improvement step to scripts of
+type FloatMinimizeScript and FloatMaximizeScript.
+
+[ENTRY]
+Module: minimodel
+What:   new
+Rank:   minor
+Thanks: Mark Manser 
+[DESCRIPTION]
+The classes FloatMinimizeSpace and FloatMaximizeSpace can be
+created with an improvement step for optimization.
+
+[ENTRY]
+Module: flatzinc
+What:   bug
+Rank:   minor
+Thanks: Ahmed Kamal
+[DESCRIPTION]
+Added support for missing builtins array_float_element
+(by decomposition), float_lin_lt and float_lin_lt_reif.
+
+[ENTRY]
+Module: search
+What:   new
+Rank:   minor
+[DESCRIPTION]
+Added functions to Stop class that can create common stop objects.
+
+[ENTRY]
+Module: search
+What:   new
+Rank:   minor
+[DESCRIPTION]
+Exposed class definitions for common cutoff generators.
+
+[ENTRY]
+Module: flatzinc
+What:   bug
+Rank:   minor
+Thanks: Håkan Kjellerstrand
+[DESCRIPTION]
+LNS could fail when the search was restarted before finding the first solution.
+
+[ENTRY]
+Module: search
+What:   bug
+Rank:   major
+Thanks: Håkan Kjellerstrand
+[DESCRIPTION]
+Fix memory leak in the DFS and BAB search engines that could make restart-based
+search run out of memory very quickly.
+
+[ENTRY]
+Module: driver
+What:   new
+Rank:   minor
+[DESCRIPTION]
+Added option -seed for passing a seed to random number generators.
+
+[ENTRY]
+Module: example
+What:   new
+Rank:   minor
+[DESCRIPTION]
+Added quasigroup completion benchmarks.
+
+[ENTRY]
+Module: search
+What:   performance
+Rank:   minor
+[DESCRIPTION]
+Delay efforts for restarting until it is really needed after a
+solution has been found.
+
+
+[RELEASE]
+Version: 4.3.3
+Date: 2015-01-20
+[DESCRIPTION]
+This release adds support for LNS to FlatZinc, adds support for
+MiniZinc 2, fixes a number of bugs and some new constraints.
+
+[ENTRY]
+Module: flatzinc
+What:   new
+Rank:   minor
+[DESCRIPTION]
+Added support for arg_min and arg_max constraints.
+
+[ENTRY]
+Module: int
+What:   new
+Rank:   minor
+[DESCRIPTION]
+Added argmin and argmax constraints.
+
+[ENTRY]
+Module: search
+What:   bug
+Rank:   major
+Thanks: Zichen Zhu
+[DESCRIPTION]
+Now no-goods are extracted properly in case a solution is found.
+
+[ENTRY]
+Module: flatzinc
+What:   change
+Rank:   minor
+[DESCRIPTION]
+Add support for the MiniZinc 2 min/max builtins. The Gecode MiniZinc library
+is now compatible with both MiniZinc 1.6 and 2.0.
+
+[ENTRY]
+Module: search
+What:   change
+Rank:   minor
+[DESCRIPTION]
+Change the slave function for meta search engines to return whether the search
+in the slave is going to be complete. This is necessary for example in LNS,
+where completing the search in the slave does not mean that the overall search
+is finished.
+
+[ENTRY]
+Module: flatzinc
+What:   new
+Rank:   major
+[DESCRIPTION]
+Make a simple form of LNS accessible from FlatZinc. To use it, include
+gecode.mzn and add the relax_and_reconstruct search annotation defined in
+that file.
+
+[ENTRY]
+Module: set
+What:   bug
+Rank:   minor
+Thanks: Farshid Hassani Bijarbooneh
+[DESCRIPTION]
+The channeling propagator between a SetVar and an array of BoolVars
+propagated incorrectly when posted on a fixed SetVar.
+
+[ENTRY]
+Module: flatzinc
+What:   new
+Rank:   minor
+[DESCRIPTION]
+Support dom_w_deg search annotation.
+
+[ENTRY]
+Module: flatzinc
+What:   change
+Rank:   minor
+[DESCRIPTION]
+Search on objective function variable after all other variables (but
+still before introduced variables).
+
+[ENTRY]
+Module: flatzinc
+What:   bug
+Rank:   minor
+Thanks: Mats Carlsson
+[DESCRIPTION]
+Fix special case detection for cumulatives constraint, could sometimes
+incorrectly turn a cumulatives into a disjunctive constraint.
+
+[ENTRY]
+Module: flatzinc
+What:   bug
+Rank:   minor
+Thanks: Björn Böttcher
+[DESCRIPTION]
+Fix behaviour of -a command line option for satisfaction problems.
+
+[ENTRY]
+Module: flatzinc
+What:   bug
+Rank:   minor
+Thanks: Chris Mears
+[DESCRIPTION]
+Fix default search annotation for float objectives.
+
+[ENTRY]
+Module: flatzinc
+What:   bug
+Rank:   minor
+Thanks: Willem Van Onsem
+[DESCRIPTION]
+Install parser.tab.hh header.
+
+[ENTRY]
+Module: flatzinc
+What:   new
+Rank:   minor
+[DESCRIPTION]
+Add support for gecode_schedule_cumulative_optional constraint.
+
+
+[RELEASE]
+Version: 4.3.2
+Date: 2014-11-06
+[DESCRIPTION]
+Fixed major bug in and added extensive tests for the FlatZinc
+interpreter. If you are using Gecode with FlatZinc you should
+definitely upgrade!
+
+[ENTRY]
+Module: test
+What:   new
+Rank:   major
+[DESCRIPTION]
+Added long-overdues tests for the FlatZinc interpreter.
+
+[ENTRY]
+Module: other
+What:   bug
+Rank:   minor
+Thanks:	Alex Elliott
+[DESCRIPTION]
+Fix cmake build file to work better when building with Qt.
+
+[ENTRY]
+Module: flatzinc
+What:   bug
+Rank:   major
+Thanks: Jean-Noël Monette
+[DESCRIPTION]
+Fixed major bug that would cause the FlatZinc interpreter to crash
+on most models.
+
+[RELEASE]
+Version: 4.3.1
+Date: 2014-10-22
+[DESCRIPTION]
+This release fixes some minor issues and a major bug for the
+FlatZinc interpreter. It considerably extends restart-based
+search so that it supports LNS (Large Neighborhood Search).
+
+[ENTRY]
+Module: search
+What:   change
+Rank:   major
+[DESCRIPTION]
+The restart-based search engine has been made more powerful: the
+master() and slave() configuration functions have been extended
+and get more information about each restart and the engine always
+maintains the last solution found. In particulae, the engine is
+now powerful enough to support LNS (Large Neighborhood
+Search). For details, please see MPG.
+
+[ENTRY]
+Module: search
+What:   change
+Rank:   minor
+[DESCRIPTION]
+The interface of cutoff generators has been extended in that it
+now offers current value access (operator()()) as well as
+increment (operator++()).
+
+[ENTRY]
+Module: search
+What:   new
+Rank:   minor
+[DESCRIPTION]
+Added a cutoff generator that merges the values of two cutoff generators.
+
+[ENTRY]
+Module: other
+What:   bug
+Rank:   minor
+Thanks:	Pierre Talbot
+[DESCRIPTION]
+Gecode can now be used together with boost without conflicts.
+
+[ENTRY]
+Module: other
+What:   new
+Rank:   minor
+Thanks:	Petter Strandmark
+[DESCRIPTION]
+Added support for building examples with CMake.
+
+[ENTRY]
+Module: minimodel
+What:   bug
+Rank:   minor
+Thanks:	Léonard Benedetti
+[DESCRIPTION]
+Removed potentially undefined behavior for regular expressions. 
+
+[ENTRY]
+Module: flatzinc
+What:   bug
+Rank:   major
+Thanks:	Mats Carlsson
+[DESCRIPTION]
+Fixed FlatZinc aliasing detection on array variables that
+introduced incorrect aliases between variables.
+
+[ENTRY]
+Module: flatzinc
+What:   bug
+Rank:   minor
+Thanks:	Frank Imeson
+[DESCRIPTION]
+Fixed parser for integer literals to generate error message when
+integers are out of bounds.
+
+[ENTRY]
+Module: flatzinc
+What:   bug
+Rank:   minor
+Thanks:	Peter Nightingale
+[DESCRIPTION]
+Fixed the FlatZinc interpreter to accept empty arrays as arguments in
+annotations.
+
+[ENTRY]
+Module: flatzinc
+What:   bug
+Rank:   minor
+Thanks:	Carleton Coffrin
+[DESCRIPTION]
+Fixed the behaviour for the -n and -a command line options for
+optimisation models.
+
+
+[RELEASE]
+Version: 4.3.0
+Date: 2014-08-28
+[DESCRIPTION]
+This release fixes a large number of both minor and major bugs,
+has some improvements for FlatZinc, and adds multi-dimensional
+bin-packing.
+
+[ENTRY]
+Module: other
+What:   bug
+Rank:   minor
+Thanks:	Victor Zverovich, Tony Kelman
+[DESCRIPTION]
+Various fixes for CMake:
+ - Set the output directory for runtime target files (executables and DLLs) to bin/ subdirectory of the project's binary directory to avoid collisions when Gecode is used as a subproject.Improve suppression of warnings.
+ - Add GECODE_USE_QT variable which specifies whether to use Qt. Qt is used if GECODE_USE_QT is TRUE or unset.
+ - Prevent linker warnings on MSVC.
+ - Use per-target instead of global include directories. This simplifies use of Gecode as a subproject because add_target_libraries(<target> <gecode-lib>) now sets the necessary include directories for <target> in addition to link dependencies.
+ - Fix to fully link internal dependencies needed for creating DLLs: https://github.com/ampl/gecode/pull/2
+ .
+
+[ENTRY]
+Module: flatzinc
+What:   change
+Rank:   minor
+[DESCRIPTION]
+The --free command line option has been renamed to -f to comply with other
+FlatZinc solvers.
+
+[ENTRY]
+Module: flatzinc
+What:   performance
+Rank:   minor
+[DESCRIPTION]
+The diffn constraint now posts additional implied cumulative constraints
+to strengthen propagation.
+
+[ENTRY]
+Module: flatzinc
+What:   bug
+Rank:   minor
+[DESCRIPTION]
+Added unshare constraints to all constraints that need them. Without unsharing,
+variables occurring multiply in the same FlatZinc arrays could lead to the
+FlatZinc interpreter aborting with an error.
+
+[ENTRY]
+Module: flatzinc
+What:   performance
+Rank:   minor
+[DESCRIPTION]
+Treat equality constraints in FlatZinc as aliases instead of posting 
+propagators, and post simple domain constraints before more complex
+propagators to help post the most efficient versions.
+
+[ENTRY]
+Module: example
+What:   new
+Rank:   minor
+Thanks: Stefano Gualandi, Brian Kell, Willem-Jan Van Hoeve
+[DESCRIPTION]
+Added example for multi-dimensional bin-packing
+constraint. Thanks to Brian and Willem-Jan for allowing us to use
+their data set.
+
+[ENTRY]
+Module: int
+What:   new
+Rank:   major
+Author: Stefano Gualandi
+[DESCRIPTION]
+Added multi-dimensional bin-packing constraint.
+
+[ENTRY]
+Module: kernel
+What:   change
+Rank:   minor
+Thanks: Kish Shen
+[DESCRIPTION]
+Allow 0.0 as decay value.
+
+[ENTRY]
+Module: other
+What:   bug
+Rank:   minor
+Thanks: Roland Stigge
+[DESCRIPTION]
+Added patch for PowerPC (downstream patch from Debian).
+
+[ENTRY]
+Module: other
+What:   bug
+Rank:   minor
+Thanks: David Rijsman
+[DESCRIPTION]
+Added missing boost header files.
+
+[ENTRY]
+Module: test
+What:   bug
+Rank:   minor
+Thanks: Victor Zverovich
+[DESCRIPTION]
+Removed uninitialized access.
+
+[ENTRY]
+Module: set
+What:   bug
+Rank:   minor
+Thanks: Victor Zverovich
+[DESCRIPTION]
+Removed compiler warning.
+
+[ENTRY]
+Module: float
+What:   bug
+Rank:   minor
+Thanks: Victor Zverovich
+[DESCRIPTION]
+Removed compiler warning.
+
+[ENTRY]
+Module: flatzinc
+What:   bug
+Rank:   minor
+Thanks: Victor Zverovich
+[DESCRIPTION]
+Fixed FlatZinc interpreter to compile with clang in C++11 mode.
+
+[ENTRY]
+Module: int
+What:   bug
+Rank:   minor
+Thanks: Bauke Conijn
+[DESCRIPTION]
+Re-enabled parts of not-first-not-last propagation for unary with
+optional tasks.
+
+[ENTRY]
+Module: flatzinc
+What:   bug
+Rank:   minor
+[DESCRIPTION]
+Catch exceptions and print proper error message.
+
+[ENTRY]
+Module: minimodel
+What:   bug
+Rank:   major
+[DESCRIPTION]
+Fixed posting of set relations involving constants.
+
+[ENTRY]
+Module: int
+What:   bug
+Rank:   major
+Thanks:	Roberto Castañeda Lozano, Gabriel Hjort Blindell
+[DESCRIPTION]
+In extremely rare cases, the bounds-consistent distinct (and
+hence all other distinct propagators as they use the
+bounds-consistent one internally) propagator could suffer from
+numerical overflow.
+
+[ENTRY]
+Module: kernel
+What:   bug
+Rank:   minor
+Thanks:	Roberto Castañeda Lozano
+[DESCRIPTION]
+The function brancher did not return a handle.
+
+[ENTRY]
+Module: int
+What:   bug
+Rank:   minor
+Thanks:	Duane Leslie
+[DESCRIPTION]
+No-good literals for greater-or-equal did not prune as much as they should.
+
+
+[RELEASE]
+Version: 4.2.1
+Date: 2013-11-05
+[DESCRIPTION]
+This release fixes several major bugs and adds some minor
+improvements.
+
+[ENTRY]
+Module: other
+What:   change
+Rank:   minor
+[DESCRIPTION]
+Compiles with MSVC 2013.
+
+[ENTRY]
+Module: search
+What:   bug
+Rank:   major
+Thanks:	Roberto Castañeda Lozano
+[DESCRIPTION]
+Fix for restart-based search when the master does not have a branching.
+
+[ENTRY]
+Module: search
+What:   bug
+Rank:   major
+Thanks:	Roberto Castañeda Lozano
+[DESCRIPTION]
+Restart-based search did not work when the cutoff limit did not
+strictly increase.
+
+[ENTRY]
+Module: search
+What:   new
+Rank:   minor
+Thanks:	Roberto Castañeda Lozano
+[DESCRIPTION]
+Added support for a repeat cutoff generator.
+
+[ENTRY]
+Module: int
+What:   performance
+Rank:   minor
+Thanks: Anne Meyer
+[DESCRIPTION]
+Fix performance of domain consistent element for the case that the result
+variable is assigned.
+
+[ENTRY]
+Module: int
+What:   bug
+Rank:   major
+Thanks: Bauke Conijn
+[DESCRIPTION]
+Fixed incorrect propagation in sortedness with permutation variables.
+
+[ENTRY]
+Module: int
+What:   bug
+Rank:   major
+Thanks: Duane Leslie
+[DESCRIPTION]
+Fixed cumulative constraint for 0-usage tasks.
+
+[ENTRY]
+Module: int
+What:   bug
+Rank:   major
+Thanks: Duane Leslie
+[DESCRIPTION]
+Fixed special case check for cumulative that would wrongly classify
+some instances as disjunctive.
+
+[ENTRY]
+Module: int
+What:   bug
+Rank:   major
+Thanks: Kish Shen
+[DESCRIPTION]
+The nroot constraint now propagates correctly for negative
+numbers when the exponent is odd.
+
+[ENTRY]
+Module: other
+What:   bug
+Rank:   minor
+[DESCRIPTION]
+Fix CMake to also build FlatZinc and Driver correctly.
+
+[ENTRY]
+Module: flatzinc
+What:   bug
+Rank:   minor
+[DESCRIPTION]
+Fixed bug in auxiliary variable branching.
+
+[ENTRY]
+Module: minimodel
+What:   new
+Rank:   minor
+Thanks: Philippe Kezirian
+[DESCRIPTION]
+The sum of IntArgs can now be computed similarly to the sum of
+IntVarArgs.
+
+[ENTRY]
+Module: kernel
+What:   new
+Rank:   minor
+Thanks: Kish Shen
+[DESCRIPTION]
+Activity information can now be initialized with a branch merit function.
+
+[ENTRY]
+Module: int
+What:   new
+Rank:   minor
+Thanks: Kish Shen
+[DESCRIPTION]
+Activity information can now be initialized with a branch merit function.
+
+[ENTRY]
+Module: set
+What:   new
+Rank:   minor
+Thanks: Kish Shen
+[DESCRIPTION]
+Activity information can now be initialized with a branch merit function.
+
+[ENTRY]
+Module: float
+What:   new
+Rank:   minor
+Thanks: Kish Shen
+[DESCRIPTION]
+Activity information can now be initialized with a branch merit function.
+
+
+
+[RELEASE]
+Version: 4.2.0
+Date: 2013-07-19
+[DESCRIPTION]
+This release adds no-goods from restarts, removes memory
+statistics (but Gecode can be configured for more accurate
+statistics), and fixes a number of bugs.
+
+[ENTRY]
+Module: iter
+What:   bug
+Rank:   minor
+Thanks: Farshid Hassani Bijarbooneh, Joseph Scott
+[DESCRIPTION]
+Fixed segfault in NaryUnion iterator.
+
+[ENTRY]
+Module: kernel
+What:   new
+Rank:   minor
+[DESCRIPTION]
+Added configure switch --enable-peakheap that adds support for
+memory statistics to the kernel. This comes with a runtime overhead,
+but provides more accurate information than the previous search
+engine based statistics.
+
+[ENTRY]
+Module: search
+What:   removed
+Rank:   major
+[DESCRIPTION]
+Removed memory statistics from the search engines. The reason is
+that the figures were too inaccurate (memory for shared data
+structure, caches, etc were not counted) and computing the
+figures was complicated. This feature is replaced by a configure
+switch that enables peak memory tracking based on operating system
+information.
+
+[ENTRY]
+Module: kernel
+What:   change
+Rank:   minor
+Thanks: Kish Shen
+[DESCRIPTION]
+Low-level support for AFC is now public.
+
+[ENTRY]
+Module: search
+What:   new
+Rank:   minor
+[DESCRIPTION]
+Search options have an additional field nogoods_limit that
+defines too which depth a search tree is inspected for no-goods.
+
+[ENTRY]
+Module: kernel
+What:   change
+Rank:   minor
+[DESCRIPTION]
+The master() member function used during restart-based search now
+takes an additional no-goods argument. The default master()
+function posts no-goods (only effective when enabled in
+Search::Options). See MPG for details.
+
+[ENTRY]
+Module: driver
+What:   new
+Rank:   minor
+[DESCRIPTION]
+When using restart-based search, the use of no-goods from
+restarts can be switched on/off with the -nogoods command line
+option and the depth limit for extraction of no-goods with the
+-nogoods-limit command line option.
+
+[ENTRY]
+Module: search
+What:   new
+Rank:   major
+[DESCRIPTION]
+Added support for no-goods from restarts, see Modeling and
+Programming with Gecode for details.
+
+Note that also entails that the statistics will report different
+a different peak depth than in previous releases of Gecode when
+using no-goods.
+
+[ENTRY]
+Module: flatzinc
+What:   new
+Rank:   minor
+[DESCRIPTION]
+Added support for value_precede_int and value_precede_set constraints.
+
+[ENTRY]
+Module: flatzinc
+What:   bug
+Rank:   major
+Thanks: Chris Mears
+[DESCRIPTION]
+Fixed a memory leak in FlatZincSpace and a few more in the FlatZinc
+parser.
+
+[ENTRY]
+Module: flatzinc
+What:   bug
+Rank:   minor
+Thanks: Chris Mears
+[DESCRIPTION]
+Fixed a bug in implicit search heuristic that could lead to a
+segmentation fault when minimizing an array element.
+
+[ENTRY]
+Module: other
+What:   bug
+Rank:   minor
+Thanks:	Victor Zverovich
+[DESCRIPTION]
+Fixes link error for CMake with MSVC.
+
+
+[RELEASE]
+Version: 4.1.0
+Date: 2013-07-01
+[DESCRIPTION]
+This release adds a really useful feature and the required
+infrastructure to Gist (it now can show information on the
+alternatives in a search tree), has some new features, and fixes
+quite a number of bugs (some of which are quite serious, in
+particular for: LDSB, restart-based search, and FlatZinc).
+
+[ENTRY]
+Module: driver
+What:   bug
+Rank:   minor
+Thanks: Vincent Barichard
+[DESCRIPTION]
+Fixed a race condition when using parallel search.
+
+[ENTRY]
+Module: set
+What:   bug
+Rank:   minor
+[DESCRIPTION]
+Fixed SET_VAR_ACTIVITY_SIZE_MIN/MAX, which used to compute
+size/activity instead of activity/size.
+
+[ENTRY]
+Module: kernel
+What:   performance
+Rank:   minor
+[DESCRIPTION]
+Implement the AFC search heuristic using FastMutex, which greatly
+improves parallel search performance on Mac OS X when using AFC.
+
+[ENTRY]
+Module: support
+What:   new
+Rank:   minor
+[DESCRIPTION]
+Added FastMutex class that is implemented using spin locks on
+some platforms.
+
+[ENTRY]
+Module: int
+What:   bug
+Rank:   minor
+Thanks:	Victor Zverovich
+[DESCRIPTION]
+Fixed INT_VALUES_MAX() branching (INT_VALUES_MIN() was used instead).
+
+[ENTRY]
+Module: float
+What:   bug
+Rank:   minor
+[DESCRIPTION]
+Fixed FLOAT_VAR_ACTIVITY_SIZE_MIN/MAX, which used to compute
+size/activity instead of activity/size.
+
+[ENTRY]
+Module: example
+What:   new
+Rank:   minor
+Thanks:	Stefano Gualandi
+[DESCRIPTION]
+Added LDSB-based symmetry breaking to graph coloring example.
+
+[ENTRY]
+Module: flatzinc
+What:   bug
+Rank:   minor
+Thanks:	Peter Nightingale
+[DESCRIPTION]
+Fixed printing of float variables to be compatible with MiniZinc output.
+
+[ENTRY]
+Module: flatzinc
+What:   bug
+Rank:   minor
+Thanks:	Peter Nightingale
+[DESCRIPTION]
+Fixed a segmentation fault when using FlatZinc with float variables
+that have initializers.
+
+[ENTRY]
+Module: set
+What:   bug
+Rank:   major
+Thanks:	Stefano Gualandi
+[DESCRIPTION]
+Fixed crash due to combination of LDSB and Activity.
+
+[ENTRY]
+Module: int
+What:   bug
+Rank:   major
+Thanks:	Stefano Gualandi
+[DESCRIPTION]
+Fixed crash due to combination of LDSB and Activity.
+
+[ENTRY]
+Module: int
+What:   bug
+Rank:   major
+[DESCRIPTION]
+The internal representation of integer variable domains could leak
+memory to the space.
+
+[ENTRY]
+Module: flatzinc
+What:   new
+Rank:   major
+[DESCRIPTION]
+The FlatZinc interpreter now supports float variables as objective
+functions.
+
+[ENTRY]
+Module: gist
+What:   new
+Rank:   major
+[DESCRIPTION]
+Gist now can show information on the alternatives in a search tree,
+using the new menu options "Label branches" and "Label path".
+
+[ENTRY]
+Module: float
+What:   bug
+Rank:   minor
+[DESCRIPTION]
+Random value selection for float branchings was not declared with
+the right types.
+
+[ENTRY]
+Module: set
+What:   new
+Rank:   major
+[DESCRIPTION]
+Set branchings now take an optional argument for a
+user-defined print function. See MPG for details.
+
+[ENTRY]
+Module: float
+What:   new
+Rank:   major
+[DESCRIPTION]
+Float branchings now take an optional argument for a
+user-defined print function. See MPG for details.
+
+[ENTRY]
+Module: int
+What:   new
+Rank:   major
+[DESCRIPTION]
+Integer and Boolean branchings now take an optional argument for a
+user-defined print function. See MPG for details.
+
+[ENTRY]
+Module: kernel
+What:   new
+Rank:   major
+[DESCRIPTION]
+Branchers now support a print() member function.
+
+[ENTRY]
+Module: flatzinc
+What:   new
+Rank:   minor
+[DESCRIPTION]
+Added {int,bool,set,float}_default_search annotations. These can be used
+on solve items to declare the default search strategy for the respective
+variable types.
+
+[ENTRY]
+Module: minimodel
+What:   bug
+Rank:   minor
+Thanks:	Roberto Castañeda Lozano
+[DESCRIPTION]
+Boolean expressions could lead to a segfault when initialized
+with default constructor.
+
+[ENTRY]
+Module: kernel
+What:   new
+Rank:   minor
+[DESCRIPTION]
+Both AFC and Activity can be changed by a set() function.
+
+[ENTRY]
+Module: int
+What:   new
+Rank:   minor
+[DESCRIPTION]
+Added if-then-else constraint (called ite) for integer variables.
+
+[ENTRY]
+Module: driver
+What:   new
+Rank:   minor
+Thanks:	Pascal Francq
+[DESCRIPTION]
+Added classes FloatMinimizeScript and FloatMaximizeScript for
+cost-based optimization with a float cost variable.
+
+[ENTRY]
+Module: driver
+What:   change
+Rank:   minor
+[DESCRIPTION]
+Added classes IntMinimizeScript and IntMaximizeScript for
+cost-based optimization with an integer cost variable. While the
+classes MinimizeScript and MaximizeSpcript are still available,
+there use is deprecated and a later release might remove them.
+
+[ENTRY]
+Module: int
+What:   change
+Rank:   minor
+[DESCRIPTION]
+Added classes IntMinimizeSpace and IntMaximizeSpace for
+cost-based optimization with an integer cost variable. While the
+classes MinimizeSpace and MaximizeSpace are still available,
+there use is deprecated and a later release might remove them.
+
+[ENTRY]
+Module: float
+What:   new
+Rank:   minor
+Thanks:	Pascal Francq
+[DESCRIPTION]
+Added classes FloatMinimizeSpace and FloatMaximizeSpace for
+cost-based optimization with a float cost variable.
+
+[ENTRY]
+Module: flatzinc
+What:   bug
+Rank:   minor
+[DESCRIPTION]
+Fixed the random search strategies to all use the same random number
+generator instead of different generators all initialised with the same
+seed (and therefore all producing the same sequences).
+
+[ENTRY]
+Module: flatzinc
+What:   new
+Rank:   minor
+Thanks: Tias Guns
+[DESCRIPTION]
+Added int2float constraint which was missing in the FlatZinc
+interpreter.
+
+[ENTRY]
+Module: int
+What:   bug
+Rank:   minor
+Thanks: David Rijsman
+[DESCRIPTION]
+Fixed binpacking crash when the b and s arrays are empty.
+
+[ENTRY]
+Module: other
+What:   change
+Rank:   minor
+Thanks: Cliff Yapp
+[DESCRIPTION]
+CMake build system tweaked for out-of-source-dir building.
+
+[ENTRY]
+Module: float
+What:   bug
+Rank:   minor
+Thanks: Duong Khanh Chuong
+[DESCRIPTION]
+Fixed missing propagation in reified rel-constraints.
+
+[ENTRY]
+Module: search
+What:   bug
+Rank:   major
+Thanks: Chris Mears, Roberto Castañeda Lozano
+[DESCRIPTION]
+Fixed a bug in restart-based search, which would crash if the
+problem is failed at the root or only had a single solution
+during best-solution search.
+
+[RELEASE]
+Version: 4.0.0
+Date: 2013-03-14
+[DESCRIPTION]
+This release adds a multitude of new features, fixes many bugs,
+and offers a number of performance improvements. There are too
+many major improvements to even summarize them here all, so here
+are just some highlights: LDSB as automatic symmetry breaking
+during search; restart-based search; complete redesign and
+reimplementation of branching enhancing the expressiveness
+massively (AFC with decay, activity, user-defined variable and
+value selection, tie-break control, better randomization, ...);
+half-reification; addition of floating point constraints.
+
+It is recommended to read the new Chapter in MPG on branching as
+the changes are substantial and require you to change your
+programs, see also the full list of changes below.
+
+As the interfaces has changed, please consult \ref
+PageHowToChange_4 "How to Change to Gecode 4.0.0".
+
+[ENTRY]
+Module: flatzinc
+What:   change
+Rank:   minor
+[DESCRIPTION]
+Renamed the FlatZinc executable to fzn-gecode, to better distinguish
+it when installed alongside other FlatZinc implementations.
+
+[ENTRY]
+Module: int
+What:   new
+Rank:   major
+Author: Christopher Mears
+[DESCRIPTION]
+Gecode now supports Lightweight Dynamic Symmetry Breaking (LDSB),
+see MPG for details.
+
+[ENTRY]
+Module: set
+What:   new
+Rank:   major
+Author: Christopher Mears
+[DESCRIPTION]
+Gecode now supports Lightweight Dynamic Symmetry Breaking (LDSB),
+see MPG for details.
+
+[ENTRY]
+Module: int
+What:   new
+Rank:   major
+Thanks: Manuel Loth
+[DESCRIPTION]
+Added value selection strategies for branching
+INT_VAL_NEAR_MIN(), INT_VAL_NEAR_MAX(), INT_VAL_NEAR_INC(), and
+INT_VAL_NEAR_DEC(). They can take a previous assignment to the
+variables to branch on and try to choose values which are near
+(see MPG for details).
+
+[ENTRY]
+Module: int
+What:   new
+Rank:   minor
+[DESCRIPTION]
+Added domain constraint that constrains a variable (or an array)
+according to the domain of another variable.
+
+[ENTRY]
+Module: set
+What:   new
+Rank:   minor
+[DESCRIPTION]
+Added domain constraint that constrains a variable (or an array)
+according to the domain of another variable.
+
+[ENTRY]
+Module: set
+What:   new
+Rank:   minor
+[DESCRIPTION]
+Added domain constraints for arrays of set variables.
+
+[ENTRY]
+Module: kernel
+What:   change
+Rank:   minor
+[DESCRIPTION]
+The default constrain() function for best-solution search now
+does by default nothing (it used to throw an exception).
+
+[ENTRY]
+Module: driver
+What:   new
+Rank:   major
+[DESCRIPTION]
+Added commandline options to control restart-based search, see
+MPG for details.
+
+[ENTRY]
+Module: search
+What:   new
+Rank:   major
+[DESCRIPTION]
+Added support for restart-based search, see MPG for details.
+
+[ENTRY]
+Module: flatzinc
+What:   new
+Rank:   minor
+[DESCRIPTION]
+Added support for more search annotations (defined in gecode.mzn), and for
+the restart and decay command line options.
+
+[ENTRY]
+Module: other
+What:   new
+Rank:   minor
+Thanks:	Victor Zverovich
+[DESCRIPTION]
+Added CMake build script for Gecode (CMakeLists.txt).
+
+[ENTRY]
+Module: int
+What:   new
+Rank:   minor
+[DESCRIPTION]
+Added variants of dom that copy the domain from one variable to
+another.
+
+[ENTRY]
+Module: driver
+What:   new
+Rank:   minor
+[DESCRIPTION]
+Decay values can now be passed on the command line using the
+switch -decay.
+
+[ENTRY]
+Module: search
+What:   change
+Rank:   major
+[DESCRIPTION]
+Variable selection for branching used the quotient of size
+divided by degree, accumulated failure count, or activity. They
+now use the inverse. That is, for example, it is not any longer
+INT_VAR_SIZE_DEGREE_MIN() but INT_VAR_DEGREE_SIZE_MAX() (that is,
+largest degree divided by size).
+[MORE]
+That looks like an annoying change but is in fact essential: the
+strategies using accumulated failure count and activity now could
+have run into division by zero issues. And just changing the
+implementation is not good enough because the values of these
+measures can now be exposed during tie-breaking.
+
+[ENTRY]
+Module: other
+What:   new
+Rank:   major
+[DESCRIPTION]
+Variable selection using AFC now supports decay. Read more in MPG.
+
+[ENTRY]
+Module: int
+What:   performance
+Rank:   major
+[DESCRIPTION]
+Arithmetic, linear, and cumulative constraints now resort to
+internal operations using "long long int" rather than
+"double". This improves performance but also extends the range
+over integer coefficients that can be handled by linear
+constraints.
+
+[ENTRY]
+Module: flatzinc
+What:   bug
+Rank:   minor
+[DESCRIPTION]
+The mzn-gecode shell script now passes arguments correctly to the
+FlatZinc interpreter.
+
+[ENTRY]
+Module: other
+What:   change
+Rank:   minor
+[DESCRIPTION]
+Compiles with MSVC 2012.
+
+[ENTRY]
+Module: gist
+What:   change
+Rank:   minor
+[DESCRIPTION]
+Updated to compile with Qt version 5.0 (still works with Qt >= 4.3 as well).
+
+[ENTRY]
+Module: int
+What:   bug
+Rank:   minor
+Thanks:	Roberto Castañeda Lozano
+[DESCRIPTION]
+Fixed precede constraint with less than two values.
+
+[ENTRY]
+Module: set
+What:   bug
+Rank:   minor
+Thanks:	Roberto Castañeda Lozano
+[DESCRIPTION]
+Fixed precede constraint with less than two values.
+
+[ENTRY]
+Module: int
+What:   new
+Rank:   minor
+[DESCRIPTION]
+The nooverlap constraint now allows sharing of unassigned
+variables in its argument arrays.
+
+[ENTRY]
+Module: set
+What:   new
+Rank:   major
+[DESCRIPTION]
+Added half-reification for reified constraints (see Modeling and
+Programming with Gecode for details).
+
+[ENTRY]
+Module: int
+What:   new
+Rank:   major
+[DESCRIPTION]
+Added half-reification for reified constraints (see Modeling and
+Programming with Gecode for details).
+
+[ENTRY]
+Module: flatzinc
+What:   bug
+Rank:   minor
+Thanks: Simon Ekvy
+[DESCRIPTION]
+Removed spurious debug output for among constraint.
+
+[ENTRY]
+Module: int
+What:   bug
+Rank:   major
+Thanks: Lin Yong
+[DESCRIPTION]
+Fixed a bug where bounds consistent distinct reported subsumption
+instead of failure in certain cases.
+
+[ENTRY]
+Module: support
+What:   bug
+Rank:   minor
+[DESCRIPTION]
+Fixed a concurrency problem that caused an exception to be thrown at
+the end of a multi-threaded search on some platforms.
+
+[ENTRY]
+Module: int
+What:   change
+Rank:   minor
+[DESCRIPTION]
+The coefficients for linear constraints are now divided by
+their greatest common divisor. That means that some equations
+can be handled now that previously threw an OutOfLimits exception,
+and some equations can be handled with the more efficient integer
+precision propagators that previously required double precision.
+
+[ENTRY]
+Module: kernel
+What:   change
+Rank:   major
+[DESCRIPTION]
+The entire infrastructure for variable-value branchers has been
+reimplemented from scratch. The new design makes a much better
+compromise between code size, efficiency, and expressiveness:
+the efficiency is about the same (for examples with no
+propagation and just branching one can note a slowdown of 2-4%)
+while code size shrinks drastically (the overall code size for
+integer variables shrinks by 20%) and the architecture is much
+more expressive (in particular, it supports tie-break limits, see
+MPG).
+
+[ENTRY]
+Module: int
+What:   change
+Rank:   minor
+Thanks:	Roberto Castañeda Lozano
+[DESCRIPTION]
+Generalized definition of no-overlap propagators for better reuse.
+
+[ENTRY]
+Module: iter
+What:   documentation
+Rank:   minor
+[DESCRIPTION]
+Clarified for several iterators that when using the assignment
+operator both iterators must be allocated from the very same
+region.
+
+[ENTRY]
+Module: int
+What:   change
+Rank:   major
+[DESCRIPTION]
+The interface for branching on integer and Boolean variables has
+changed considerably (supporting user-defined variable and value
+selection, tie-break limit functions, handlers to created
+branchers, and more). In order to change, you have to add () to
+all variants of INT_VAR, INT_VAL, and INT_ASSIGN. For example,
+INT_VAR_SIZE_MIN becomes the function call INT_VAR_SIZE_MIN() and
+INT_VAL_MIN_MIN becomes the function call INT_VAL_MIN_MIN(). Some
+of these functions expect additional arguments and can take also
+optional arguments (this replaces the VarBranchOptions and
+ValBranchOptions). Please read the new "Branching" chapter
+in MPG.
+
+[ENTRY]
+Module: set
+What:   change
+Rank:   major
+[DESCRIPTION]
+The interface for branching on integer and Boolean variables has
+changed considerably (supporting user-defined variable and value
+selection, tie-break limit functions, handlers to created
+branchers, and more). In order to change, you have to add () to
+all variants of SET_VAR, SET_VAL, and SET_ASSIGN. For example,
+SET_VAR_SIZE_MIN becomes the function call SET_VAR_SIZE_MIN() and
+SET_VAL_MIN_INC becomes the function call SET_VAL_MIN_INC(). Some
+of these functions expect additional arguments and can take also
+optional arguments (this replaces the VarBranchOptions and
+ValBranchOptions). Please read the new "Branching" chapter in
+MPG.
+
+[ENTRY]
+Module: kernel
+What:   new
+Rank:   minor
+[DESCRIPTION]
+The random seeds for variable and value branching options can now
+be initialized from a hardware random number generator (see MPG
+for details).
+
+[ENTRY]
+Module: search
+What:   change
+Rank:   major
+[DESCRIPTION]
+The restart best solution search engine has been removed (it is
+subsumed by the new restart-based meta search engine RBS).
+
+
+[ENTRY]
+Module: minimodel
+What:   new
+Rank:   minor
+[DESCRIPTION]
+Added pow and nroot expressions for integer variables.
+
+[ENTRY]
+Module: int
+What:   new
+Rank:   major
+[DESCRIPTION]
+Added pow and nroot constraints.
+
+[ENTRY]
+Module: int
+What:   bug
+Rank:   minor
+[DESCRIPTION]
+Fixed potential rounding issues in sqr and sqrt constraints.
+
+[ENTRY]
+Module: search
+What:   performance
+Rank:   minor
+[DESCRIPTION]
+The search engines now do not allocate memory on the search stack for
+the rightmost branch of each node. This means that the search tree
+depth is now computed differently. It now represents the actual peak
+depth required at any one time, taking into account that rightmost
+branches reuse the stack entry of their parents.
+
+[ENTRY]
+Module: int
+What:   bug
+Rank:   major
+Thanks: Manuel Baclet
+[DESCRIPTION]
+Fixed copying of tuple sets in extensional constraints and IntSets in
+sequence constraints (could lead to crashes when using parallel search).
+
+[ENTRY]
+Module: support
+What:   bug
+Rank:   minor
+Thanks: Max Ostrowski
+[DESCRIPTION]
+Fixed a bug in the allocation of very large bitsets.
+
+[ENTRY]
+Module: kernel
+What:   performance
+Rank:   major
+Thanks: Zandra Norman
+[DESCRIPTION]
+Fixed a bug in the main memory allocation routine: now heap block
+sizes are decreased dynamically as they should be. Also changed
+the memory configuration parameters as explained in: Zandra
+Norman, Memory Management for Gecode.  KTH Royal Institute of
+Technology, Sweden, Bachelor thesis, TRITA-ICT-EX-2012:143, 2012.
+
+[ENTRY]
+Module: driver
+What:   new
+Rank:   minor
+Thanks: Andrea Pretto
+[DESCRIPTION]
+Added options -file-sol and -file-stat for writing solutions and
+statistics to arbitrary files and streams.
+
+[ENTRY]
+Module: flatzinc
+What:   bug
+Rank:   minor
+Thanks: Jean-Noël Monette
+[DESCRIPTION]
+Exported registry and helper functions so that users can add
+constraint handlers to the FlatZinc interpreter.
+
+[ENTRY]
+Module: gist
+What:   new
+Rank:   minor
+[DESCRIPTION]
+Added option to invoke move cursors during the automatic search.
+
+[ENTRY]
+Module: int
+What:   change
+Rank:   minor
+[DESCRIPTION]
+Respect IntConLevel argument for reified linear constraints with a
+single integer variable.
+
+[ENTRY]
+Module: int
+What:   bug
+Rank:   minor
+Thanks: Jean-Noël Monette
+[DESCRIPTION]
+Added missing propagation for nary min/max constraint.
+
+[ENTRY]
+Module: flatzinc
+What:   new
+Rank:   minor
+[DESCRIPTION]
+Added native support for lex_less_bool and lex_lesseq_bool.
+
+[ENTRY]
+Module: int
+What:   bug
+Rank:   minor
+Thanks: Peter Nightingale
+[DESCRIPTION]
+Make extensional constraints work with empty tuple sets.
+
+[ENTRY]
+Module: int
+What:   bug
+Rank:   minor
+Thanks: Peter Nightingale
+[DESCRIPTION]
+Fix count (global cardinality constraint) for multiple occurrences
+of the same value in the cover array.
+
+[ENTRY]
+Module: flatzinc
+What:   new
+Rank:   major
+[DESCRIPTION]
+Gecode/FlatZinc now supports float constraints and variables.
+
+[ENTRY]
+Module: kernel
+What:   new
+Rank:   minor
+[DESCRIPTION]
+All ArgArrays now accept STL vectors and input iterators for construction.
+
+[ENTRY]
+Module: flatzinc
+What:   new
+Rank:   major
+Thanks: Gabriel Hjort Blindell
+[DESCRIPTION]
+The FlatZinc interpreter now supports comparing of nodes in Gist.
+
+[ENTRY]
+Module: flatzinc
+What:   change
+Rank:   major
+[DESCRIPTION]
+The FlatZinc interpreter no longer performs a complete search on variables
+annotated as var_is_introduced, but tries to extend a solution on the model
+variables to a solution that includes the introduced variables. Each solution
+on the model variables is therefore only reported once.
+
+[ENTRY]
+Module:	float
+What:	new
+Rank:	major
+Author:	Vincent Barichard
+[DESCRIPTION]
+Added support for float variables.
+
+[ENTRY]
+Module:	int
+What:	new
+Rank:	minor
+Thanks: Kathrin Dannmann, Roberto Castañeda Lozano
+[DESCRIPTION]
+The binpacking constraint now also accepts items of size zero.
+
+[ENTRY]
+Module:	int
+What:	new
+Rank:	major
+[DESCRIPTION]
+Added activity-based branching strategies for integer and Boolean
+variables: INT_VAR_ACTIVITY_MIN, INT_VAR_ACTIVITY_MAX,
+INT_VAR_ACTIVITY_SIZE_MIN, INT_VAR_ACTIVITY_SIZE_MAX. For
+details, see "Modeling and Programming with Gecode".
+
+[ENTRY]
+Module:	set
+What:	new
+Rank:	major
+[DESCRIPTION]
+Added activity-based branching strategies for set variables:
+SET_VAR_ACTIVITY_MIN, SET_VAR_ACTIVITY_MAX,
+SET_VAR_ACTIVITY_SIZE_MIN, SET_VAR_ACTIVITY_SIZE_MAX. For
+details, see "Modeling and Programming with Gecode".
+
+[ENTRY]
+Module: kernel
+What:   new
+Rank:   major
+[DESCRIPTION]
+The kernel now can record the activity of variables. The activity
+of a variable is defined as how often the domain of a variable
+has been pruned during search.  For details, see "Modeling and
+Programming with Gecode".
+
+[ENTRY]
+Module: example
+What:   new
+Rank:   minor
+[DESCRIPTION]
+New example: Colored matrix without monochromatic rectangles.
+
+[ENTRY]
+Module: driver
+What:   new
+Rank:   minor
+Thanks: Josef Eisl
+[DESCRIPTION]
+The command line -print-last configures whether only the last
+solution found is printed.
+
+[ENTRY]
+Module: driver
+What:   change
+Rank:   minor
+[DESCRIPTION]
+Boolean options (BoolOption) can now be given a false or true argument
+and hence are in-line with all other option types.
+
+[ENTRY]
+Module: kernel
+What:   change
+Rank:   minor
+[DESCRIPTION]
+Throw exception when the user-defined copy constructor of a class
+that inherits from Space does not call the Space copy constructor.
+
+[ENTRY]
+Module: set
+What:   new
+Rank:   major
+Author: Denys Duchier
+[DESCRIPTION]
+Added channeling constraint between arrays of set variables.
+
+[ENTRY]
+Module: flatzinc
+What:   new
+Rank:   minor
+[DESCRIPTION]
+Added native support for the inverse_set constraint.
+
+[ENTRY]
+Module: minimodel
+What:   change
+Rank:   minor
+[DESCRIPTION]
+Made implementations of MiniModel expressions private, so that the
+MiniModel headers do not have to include propagator headers like
+gecode/int/linear.hh any longer.
+
+
+[RELEASE]
+Version: 3.7.3
+Date: 2012-03-23
+[DESCRIPTION]
+This release fixes some small bugs in the FlatZinc interpreter and library.
+
+[ENTRY]
+Module: flatzinc
+What:   bug
+Rank:   minor
+Thanks: Marco Correia
+[DESCRIPTION]
+Fixed "largest" variable selection strategy for set variables.
+
+[ENTRY]
+Module: flatzinc
+What:   change
+Rank:   minor
+[DESCRIPTION]
+Removed the print command line option. Instead, for optimization problems,
+using -a will print all solutions, while not using -a will only print the
+last one. This is consistent with the G12 FlatZinc command line interface.
+
+[ENTRY]
+Module: flatzinc
+What:   bug
+Rank:   minor
+Thanks: Thibaut Feydy
+[DESCRIPTION]
+Fixed the parser for set literals.
+
+[ENTRY]
+Module: flatzinc
+What:   new
+Rank:   minor
+[DESCRIPTION]
+Added mzn-gecode scripts for conveniently solving MiniZinc models
+using the Gecode FlatZinc interpreter.
+
+[ENTRY]
+Module: flatzinc
+What:   bug
+Rank:   minor
+[DESCRIPTION]
+Integer variables with empty domains result in unsatisfiable models
+instead of an error message.
+
+[ENTRY]
+Module: flatzinc
+What:   bug
+Rank:   minor
+[DESCRIPTION]
+Support 0-length array declarations.
+
+[RELEASE]
+Version: 3.7.2
+Date: 2012-02-27
+[DESCRIPTION]
+This release fixes several small bugs.
+
+[ENTRY]
+Module: flatzinc
+What:   bug
+Rank:   minor
+[DESCRIPTION]
+Export RTTI symbols for the FlatZinc AST so that it can be used
+by client code.
+
+[ENTRY]
+Module: other
+What:   new
+Rank:   minor
+Thanks: Adam Russell
+[DESCRIPTION]
+Gecode now compiles on NetBSD.
+
+[ENTRY]
+Module: int
+What:   change
+Rank:   minor
+[DESCRIPTION]
+Throw exception of type OutOfLimits instead of Exception when
+numerical arguments to sequence constraint are out of range.
+
+[ENTRY]
+Module: int
+What:   bug
+Rank:   minor
+Thanks: Joseph Scott
+[DESCRIPTION]
+Added missing pruning to cumulative edge finding propagator.
+
+[ENTRY]
+Module: driver
+What:   bug
+Rank:   minor
+Thanks: Serge Le Huitouze
+[DESCRIPTION]
+Fixed rounding for printing the runtime (for example,
+1:60:56.157 could be printed...).
+
+[ENTRY]
+Module: set
+What:   bug
+Rank:   major
+Thanks: Denys Duchier
+[DESCRIPTION]
+The element constraint with SOT_UNION and IntSetArgs reported
+subsumption too early, resulting in incorrect propagation.
+
+[ENTRY]
+Module: minimodel
+What:   bug
+Rank:   minor
+[DESCRIPTION]
+The BoolExpr default constructor did not properly initialize
+its members, causing crashes.
+
+[ENTRY]
+Module: int
+What:   performance
+Rank:   minor
+[DESCRIPTION]
+Posting a reified dom constraint on IntVars with an assigned control
+variable does not create propagators any more, but updates the
+domain immediately.
+
+[ENTRY]
+Module: flatzinc
+What:   bug
+Rank:   minor
+Thanks: Nicholas Tung
+[DESCRIPTION]
+Do not crash when encountering undefined identifier as constraint argument.
+
+[ENTRY]
+Module: int
+What:   bug
+Rank:   minor
+Thanks: Kish Shen
+[DESCRIPTION]
+Fixed sorted constraint to accept zero-length arrays.
+
+[ENTRY]
+Module: int
+What:   bug
+Rank:   minor
+Thanks: Kish Shen
+[DESCRIPTION]
+Added some missing propagation when posting a channel constraint
+between an array of Boolean variables and an integer variable.
+
+[ENTRY]
+Module: other
+What:   new
+Rank:   minor
+Thanks: Denys Duchier
+[DESCRIPTION]
+Added a macro GECODE_VERSION_NUMBER that is defined as
+x*1000000+y*100+z for Gecode version x.y.z.
+
+[ENTRY]
+Module: driver
+What:   bug
+Rank:   minor
+Thanks: Jan Kelbel
+[DESCRIPTION]
+Fixed time output for times with zero minutes but nonzero hours.
+
+[ENTRY]
+Module: kernel
+What:   new
+Rank:   minor
+[DESCRIPTION]
+Added Archive operators for floats and doubles.
+
+[RELEASE]
+Version: 3.7.1
+Date: 2011-10-10
+[DESCRIPTION]
+This release fixes several bugs, upgrades to MiniZinc version
+1.4, and features some minor improvements.
+
+[ENTRY]
+Module: int
+What:   change
+Rank:   minor
+[DESCRIPTION]
+The semantics of n-ary Boolean implication has been changed (to
+the more convential reading): rel(home, BOT_IMP, x, y) where x is
+an array of Boolean variable now assumes implication to be right
+associative. See MPG for explanation.
+
+[ENTRY]
+Module: int
+What:   new
+Rank:   minor
+[DESCRIPTION]
+Added efficient propagators for n-ary Boolean xor and equivalence
+(as they are now primitive in MiniZinc).
+
+[ENTRY]
+Module: flatzinc
+What:   change
+Rank:   minor
+[DESCRIPTION]
+The FlatZinc interpreter is now compatible with the G12 MiniZinc
+distribution 1.4. This adds support for var and par identifiers that
+begin with underscores, the array_bool_xor primitive, as well as the
+command line option -r for specifying a random seed.
+
+[ENTRY]
+Module: int
+What:   new
+Rank:   minor
+Thanks: Kish Shen
+[DESCRIPTION]
+Domain consistency for simple counting constraints can be
+switched off.
+
+[ENTRY]
+Module: flatzinc
+What:   bug
+Rank:   major
+Thanks: Håkan Kjellerstrand
+[DESCRIPTION]
+Fixed linear inequations over integer variables that are channeled
+from Boolean variables.
+
+[ENTRY]
+Module: support
+What:   bug
+Rank:   minor
+[DESCRIPTION]
+Compile again if threads are disabled.
+
+[ENTRY]
+Module: int
+What:   performance
+Rank:   minor
+[DESCRIPTION]
+Domain consistent distinct runs 10-20% faster.
+
+[ENTRY]
+Module: set
+What:   bug
+Rank:   major
+[DESCRIPTION]
+Do not use SharedArray<IntSet> in the set element constraints,
+because it does not properly udpate the IntSet during copying.
+This could cause memory corruption.
+
+[ENTRY]
+Module: int
+What:   bug
+Rank:   major
+[DESCRIPTION]
+Fixed bugs in the computation of the required precision
+(int or double) for linear propagation, and in division
+operations of scale views. These could cause an incorrect
+treatment of overflow in linear constraints.
+
+[ENTRY]
+Module: search
+What:   bug
+Rank:   minor
+[DESCRIPTION]
+Fixed a bug that crashed the single-thread branch-and-bound
+search engine when initialized with a failed space.
+
+[ENTRY]
+Module: gist
+What:   bug
+Rank:   minor
+[DESCRIPTION]
+Fixed a crash that occurred when double-clicking an unexplored
+node while move inspectors were active.
+
+
+[RELEASE]
+Version: 3.7.0
+Date: 2011-08-31
+[DESCRIPTION]
+This release adds and improves quite a number of constraints
+(total lexicographic order for set variables, membership
+constraints for integer variables, counting constraints for
+integer variables using integer sets, range, roots, set element
+constraints for integer variables, number of values for integer
+variables). All of these constraints (and some more) are now also
+available in FlatZinc. Additionally, some fixes and improvements.
+
+This release is an important milestone as %Gecode now provides
+native implementations for all important constraints available
+in MiniZinc/FlatZinc.
+
+The documentation of constraints in "Modeling and Programming
+with Gecode" now refers to the Global Constraint Catalog (for
+those constraints that are listed in the catalog).
+
+[ENTRY]
+Module: gist
+What:   bug
+Rank:   minor
+[DESCRIPTION]
+Call solution inspectors also when exploring manually.
+
+[ENTRY]
+Module: gist
+What:   bug
+Rank:   minor
+[DESCRIPTION]
+Flush output to Gist console, so that output that is not ended by a
+newline is not lost.
+
+[ENTRY]
+Module: flatzinc
+What:   bug
+Rank:   major
+[DESCRIPTION]
+Added missing primitives set_le, set_lt, set_ge, and set_gt.
+
+[ENTRY]
+Module: set
+What:   new
+Rank:   major
+[DESCRIPTION]
+Added set relations SRT_LQ, SRT_LE, SRT_GQ, SRT_GR for total
+(lexicographic) order.
+
+[ENTRY]
+Module: other
+What:   bug
+Rank:   minor
+Thanks: Gustavo Gutierrez
+[DESCRIPTION]
+Install generated variable implementation headers instead of the shipped 
+versions (fixes a problem when building Gecode in a separate directory).
+
+[ENTRY]
+Module: int
+What:   new
+Rank:   major
+[DESCRIPTION]
+Added normal and reified membership constraints for integer and
+Boolean variables.
+
+[ENTRY]
+Module: minimodel
+What:   new
+Rank:   minor
+[DESCRIPTION]
+Added a convenience function values that restricts the set of values
+taken by an array of integer variables to a fixed set, using the nvalues
+constraint. The channel constraints between IntVarArgs and a SetVar now
+also use nvalues to increase propagation.
+
+[ENTRY]
+Module: int
+What:   bug
+Rank:   minor
+[DESCRIPTION]
+Added some additional propagation for the count constraints (now,
+for example, count(home, x, y, IRT_GQ, 1) also constrains y to
+only take values supported by x).
+
+[ENTRY]
+Module: int
+What:   new
+Rank:   major
+[DESCRIPTION]
+The count constraints now also support comparison to integer sets
+in addition to integers and integer variables (which then implements among
+from the GCCAT).
+
+[ENTRY]
+Module: minimodel
+What:   new
+Rank:   minor
+[DESCRIPTION]
+Added range and roots, which decompose into set element constraints.
+
+[ENTRY]
+Module: flatzinc
+What:   new
+Rank:   major
+[DESCRIPTION]
+Added native support for among, nvalues, int_set_channel,
+member_bool, member_int, sum_pred, and the range and roots
+constraints.
+
+[ENTRY]
+Module: set
+What:   new
+Rank:   minor
+[DESCRIPTION]
+Added set element constraints with singleton integer variables
+as arguments.
+
+[ENTRY]
+Module: set
+What:   bug
+Rank:   minor
+Thanks: Johannes Inführ
+[DESCRIPTION]
+Fixed a memory leak in the set weights constraint, and use
+IntSharedArray instead of IntArgs as parameters for weights.
+
+[ENTRY]
+Module: kernel
+What:   bug
+Rank:   minor
+Thanks: Max Ostrowski
+[DESCRIPTION]
+Array slices can now be created from empty arrays.
+
+[ENTRY]
+Module: int
+What:   new
+Rank:   major
+[DESCRIPTION]
+Added nvalues constraint.
+
+[ENTRY]
+Module: example
+What:   new
+Rank:   minor
+[DESCRIPTION]
+Added Dominating %Queens puzzle.
+
+[ENTRY]
+Module: kernel
+What:   new
+Rank:   minor
+[DESCRIPTION]
+View arrays can now also use region-allocated memory.
+
+[ENTRY]
+Module: int
+What:   bug
+Rank:   major
+[DESCRIPTION]
+The estimation of bounds on linear terms did not handle overflow
+correctly.
+
+[ENTRY]
+Module: iter
+What:   change
+Rank:   minor
+[DESCRIPTION]
+Cached iterators such as n-ary union and intersection, minus, and
+cache (of course) are not any longer template classes but take
+template constructors and member functions. N-ary union and
+intersection iterators can now also be initialized incrementaly
+with iterators of different types.
+
+[ENTRY]
+Module: flatzinc
+What:   change
+Rank:   minor
+[DESCRIPTION]
+The set_in and set_in_reif constraints now work for constant sets
+even when %Gecode is compiled without support for set variables.
+
+
+[RELEASE]
+Version: 3.6.0
+Date: 2011-07-15
+[DESCRIPTION]
+This release adds new constraints (value precedence constraints
+for integer and set variables, no-overlap constraints for
+rectangles, constraints for Hamiltonian paths), improves and
+cleans up a number of existing constraints (scheduling,
+channeling, relation, bin-packing, lexicographic relations), and
+adds new functionality (support for externalization of choices
+for distributed search, support for incremental propagation).
+
+Some models might have to be changed as the graph and scheduling
+modules have been incorporated into the integer module (removing
+the respective include directives is sufficient).
+
+On top, there are many small fixes, in particular for FlatZinc.
+
+[ENTRY]
+Module: int
+What:   change
+Rank:   minor
+[DESCRIPTION]
+The cumulatives constraint now does not post the s+p=e constraints,
+harmonizing its semantics with the cumulative and unary constraints.
+
+[ENTRY]
+Module: int
+What:   new
+Rank:   minor
+[DESCRIPTION]
+The cumulative constraints now support an IntVar as the capacity
+argument.
+
+[ENTRY]
+Module: example
+What:   new
+Rank:   minor
+[DESCRIPTION]
+Added Schur's Lemma puzzle.
+
+[ENTRY]
+Module: int
+What:   performance
+Rank:   minor
+[DESCRIPTION]
+Optimized channeling propagator between an array of Boolean
+variables and an integer variables.
+
+[ENTRY]
+Module: int
+What:   change
+Rank:   major
+[DESCRIPTION]
+Changed semantics of rel(home, x, IRT_NQ), enforces that not all
+variables in x are equal. See "Modeling and Programming with
+Gecode" for details.
+
+[ENTRY]
+Module: flatzinc
+What:   new
+Rank:   major
+[DESCRIPTION]
+Added native support for the precedence constraint.
+
+[ENTRY]
+Module: set
+What:   new
+Rank:	major
+Author:	Christopher Mears
+[DESCRIPTION]
+Added value precedence constraint.
+
+[ENTRY]
+Module: int
+What:   new
+Rank:	major
+Author:	Christopher Mears
+[DESCRIPTION]
+Added value precedence constraint.
+
+[ENTRY]
+Module: int
+What:   performance
+Rank:   minor
+[DESCRIPTION]
+The disequality constraint between variable arrays has an efficient
+propagator now.
+
+[ENTRY]
+Module: int
+What:   performance
+Rank:   major
+[DESCRIPTION]
+The ordering constraints rel(home, x, IRT_LE) (also for IRT_LQ,
+IRT_GR, IRT_GQ) now have an optimal implementation (single
+incremental propagator).
+
+[ENTRY]
+Module: driver
+What:   bug
+Rank:   minor
+Thanks: Jan Kelbel
+[DESCRIPTION]
+Fixed a small memory leak in the driver (stop objects were not deleted).
+
+[ENTRY]
+Module: int
+What:   performance
+Rank:   major
+[DESCRIPTION]
+Increased performance of bin-packing propagator by 40 to 300
+percent by using staging.
+
+[ENTRY]
+Module: flatzinc
+What:   new
+Rank:   major
+[DESCRIPTION]
+Added native support for the no-overlap constraint (called diffn in 
+MiniZinc/FlatZinc).
+
+[ENTRY]
+Module: int
+What:   new
+Rank:   major
+[DESCRIPTION]
+Added no-overlap constraint that enforces that rectangles do not
+overlap (also known as diffn). See "Modeling and Programming with
+Gecode" for details.
+
+[ENTRY]
+Module: int
+What:   new
+Rank:   major
+[DESCRIPTION]
+Added constraints for Hamiltonian paths (called
+path). See "Modeling and Programming with Gecode" for details.
+
+[ENTRY]
+Module: flatzinc
+What:   new
+Rank:   minor
+Thanks: Håkan Kjellerstrand
+[DESCRIPTION]
+Support indomain_middle and indomain_interval search annotation by
+replacing them with indomain_median and indomain_split, respectively.
+
+[ENTRY]
+Module: gist
+What:   change
+Rank:   minor
+[DESCRIPTION]
+Zoom-to-fit can now be selected during search.
+
+[ENTRY]
+Module: graph
+What:   change
+Rank:   major
+[DESCRIPTION]
+The graph module has been removed and its constraints have been
+added to the integer module.
+
+[ENTRY]
+Module: scheduling
+What:   change
+Rank:   major
+[DESCRIPTION]
+The scheduling module has been removed and its constraints have been
+added to the integer module.
+
+[ENTRY]
+Module: int
+What:   bug
+Rank:   minor
+[DESCRIPTION]
+Fixed element and sequence propagators, which were only
+correct by accident (incorrect use of GECODE_ME_CHECK instead of
+GECODE_ES_CHECK).
+
+[ENTRY]
+Module: set
+What:   bug
+Rank:   minor
+[DESCRIPTION]
+Fixed sequence, partition, and union propagators, which were only
+correct by accident (incorrect use of GECODE_ME_CHECK instead of
+GECODE_ES_CHECK).
+
+[ENTRY]
+Module: scheduling
+What:   bug
+Rank:   minor
+[DESCRIPTION]
+Fixed scheduling code for mandatory flexible tasks, which was only
+correct by accident (incorrect use of GECODE_ME_CHECK instead of
+GECODE_ES_CHECK).
+
+[ENTRY]
+Module: flatzinc
+What:   new
+Rank:   minor
+[DESCRIPTION]
+Added native support for link_set_to_booleans, 
+global_cardinality_low_up_closed, and decreasing_bool.
+
+[ENTRY]
+Module: int
+What:   new
+Rank:   minor
+Thanks: Kish Shen
+[DESCRIPTION]
+Generalized lexicographic constraint to arrays of different sizes.
+
+[ENTRY]
+Module: search
+What:   bug
+Rank:   minor
+[DESCRIPTION]
+Fixed memory leak when passing a failed space to a search engine with cloning 
+option set to false.
+
+[ENTRY]
+Module: kernel
+What:   new
+Rank:   minor
+[DESCRIPTION]
+Moved RangeList class, which is a list of ranges implemented as a FreeList, 
+from the set module into the kernel. Also added corresponding 
+Iter::Ranges::RangeList iterator.
+
+[ENTRY]
+Module: int
+What:   new
+Rank:   major
+[DESCRIPTION]
+Added a CachedView that can cache the domain between propagator invocations
+and provides an efficient test whether a view has changed since the previous
+invocation as well as an iterator over the removed domain values. This makes
+it easier to implement incremental propagation algorithms that need exact
+delta information.
+
+[ENTRY]
+Module: set
+What:   new
+Rank:   major
+[DESCRIPTION]
+Added a CachedView that can cache the domain between propagator invocations
+and provides an efficient test whether a view has changed since the previous
+invocation as well as an iterator over the removed domain values. This makes
+it easier to implement incremental propagation algorithms that need exact
+delta information.
+
+[ENTRY]
+Module: set
+What:   performance
+Rank:   minor
+[DESCRIPTION]
+Use new cached views for a more efficient implementation of the channel constraint between IntVarArgs and SetVarArgs.
+
+[ENTRY]
+Module: gist
+What:   bug
+Rank:   minor
+[DESCRIPTION]
+Changed keyboard shortcuts in Gist so that they work on all platforms: "Inspect"
+is now Ctrl+number of inspector, for "Inspect before fixpoint" press Alt in 
+addition (on Mac OS, use the Command key instead of Ctrl).
+
+[ENTRY]
+Module: other
+What:   bug
+Rank:   minor
+Thanks: Martin Mann
+[DESCRIPTION]
+Fixed Makefile, now installation works when FlatZinc library is disabled.
+
+[ENTRY]
+Module: other
+What:   new
+Rank:   minor
+Thanks: Ruben Zilibowitz
+[DESCRIPTION]
+Added configure option --enable-small-codesize that results in
+slightly less efficient but more compact code being generated for
+non-debug builds.
+
+[ENTRY]
+Module: set
+What:   bug
+Rank:   minor
+[DESCRIPTION]
+The constructors for set variable arrays and argument arrays threw incorrect 
+VariableEmptyDomain exceptions.
+
+[ENTRY]
+Module: graph
+What:   new
+Rank:   minor
+[DESCRIPTION]
+Added circuit constraints with offsets.
+
+[ENTRY]
+Module: int
+What:   performance
+Rank:   minor
+[DESCRIPTION]
+The channel constraints between two integer arrays are now more
+memory efficient when offsets are used.
+
+[ENTRY]
+Module: kernel
+What:   change
+Rank:   major
+[DESCRIPTION]
+Choices can now be written into an externalized form (called an Archive),
+and reconstructed from it. This is necessary for serializing paths in
+a distributed search engine.
+
+[ENTRY]
+Module: flatzinc
+What:   change
+Rank:   minor
+[DESCRIPTION]
+Adapted the MiniZinc declarations and the command line options for 
+Gecode/FlatZinc to MiniZinc 1.3. The fz binary now works with the
+minizinc driver script.
+
+[ENTRY]
+Module: flatzinc
+What:   bug
+Rank:   minor
+Thanks: Håkan Kjellerstrand
+[DESCRIPTION]
+Re-enabled the global cardinality constraint in the FlatZinc interpreter.
+
+[ENTRY]
+Module: flatzinc
+What:   bug
+Rank:   minor
+Thanks: Håkan Kjellerstrand
+[DESCRIPTION]
+Fixed the MiniZinc definition for the circuit constraints to work with 
+arbitrarily indexed arrays.
+
+[ENTRY]
+Module:	gist
+What:	change
+Rank:	minor
+Thanks: Alin Gherman
+[DESCRIPTION]
+Compiles under MSVC 2005 SP1 again.
+
+[ENTRY]
+Module:	set
+What:	new
+Rank:	minor
+Thanks: Marco Correia
+[DESCRIPTION]
+Added channel aliases for set union of an array of integer variables,
+and renamed channel to channelSorted.
+
+[ENTRY]
+Module:	set
+What:	documentation
+Rank:	minor
+Thanks: Marco Correia
+[DESCRIPTION]
+Fixed documentation for set channeling constraint.
+
+
+[RELEASE]
+Version: 3.5.0
+Date: 2011-02-01
+[DESCRIPTION]
+This release fixes serious bugs in parallel search, FlatZinc,
+fixes some DLL issues on Windows, adds support for FreeBSD, and
+adds STL-style iterators for arrays.
+
+[ENTRY]
+Module:	search
+What:	bug
+Rank:	major
+Thanks: Denys Duchier, Chris Mears
+[DESCRIPTION]
+Fixed a serious bug in parallel search (took over a year to
+isolate the bug).
+
+[ENTRY]
+Module:	other
+What:	new
+Rank:	minor
+Thanks: Peter Penchev
+[DESCRIPTION]
+Gecode now compiles on FreeBSD.
+
+[ENTRY]
+Module:	kernel
+What:	new
+Rank:	major
+Author: Gregory Crosswhite
+[DESCRIPTION]
+Added STL compatible iteration support for arrays (variable
+arrays, argument arrays, view arrays, and shared arrays).
+
+[ENTRY]
+Module:	minimodel
+What:	bug
+Rank:	minor
+Thanks: Alexander Kleff
+[DESCRIPTION]
+Do not inline construction of linear, Boolean, and set
+expressions to avoid cross-DLL allocation/deallocation issues on
+Windows.
+
+[ENTRY]
+Module:	other
+What:	new
+Rank:	major
+[DESCRIPTION]
+Embed resource information into Gecode DLLs and EXEs on Windows.
+
+[ENTRY]
+Module: flatzinc
+What:   bug
+Rank:   major
+Thanks: Roberto Castañeda Lozano
+[DESCRIPTION]
+Fixed incorrect posting of linear constraints with variable arrays
+of size one.
+
+[ENTRY]
+Module:	other
+What:	change
+Rank:	minor
+[DESCRIPTION]
+Embed manifest into Gecode DLLs on Windows.
+
+[ENTRY]
+Module: flatzinc
+What: 	change
+Rank: 	major
+[DESCRIPTION]
+Fixed the definitions of global_cardinality to work with MiniZinc 1.2 and
+newer, and added corresponding definitions of global_cardinality_closed and
+global_cardinality_low_up_closed.
+
+
+[RELEASE]
+Version: 3.4.2
+Date: 2010-10-09
+[DESCRIPTION]
+This release removes LDS from Gecode as it is patented in the US.
+
+[ENTRY]
+Module: search
+What:   removed
+Rank:   minor
+[DESCRIPTION]
+Removed limited discrepancy search (LDS) as it is patented in the US.
+
+[ENTRY]
+Module: flatzinc
+What:   new
+Rank:   minor
+[DESCRIPTION]
+Added support for binpacking constraint.
+
+[RELEASE]
+Version: 3.4.1
+Date: 2010-10-08
+[DESCRIPTION]
+This release adds a new global constraint for binpacking (with
+extended example) and filter functions for branchers. The
+reference documentation has been cleaned up. In particular,
+information on how to obtain, install, and link Gecode has been
+expanded and moved to "Modeling and Programming with Gecode"
+(Section 2.6). Additionally, the release fixes some bugs and
+contains some performance improvements.
+
+[ENTRY]
+Module: example
+What:   new
+Rank:   major
+[DESCRIPTION]
+Added a binpacking model using the binpacking constraint and CDBF
+(complete decreasing best fit) search.
+
+[ENTRY]
+Module: int
+What:   new
+Rank:   major
+[DESCRIPTION]
+Added a binpacking constraint and propagator.
+
+[ENTRY]
+Module: driver
+What:   new
+Rank:   minor
+[DESCRIPTION]
+Added a class InstanceOptions that takes one additional string argument.
+
+[ENTRY]
+Module: flatzinc
+What:   new
+Rank:   minor
+[DESCRIPTION]
+Added support for global_cardinality_low_up.
+
+[ENTRY]
+Module: other
+What:   documentation
+Rank:   minor
+[DESCRIPTION]
+Removed obsolete Glossary in reference documentation.
+
+[ENTRY]
+Module: int
+What:   bug
+Rank:   minor
+Thanks: Gustavo A. Gómez Farhat
+[DESCRIPTION]
+Do not inline functions with variable arguments.
+
+[ENTRY]
+Module: gist
+What:   change
+Rank:   minor
+[DESCRIPTION]
+Only center node on double-click if it was undetermined (otherwise
+inspecting several nodes becomes slightly annoying).
+
+[ENTRY]
+Module: minimodel
+What:   change
+Rank:   minor
+[DESCRIPTION]
+Added element expression for BoolVarArgs.
+
+[ENTRY]
+Module: minimodel
+What:   bug
+Rank:   minor
+[DESCRIPTION]
+Fixed memory allocation for non-linear expressions and made the
+LinExpr constructor explicit for non-linear expressions (previously
+the automatic cast from integers to LinExpr was sometimes ambiguous).
+
+[ENTRY]
+Module: scheduling
+What:   bug
+Rank:   major
+Thanks: Roberto Castañeda Lozano
+[DESCRIPTION]
+Fixed initialization for unary and cumulative edge-finding (just
+worked accidentally).
+
+[ENTRY]
+Module: kernel
+What:   change
+Rank:   major
+Thanks: Felix Brandt
+[DESCRIPTION]
+Branching now honors filter functions, where variables are
+considered for branching only if the filter functions returns
+true (see "Modeling and Programming with Gecode" for details).
+
+[ENTRY]
+Module: kernel
+What:   change
+Rank:   minor
+[DESCRIPTION]
+Variable implementation views are now parametric with respect to
+variables but not variable implementations (see "Modeling and
+Programming with Gecode" for details).
+
+[ENTRY]
+Module: kernel
+What:   change
+Rank:   minor
+[DESCRIPTION]
+Renamed the template class for variables defined by a variable
+implementation from Var to VarImpVar and re-added a class Var as
+base class for any variable type.
+
+[ENTRY]
+Module: int
+What:   bug
+Rank:   minor
+Thanks: Kish Shen
+[DESCRIPTION]
+The reified dom constraint failed instead of setting the BoolVar to 0 when the 
+minimum argument given was greater than the maximum.
+
+[ENTRY]
+Module: int
+What:   performance
+Rank:   minor
+Thanks: Kish Shen
+[DESCRIPTION]
+Fixed sortedness constraint by replacing an algorithm that is linear in the 
+width of the union of all domains with an algorithm that is quadratic in the 
+number of variables. The previous algorithm crashed for domains with large 
+values due to excessive memory use.
+
+[ENTRY]
+Module: int
+What:   performance
+Rank:   minor
+[DESCRIPTION]
+Using ICL_DOM for binary linear equations with unit coefficients (such as x = 
+y+3) is now implemented using the much more efficient binary equality 
+propagator instead of the linear equation propagator (which has worst case 
+exponential runtime).
+
+[ENTRY]
+Module: gist
+What:   performance
+Rank:   minor
+[DESCRIPTION]
+Saved some memory for each node in Gist (one pointer per node, two integers
+per inner node, and some additional memory on 64 bit platforms due to optimizing
+alignment), and speeded up deallocation of the tree (e.g. when resetting or
+closing Gist).
+
+[ENTRY]
+Module: iter
+What: 	performance
+Rank:	minor
+[DESCRIPTION]
+Reimplemented n-ary union, minus, and cache iterators for much
+better efficiency.
+
+[ENTRY]
+Module: flatzinc
+What:   performance
+Rank:   minor
+[DESCRIPTION]
+The FlatZinc parser now uses hash maps instead of STL maps, which 
+significantly increases parsing performance for larger files.
+Furthermore, a single symbol table is used, also increasing
+performance and allowing to report duplicate symbol errors,
+which were previously ignored.
+
+
+[RELEASE]
+Version: 3.4.0
+Date: 2010-07-26
+[DESCRIPTION]
+This release includes: considerably improved support for posting
+expressions and relations (also including set and full arithmetic
+expressions); other improvements for modeling (array
+initialization and element addition to arrays); state-of-the-art
+unary and cumulative scheduling propagators (including optional
+and flexible tasks); major cleanups of the variable and view
+infrastructure (now also documented in MPG); cleanups of the
+examples; several other fixes and performance improvements. 
+
+This release is the first to be accompanied by a complete version
+of "Modeling and Programming in Gecode" which has been extended
+by many new case studies and parts on programming search engines
+and variables.
+
+[ENTRY]
+Module: flatzinc
+What:   bug
+Rank:   minor
+[DESCRIPTION]
+Boolean relations were incorrect on assigned arguments.
+
+[ENTRY]
+Module: kernel
+What:   bug
+Rank:   minor
+[DESCRIPTION]
+Posting a propagator in a failed space could make the space
+non-failed again.
+
+[ENTRY]
+Module: kernel
+What:   new
+Rank:   minor
+[DESCRIPTION]
+Added LocalObject and LocalHandle classes that can be used for
+space-allocated objects that are shared within a space, for
+example among several propagators or propagators and branchers.
+
+[ENTRY]
+Module: other
+What:   change
+Rank:   major
+[DESCRIPTION]
+Completely cleaned up variables and views, drastically saving code.
+
+[ENTRY]
+Module: other
+What:   removed
+Rank:   minor
+[DESCRIPTION]
+Variables do not have init functions any longer as they are not
+needed, see MPG for discussion.
+
+[ENTRY]
+Module: scheduling
+What:   new
+Rank:   major
+[DESCRIPTION]
+Added scheduling constraints for tasks with flexible duration
+(for both unary and cumulative resources), and made all scheduling
+propagators deal correctly with zero length tasks.
+
+[ENTRY]
+Module: scheduling
+What:   new
+Rank:   major
+[DESCRIPTION]
+Added propagators for cumulative scheduling.
+
+[ENTRY]
+Module: minimodel
+What:   bug
+Rank:   minor
+Thanks: Håkan Kjellerstrand
+[DESCRIPTION]
+Fixed a bug in minimodel, which could crash when using zero
+coefficients.
+
+[ENTRY]
+Module: driver
+What:   change
+Rank:   minor
+[DESCRIPTION]
+The driver now catches SIGINT (i.e., pressing Ctrl-C) and stops
+the search properly, printing statistics up to the point where
+it stopped.
+
+[ENTRY]
+Module: gist
+What:   change
+Rank:   minor
+[DESCRIPTION]
+If an inspector throws an exception, an error message is 
+printed indicating which inspector caused the problem.
+Previously, Gist would crash with a Qt error that was difficult
+to trace.
+
+[ENTRY]
+Module: flatzinc
+What:   bug
+Rank:   minor
+[DESCRIPTION]
+Fixed garbage collection of variables that are not printed. The 
+bug lead to variables being mixed up in the output.
+
+[ENTRY]
+Module: example
+What:   removed
+Rank:   minor
+[DESCRIPTION]
+Removed stress tests, the real examples are much more stressful,
+actually!
+
+[ENTRY]
+Module: minimodel
+What:   change
+Rank:   minor
+[DESCRIPTION]
+The Matrix class now supports const operations and has an output
+operator.
+
+[ENTRY]
+Module: minimodel
+What:   change
+Rank:   major
+[DESCRIPTION]
+Linear expressions can now contain non-linear parts, such as
+multiplications or divisions, or set expressions such as
+cardinality.
+
+[ENTRY]
+Module: minimodel
+What:   change
+Rank:   major
+[DESCRIPTION]
+The minimodel post functions have been split into two functions, rel
+and expr. While rel posts a constraint, expr returns a new variable
+constrained to the given expression. This change makes it possible to
+get rid of the reification operator (~) as well as the tt and ff
+functions, which were previously needed to distinguish between
+relations and expressions. Boolean equivalence and implication can
+now be expressed using operators (==,<<,>>).
+
+[ENTRY]
+Module: minimodel
+What:   new
+Rank:   major
+[DESCRIPTION]
+The minimodel library now provides convenient post functions
+for set constraints.
+
+[ENTRY]
+Module: set
+What:   bug
+Rank:   minor
+[DESCRIPTION]
+Fixed the include and exclude tell operations of set variables so
+that they work with empty ranges.
+
+[ENTRY]
+Module: example
+What:   change
+Rank:   minor
+[DESCRIPTION]
+The Nonogram example now uses AFC as the default branching and 
+includes some more instances.
+
+[ENTRY]
+Module: example
+What:   new
+Rank:   minor
+[DESCRIPTION]
+New custom branching for the BACP example using a custom value selection.
+
+[ENTRY]
+Module: other
+What:   change
+Rank:   minor
+[DESCRIPTION]
+The configure script now checks for qmake-qt4 and moc-qt4, which are used on 
+some Linux systems to distinguish between Qt3 and Qt4.
+
+[ENTRY]
+Module: driver
+What: 	change
+Rank:	minor
+[DESCRIPTION]
+Running a script in time mode stops all iterations and samples
+immediately if a single run reaches a limit (eases benchmarks
+with timeouts).
+
+[ENTRY]
+Module: int
+What: 	performance
+Rank:	minor
+[DESCRIPTION]
+Optimized element propagator, expect a speed up of around 35-50%
+in most cases.
+
+[ENTRY]
+Module: minimodel
+What: 	performance
+Rank:	minor
+[DESCRIPTION]
+Posting linear expressions performs more aggressive optimizations
+for assigned variables.
+
+[ENTRY]
+Module: minimodel
+What: 	performance
+Rank:	minor
+[DESCRIPTION]
+Arithmetic modeling functions now try to avoid creating new
+variables and posting propagators for common cases.
+
+[ENTRY]
+Module: set
+What: 	change
+Rank:	minor
+[DESCRIPTION]
+The argument arrays now have constructors that create new variables.
+
+[ENTRY]
+Module: int
+What: 	change
+Rank:	minor
+[DESCRIPTION]
+The argument arrays now have constructors that create new variables.
+
+[ENTRY]
+Module: int
+What: 	change
+Rank:	minor
+[DESCRIPTION]
+IntArgs with simple sequences of values can now be created using the 
+IntArgs::create static member function.
+
+[ENTRY]
+Module: other
+What: 	change
+Rank:	minor
+[DESCRIPTION]
+The build system now supports Visual C++ 2010.
+
+[ENTRY]
+Module: minimodel
+What: 	change
+Rank:	minor
+[DESCRIPTION]
+Array slices can now be empty.
+
+[ENTRY]
+Module: kernel
+What:   change
+Rank:   major
+[DESCRIPTION]
+The support for dynamically resizing variable arrays has been
+removed (it was buggy and inefficient). Instead, all argument
+arrays now support adding elements using operator<<. In addition,
+all arrays now support concatenation using operator+ and slicing,
+and variable arrays, view arrays, and variable argument arrays
+include a test whether all variables are assigned.
+
+[ENTRY]
+Module: example
+What:   change
+Rank:   minor
+[DESCRIPTION]
+Take advantage of the better modeling support for the BIBD, Golomb
+ruler, Kakuro, Black Hole, and Warehouse examples (nothing but dusting off
+examples that have been around for ages).
+
+[ENTRY]
+Module: int
+What:   new
+Rank:   minor
+[DESCRIPTION]
+You can now construct IntArgs from an STL vector, an IntSharedArray,
+or using simple comprehensions.
+
+[ENTRY]
+Module: gist
+What:   bug
+Rank:   minor
+[DESCRIPTION]
+Fixed bug in Gist where signals were sent across threads, which
+makes Qt crash in certain situations on some platforms.
+
+[ENTRY]
+Module: gist
+What:   bug
+Rank:   minor
+Thanks: David Zaremby
+[DESCRIPTION]
+Fixed bug in interactive search where every move in the tree required 
+recomputation.
+
+
+[RELEASE]
+Version: 3.3.1
+Date: 2010-04-09
+[DESCRIPTION]
+This release adds many new features to Gist, fixes two major bugs
+in extensional constraints, and has some more cleanups to comply
+with the first release of the "Modeling and Programming with
+Gecode" document. And, as always some small fixes and cleanups.
+
+[ENTRY]
+Module: other
+What:   documentation
+Rank:   minor
+[DESCRIPTION]
+Removed many small documentation quirks.
+
+[ENTRY]
+Module: flatzinc
+What:   performance
+Rank:   minor
+[DESCRIPTION]
+Variables that do not have output annotations are now garbage
+collected during copying.
+
+[ENTRY]
+Module: flatzinc
+What:   performance
+Rank:   minor
+[DESCRIPTION]
+When using sums of Boolean variables using bool2int in MiniZinc,
+the FlatZinc interpreter now posts the more efficient propagators
+that work directly on the Boolean variables.
+
+[ENTRY]
+Module: scheduling
+What:   bug
+Rank:   minor
+[DESCRIPTION]
+The unary scheduling propagator with optional tasks missed some
+propagation sometimes.
+
+[ENTRY]
+Module: int
+What:   bug
+Rank:   major
+[DESCRIPTION]
+Fixed extensional constraint with finite automata for very
+unlikely (but apparantely possible) border case.
+
+[ENTRY]
+Module: gist
+What:   new
+Rank:   major
+[DESCRIPTION]
+In addition to inspectors, you can now also register comparators, which can be 
+used to compare two nodes in the tree. In combination with the option to 
+compare before computing a fixpoint of the second node, this lets you see what 
+exactly was modified by a branching.
+
+[ENTRY]
+Module: set
+What:   bug
+Rank:   minor
+[DESCRIPTION]
+Fixed channeling between set and integer variables which did not propagate 
+enough.
+
+[ENTRY]
+Module: int
+What:   bug
+Rank:   major
+[DESCRIPTION]
+The extensional constraints with tuple sets could cause crashes
+when used with parallel search.
+
+[ENTRY]
+Module: gist
+What:   bug
+Rank:   minor
+[DESCRIPTION]
+Missing export declarations prevented embedding Gist as a widget. There is 
+now example code for embedding Gist in the directory 
+gecode/gist/standalone-example.
+
+[ENTRY]
+Module: gist
+What:   new
+Rank:   major
+[DESCRIPTION]
+Gist can now stop exploration after all alternatives of a certain branching
+are exhausted. This feature can be turned on by posting a special branching
+using the Gist::stopBranch post function. Gist will then stop whenever that 
+special branching becomes active.
+
+[ENTRY]
+Module: kernel
+What:   bug
+Rank:   minor
+[DESCRIPTION]
+Fixed bug in VarArray::resize function that occurred when shrinking
+variable arrays.
+
+[ENTRY]
+Module: kernel
+What:   change
+Rank:   minor
+[DESCRIPTION]
+The (unused and unusable) CopiedHandle have been removed.
+
+[ENTRY]
+Module: scheduling
+What:   change
+Rank:   minor
+[DESCRIPTION]
+Tasks in unary scheduling constraints may now have processing times of 0.
+
+[ENTRY]
+Module: gist
+What:   new
+Rank:   minor
+[DESCRIPTION]
+Added inspection of nodes before fixpoint computation.
+
+[ENTRY]
+Module: set
+What:   removed
+Rank:   minor
+[DESCRIPTION]
+Removed Set::IntSetPropagator and Set::IntSetRePropagator because they are 
+subsumed by the MixBinaryPropagator patterns.
+
+[ENTRY]
+Module: gist
+What:   bug
+Rank:   minor
+[DESCRIPTION]
+Fixed a bug where sometimes clicking on a node would select a different node.
+
+[ENTRY]
+Module: gist
+What:   performance
+Rank:   major
+[DESCRIPTION]
+Scrolling and zooming have been reimplemented. The new implementation is more 
+efficient and works around problems that occurred with large trees on some 
+platforms. Zooming is now more intuitive, keeping the current center 
+centered. You can now also zoom by pressing shift while using the mouse wheel.
+
+[ENTRY]
+Module: example
+What:   new
+Rank:   minor
+[DESCRIPTION]
+Added Gist inspectors for the Knights and Queens examples.
+
+[ENTRY]
+Module: driver
+What:   new
+Rank:   minor
+[DESCRIPTION]
+You can now register Gist inspectors in the driver options.
+
+[ENTRY]
+Module: gist
+What:   new
+Rank:   minor
+[DESCRIPTION]
+Nodes can now be bookmarked.
+
+[ENTRY]
+Module: gist
+What:   new
+Rank:   minor
+[DESCRIPTION]
+Added inspectors that react whenever a node is selected.
+
+[ENTRY]
+Module: flatzinc
+What:   change
+Rank:   minor
+[DESCRIPTION]
+Comply with MiniZinc 1.1. String literals are not allowed any longer 
+except in annotations, the solver outputs UNKNOWN and UNSATISFIABLE 
+instead of just ==========, and the global constraints all_equal, 
+decreasing_int, and decreasing_bool are supported.
+
+
+
+[RELEASE]
+Version: 3.3.0
+Date: 2010-03-15
+[DESCRIPTION]
+This release provides some fixes, some performance improvements
+for domain propagators, and quite some clean ups how propagators
+and advisors report their status to the kernel. Many of these
+clean ups are essential to make it easier to program propagators
+and branchers with Gecode.
+
+[ENTRY]
+Module: other
+What:   bug
+Rank:   minor
+[DESCRIPTION]
+Configure now prepend options to the CXXFLAGS and CFLAGS variables
+instead of appending them. That way, defining the variables when
+invoking configure overrides the choices configure makes (e.g.
+overriding the default -O3 with -O2).
+
+[ENTRY]
+Module: int
+What:   change
+Rank:   minor
+[DESCRIPTION]
+Patterns for reified propagators have been moved to the
+Gecode::Int namespace.
+
+[ENTRY]
+Module: set
+What:   change
+Rank:   minor
+[DESCRIPTION]
+Patterns for set propagators have been moved to the
+Gecode::Set namespace.
+
+[ENTRY]
+Module: kernel
+What:   bug
+Rank:   minor
+[DESCRIPTION]
+ViewValBrancher with random value selection did not produce a
+random sequence of values.
+
+[ENTRY]
+Module: kernel
+What:   new
+Rank:   minor
+[DESCRIPTION]
+Advisors now can force its propagator to be rescheduled,
+including recomputation of its cost used for scheduling
+(normally, a propagator is only rescheduled if its modification
+event delta changes). An advisor can signal forceful rescheduling
+by returning ES_NOFIX_FORCE or returning the return value of
+ES_NOFIX_FORCE_DISPOSE. Read the forthcoming "Modeling and
+Programming with Gecode" for details.
+
+[ENTRY]
+Module: kernel
+What:   change
+Rank:   minor
+[DESCRIPTION]
+The failure macros for posting GECODE_ES_FAIL and GECODE_ME_FAIL
+now only accept a single argument and assume that "home" actually
+refers to the home space.  Read the forthcoming "Modeling and
+Programming with Gecode" for details.
+
+[ENTRY]
+Module: kernel
+What:   change
+Rank:   minor
+[DESCRIPTION]
+The functions ES_FIX_PARTIAL, ES_NOFIX_PARTIAL, ES_FIX_DISPOSE,
+and ES_NOFIX_DISPOSE are now member of Space. Read the
+forthcoming "Modeling and Programming with Gecode" for details.
+
+[ENTRY]
+Module: kernel
+What:   change
+Rank:   minor
+[DESCRIPTION]
+The function ES_SUBSUMED now is a member of Space and accepts a
+propagator as its single argument. The variant with a size as the
+second argument is available as ES_SUBSUMED_DISPOSED but use is
+highly discouraged. Read the forthcoming "Modeling and
+Programming with Gecode" for details.
+
+[ENTRY]
+Module: kernel
+What:   change
+Rank:   minor
+[DESCRIPTION]
+The functions ES_SUBSUMED_FIX and ES_SUBSUMED_NOFIX for advisors
+have been renamed to ES_FIX_DISPOSE and ES_NOFIX_DISPOSE. Read
+the forthcoming "Modeling and Programming with Gecode" for
+details.
+
+[ENTRY]
+Module: flatzinc
+What:   change
+Rank:   minor
+[DESCRIPTION]
+The FlatZinc interpreter can now be extended by plugins that implement
+custom search strategies. The plugins are implemented as dynamically loaded
+libraries using the Qt plugin mechanism. An example can be found in the
+directory gecode/flatzinc/exampleplugin.
+
+[ENTRY]
+Module: flatzinc
+What:   change
+Rank:   minor
+[DESCRIPTION]
+The index of the variable used for optimization is now available in the
+FlatZincSpace class.
+
+[ENTRY]
+Module: flatzinc
+What:   change
+Rank:   minor
+[DESCRIPTION]
+Added command line option -print, which controls whether all solutions are 
+printed or only the last one that is found, and -search, to choose between
+branch-and-bound and restart optimization.
+
+[ENTRY]
+Module: flatzinc
+What:   change
+Rank:   minor
+[DESCRIPTION]
+The FlatZinc library can now parse a FlatZinc model into any subclass of
+FlatZincSpace, so that custom extensions can be built. Annotations on the
+solve item can now be accessed from the returned FlatZincSpace, so that
+additional search strategies can be implemented.
+
+[ENTRY]
+Module: flatzinc
+What:   bug
+Rank:   minor
+[DESCRIPTION]
+The FlatZinc interpreter ignored the -c-d and -a-d command line 
+switches when used with Gist.
+
+[ENTRY]
+Module: minimodel
+What:   removed
+Rank:   minor
+[DESCRIPTION]
+Removed special cases for posting linear and Boolean expressions
+consisting of a single variable only (was highly ambigious).
+
+[ENTRY]
+Module: minimodel
+What:   new
+Rank:   minor
+[DESCRIPTION]
+Linear expressions can freely mix integer and Boolean variables
+and support construction from variable arrays via a sum function.
+
+[ENTRY]
+Module: support
+What:   performance
+Rank:   major
+[DESCRIPTION]
+Changed to single, really efficient bitset implementation used
+allover the system.
+
+[ENTRY]
+Module: int
+What:   performance
+Rank:   major
+[DESCRIPTION]
+Considerably improved performance and memory consumption of the
+DFA-based extensional constraint (regular).
+
+[ENTRY]
+Module: int
+What:   new
+Rank:   minor
+[DESCRIPTION]
+Integer sets (IntSet) now have a in member function for testing
+whether an integer is included.
+
+[ENTRY]
+Module: gist
+What:   bug
+Rank:   minor
+[DESCRIPTION]
+Avoid inter-thread call to QWidget::update, which apparently causes a slight 
+memory leak (and warning messages on stderr) on Mac OS.
+
+
+
+[RELEASE]
+Version: 3.2.2
+Date: 2009-11-30
+[DESCRIPTION]
+This release adds the sequence constraint (contributed by David
+Rijsman, Quintiq) and has as always some small additions and
+fixes.
+
+[ENTRY]
+Module: int
+What:   bug
+Rank:   minor
+Thanks: Alberto Delgado
+[DESCRIPTION]
+The global cardinality (count) constraint now accepts unsorted
+arrays of values.  It previously propagated incorrectly if the
+array was not sorted.
+
+[ENTRY]
+Module: int
+What:   bug
+Rank:   minor
+[DESCRIPTION]
+Fixed bug in the ICL_VAL propagator for global cardinality.
+
+[ENTRY]
+Module: flatzinc
+What:   bug
+Rank:   minor
+Thanks: Håkan Kjellerstrand
+[DESCRIPTION]
+Support search annotations with constants in the variable arrays.
+
+[ENTRY]
+Module: search
+What:   bug
+Rank:   minor
+[DESCRIPTION]
+The memory reported could be sometimes too low (the previous fix
+for 3.2.0 did not fix it for branch and bound search).
+
+[ENTRY]
+Module: kernel
+What:   bug
+Rank:   minor
+Thanks:	Gustavo Gutierrez
+[DESCRIPTION]
+Added missing assignment operator for space-based allocators for
+STL data structures.
+
+[ENTRY]
+Module: iter
+What:   change
+Rank:   minor
+[DESCRIPTION]
+Renamed test for subset or disjointness of range iterators to "compare".
+
+[ENTRY]
+Module: flatzinc
+What:   bug
+Rank:   minor
+[DESCRIPTION]
+The set_in and set_in_reif constraints were buggy when used with Boolean
+variables (which are usually not generated by mzn2fzn so that the issue
+probably does not occur in practice).
+
+[ENTRY]
+Module: set
+What:   bug
+Rank:   minor
+[DESCRIPTION]
+Subscription to constant views did not honor the flag to avoid
+processing (did not occur in practice).
+
+[ENTRY]
+Module: int
+What:   bug
+Rank:   minor
+[DESCRIPTION]
+Subscription to constant views did not honor the flag to avoid
+processing.
+
+[ENTRY]
+Module: example
+What:   new
+Rank:   minor
+[DESCRIPTION]
+Added car sequencing example (problem 1 in CSPLib). Uses the new
+sequence-constraint.
+
+[ENTRY]
+Module: int
+What:   new
+Rank:   major
+Author:	David Rijsman
+[DESCRIPTION]
+Added sequence constraint.
+
+[ENTRY]
+Module: driver
+What:   new
+Rank:   minor
+[DESCRIPTION]
+Report if search engine has been stopped.
+
+[ENTRY]
+Module: flatzinc
+What:   bug
+Rank:   minor
+[DESCRIPTION]
+The global_cardinality constraint was not completely compatible with
+the MiniZinc semantics. It would constrain values not mentioned in the
+array to have zero occurrences, while in MiniZinc they are unrestricted.
+
+[ENTRY]
+Module: flatzinc
+What:   bug
+Rank:   major
+Thanks: Håkan Kjellerstrand
+[DESCRIPTION]
+Element constraints in reified positions produced an error in the mzn2fzn
+translation.
+
+
+[RELEASE]
+Version: 3.2.1
+Date: 2009-11-04
+[DESCRIPTION]
+This release fixes one serious bug in the element constraint for
+matrices; adds branchings using accumulated failure counts (also
+known as weighted degree); provides some optimizations (mostly
+for element constraints and for regular expressions with millions
+of nodes); adds two cute models (word-square and crossword); and
+a little this and that as always.
+
+[ENTRY]
+Module: minimodel
+What:   performance
+Rank:   minor
+Thanks:	Håkan Kjellerstrand
+[DESCRIPTION]
+Conversion of a regular expression to a DFA would crash on
+regular expressions with several million nodes (due to running
+out of call stack space).
+
+[ENTRY]
+Module: set
+What:   change
+Rank:   minor
+[DESCRIPTION]
+Split rel-op.cpp and rel-op-const.cpp into several compilation units, to avoid
+excessive memory and time usage of the gcc compiler.
+
+[ENTRY]
+Module: int
+What:   performance
+Rank:   minor
+[DESCRIPTION]
+Element constraints for integer arrays now accept shared integer
+arrays (IntSharedArray). By this, the very same array can be
+shared among several element constraints. Models require no
+change, as IntArgs are automatically coerced to
+IntSharedArrays. See "Modeling with Gecode" for more
+explanation.
+
+[ENTRY]
+Module: int
+What:   change
+Rank:   minor
+[DESCRIPTION]
+The semantics of division and modulo has changed to match the C standard. This
+means that the operations round towards zero, and that the result of the 
+modulo has the same sign as its first argument.
+
+[ENTRY]
+Module: example
+What:   bug
+Rank:   minor
+Thanks: Jan Wolter
+[DESCRIPTION]
+The Nonogram example no longer crashes on empty lines.
+
+[ENTRY]
+Module:	int
+What:	performance
+Rank:	minor
+[DESCRIPTION]
+Optimized element for matrices (in special cases, the propagator
+is up to six times as efficient as before).
+
+[ENTRY]
+Module:	flatzinc
+What:	bug
+Rank:	minor
+[DESCRIPTION]
+Fixed statistics output (number of solutions was sometimes wrong).
+
+[ENTRY]
+Module:	int
+What:	bug
+Rank:	major
+[DESCRIPTION]
+Fixed segfault in matrix element constraint.
+
+[ENTRY]
+Module:	example
+What:	new
+Rank:	minor
+Author:	Håkan Kjellerstrand
+[DESCRIPTION]
+Added word square puzzle.
+
+[ENTRY]
+Module:	example
+What:	new
+Rank:	minor
+Thanks:	Peter Van Beek
+[DESCRIPTION]
+Added crossword puzzle (thanks to Peter Van Beek for providing
+access to some crossword grids).
+
+[ENTRY]
+Module:	int
+What:	new
+Rank:	minor
+[DESCRIPTION]
+Added INT_VAL_RANGES_MIN (and INT_VAL_RANGES_MAX) as value
+selection for branching: it tries the values from the smallest
+(largest) range first, if the variable's domain has several
+ranges, otherwise it splits the domain.
+
+[ENTRY]
+Module:	int
+What:	bug
+Rank:	minor
+[DESCRIPTION]
+Added missing dispose function for linear disequality of Boolean
+variables (the only problem was that with a proper dispose
+function more memory can be reused when the propagator becomes
+subsumed, so really a tiny quirk).
+
+[ENTRY]
+Module:	int
+What:	new
+Rank:	major
+[DESCRIPTION]
+Added AFC-based branching strategies for integer and Boolean
+variables: INT_VAR_AFC_MIN, INT_VAR_AFC_MAX,
+INT_VAR_SIZE_AFC_MIN, INT_VAR_SIZE_AFC_MAX. For details, see
+"Modeling with Gecode".
+
+[ENTRY]
+Module:	set
+What:	new
+Rank:	major
+[DESCRIPTION]
+Added AFC-based branching strategies for set variables:
+SET_VAR_AFC_MIN, SET_VAR_AFC_MAX, SET_VAR_SIZE_AFC_MIN,
+SET_VAR_SIZE_AFC_MAX. For details, see "Modeling with Gecode".
+
+[ENTRY]
+Module: kernel
+What:   new
+Rank:   major
+[DESCRIPTION]
+Propagators and variables now maintain an accumulated failure
+count (AFC).
+[MORE]
+The AFC of a propagator counts how often has the propagator
+failed during the entire search, and the AFC of a variable is its
+degree plus the sum of the AFCs of all propagators depending on
+the variable. While it looks straightforward, this required a
+major extension of the Gecode kernel to deal with global
+information accessed concurrently from several threads during
+search. The AFC is also known as "weighted degree".
+
+[ENTRY]
+Module: example
+What:   change
+Rank:   minor
+[DESCRIPTION]
+Sudoku and GraphColor now uses smallest size over accumulated failure
+count (AFC) as the default heuristic.
+
+[ENTRY]
+Module: bug
+What:   set
+Rank:   minor
+[DESCRIPTION]
+For branching, SET_VAR_DEGREE_MAX would select the variable with
+smallest rather than largest degree.
+
+[ENTRY]
+Module: other
+What:   change
+Rank:   major
+[DESCRIPTION]
+Now posting of propagators and branchers take an object of class
+Home (rather than just a space) that can carry additional
+information relevant for posting (for example, groups and
+accumulated failure information). Models do not need to be
+changed in any way!
+[MORE]
+While models require no change, propagator rewriting does (it
+will work but some information might be lost). Instead of writing
+something like
+GECODE_REWRITE(*this,SomeProp::post(home,...));
+where *this is the propagator to be rewritten, you should now
+write
+GECODE_REWRITE(*this,SomeProp::post(home(*this),...));
+By this, the new propagator will inherit information from *this
+(in particular the accumulated failure count).
+
+
+[RELEASE]
+Version: 3.2.0
+Date: 2009-10-05
+[DESCRIPTION]
+This release has some important bug fixes (in particular for
+global cardinality aka count), the documentation has been
+improved (worked around some issues with generation by doxygen),
+integrates the FlatZinc interpreter into the Gecode source tree,
+provides propagators for disjunctive scheduling (experimental),
+and lots of small changes and fixes. For more consistent names,
+branchings are branchers now and branching descriptions are
+choices (this you might have to adapt to).
+
+
+[ENTRY]
+Module: scheduling
+What:   new
+Rank:   major
+[DESCRIPTION]
+Added propagators for disjunctive scheduling (unary resource
+scheduling). This is still experimental as the propagators are
+not yet optimized and branching and modelling support is not yet
+available.
+
+[ENTRY]
+Module: search
+What:   bug
+Rank:   minor
+[DESCRIPTION]
+The memory reported could be sometimes too low (that could only
+happen when an advisor allocates memory which they do only now).
+
+[ENTRY]
+Module: other
+What:   documentation
+Rank:   major
+[DESCRIPTION]
+Cleaned up the generated reference documentation, and introduced a number
+of workarounds for issues in doxygen. In particular, the documentation for
+linear constraints over Boolean variables and for the thread abstractions
+is now generated properly.
+
+[ENTRY]
+Module: flatzinc
+What:   new
+Rank:   major
+[DESCRIPTION]
+The Gecode interpreter for the FlatZinc language is now part of the main
+Gecode source tree.
+
+[ENTRY]
+Module: int
+What:   performance
+Rank:   minor
+Thanks:	George Katsirelos, Nina Narodytska
+[DESCRIPTION]
+Extensional propagators using DFAs or REGs (aka regular) use a
+more compact state representation but create their state more
+eagerly. That can improve performance considerably (twice as fast) at a slight
+increase in memory.
+
+[ENTRY]
+Module: gist
+What:   bug
+Rank:   minor
+[DESCRIPTION]
+Gist now places clones also on the leftmost branch during search.
+
+[ENTRY]
+Module: other
+What:   documentation
+Rank:   minor
+Thanks: Vivian De Smedt
+[DESCRIPTION]
+Mention that also grep is needed for building Gecode.
+
+[ENTRY]
+Module: int
+What:   bug
+Rank:   minor
+Thanks: Jan Kelbel
+[DESCRIPTION]
+Slightly improved strength of the division propagator.
+
+[ENTRY]
+Module: example
+What:   bug
+Rank:   minor
+Thanks: Geoffrey Chu
+[DESCRIPTION]
+Fixed wrong symmetry breaking for TSP.
+
+[ENTRY]
+Module: support
+What:   change
+Rank:   minor
+Thanks: Alexandre Fayolle
+[DESCRIPTION]
+No longer depend on availability of timersub.
+
+[ENTRY]
+Module: int
+What:   performance
+Rank:   minor
+[DESCRIPTION]
+Optimized n-ary disjunction and conjunction and the clause constraint.
+
+[ENTRY]
+Module: int
+What:   performance
+Rank:   minor
+[DESCRIPTION]
+Linear constraints over Boolean variables with unit coefficients
+(aka Boolean cardinality constraints) have been
+reimplemented. Less memory (minus 30%) and more speed. For
+example, BIBD runs 10% faster now.
+
+[ENTRY]
+Module: search
+What:   change
+Rank:   minor
+[DESCRIPTION]
+Optimized thread creation by thread pools, now the creation and
+deletion of arbitrarily many parallel search engines also works
+for platforms using pthreads (Linux and MacOS).
+
+[ENTRY]
+Module: other
+What:   change
+Rank:   minor
+Thanks:	David Rijsman
+[DESCRIPTION]
+Compiles with MSVC 2005 again.
+
+[ENTRY]
+Module: other
+What:   bug
+Rank:   minor
+[DESCRIPTION]
+The configure script checked for Qt 4.2, although Gist requires at least
+Qt 4.3.
+
+[ENTRY]
+Module: int
+What:   bug
+Rank:   major
+[DESCRIPTION]
+Fixed serious bug in the bounds propagator for global cardinality.
+
+[ENTRY]
+Module: kernel
+What:   change
+Rank:   major
+[DESCRIPTION]
+A branching is now a brancher and a branching description is now a choice. 
+[MORE]
+Classes and member functions have been renamed accordingly. The
+change is necessary due to proper explanation in the forthcoming
+"Programming with Gecode".
+
+[ENTRY]
+Module: search
+What:   bug
+Rank:   minor
+[DESCRIPTION]
+Compiles again if no threads available.
+
+[ENTRY]
+Module: gist
+What:   change
+Rank:   minor
+[DESCRIPTION]
+The Gist console now has a toolbar that provides buttons to clear the text
+as well as to configure the console window to stay on top of Gist. 
+Furthermore, after adding output, the console now automatically scrolls to the 
+bottom.
+
+[ENTRY]
+Module: graph
+What:   new
+Rank:   minor
+[DESCRIPTION]
+Cost-based variants for circuit added.
+
+[ENTRY]
+Module: set
+What:   change
+Rank:   minor
+[DESCRIPTION]
+The element constraint with an integer index variable now throws
+an exception if used with an empty array.
+
+[ENTRY]
+Module: int
+What:   change
+Rank:   minor
+[DESCRIPTION]
+The element constraint now computes more accurate variable bounds
+when being posted (to avoid arithmetic overflow in naive models).
+
+[ENTRY]
+Module: int
+What:   change
+Rank:   minor
+[DESCRIPTION]
+The element constraint now throws an exception if used with an
+empty array.
+
+[ENTRY]
+Module: example
+What:   bug
+Rank:   minor
+[DESCRIPTION]
+Fixed zero cost edges in TSP examples.
+
+[ENTRY]
+Module: example
+What:   change
+Rank:   minor
+[DESCRIPTION]
+Examples now use the symmetry-option for symmetry-breaking.
+[MORE]
+The affected examples are:
+  - BlackHole
+  - EFPA
+  - Pentominoes
+  - SteelMill
+  .
+
+[ENTRY]
+Module: driver
+What:   new
+Rank:   minor
+[DESCRIPTION]
+Added new standard option for options called symmetry.
+
+[ENTRY]
+Module: int
+What:   new
+Rank:   minor
+Thanks:	Kish Shen
+[DESCRIPTION]
+Added regret_min and regret_max for IntVar and BoolVar (they were
+only available for IntView).
+
+[ENTRY]
+Module: int
+What:   change
+Rank:   minor
+[DESCRIPTION]
+Moved cumulatives to the new scheduling library.
+
+[ENTRY]
+Module: scheduling
+What:   new
+Rank:   minor
+[DESCRIPTION]
+Added a new module for scheduling. To use scheduling
+constraints, you have to include <gecode/scheduling.hh> and link
+against the scheduling library.
+
+[ENTRY]
+Module: int
+What:   change
+Rank:   minor
+[DESCRIPTION]
+Moved circuit to the new graph library.
+
+[ENTRY]
+Module: graph
+What:   new
+Rank:   minor
+[DESCRIPTION]
+Added a new module for graph constraints. To use graph
+constraints, you have to include <gecode/graph.hh> and link
+against the graph library.
+
+[ENTRY]
+Module: example
+What:   new
+Rank:   minor
+[DESCRIPTION]
+Added branching following Warnsdorff's heuristic for Knights.
+
+[ENTRY]
+Module: int
+What:   new
+Rank:   minor
+[DESCRIPTION]
+Added branch and assign for single integer and Boolean variable.
+
+[ENTRY]
+Module: set
+What:   new
+Rank:   minor
+[DESCRIPTION]
+Added branch and assign for single set variable.
+
+[ENTRY]
+Module: minimodel
+What:   new
+Rank:   minor
+Thanks: Håkan Kjellerstrand
+[DESCRIPTION]
+Added element constraints for Matrix interface to arrays.
+
+[ENTRY]
+Module: int
+What:   new
+Rank:   minor
+Thanks: Håkan Kjellerstrand
+[DESCRIPTION]
+Added element constraints for Matrix arrays.
+
+[ENTRY]
+Module: set
+What:   new
+Rank:   minor
+Thanks: Håkan Kjellerstrand
+[DESCRIPTION]
+Added element constraints for Matrix arrays.
+
+[ENTRY]
+Module: search
+What:   change
+Rank:   minor
+Thanks: Vincent Barichard
+[DESCRIPTION]
+Path for search provides top and empty methods.
+
+[ENTRY]
+Module: driver
+What:   change
+Rank:   minor
+Bug:    59
+Thanks: Luca Di Gaspero
+[DESCRIPTION]
+The driver takes copies of all string values passed top it.
+
+
+[RELEASE]
+Version: 3.1.0
+Date: 2009-05-20
+[DESCRIPTION]
+This release introduces parallel search, features improved memory
+management (can double efficiency on MacOS X), and provides a
+reusable command line driver upon popular request. And, of
+course, some this and that.
+
+[ENTRY]
+Module: set
+What:   change
+Rank:   minor
+[DESCRIPTION]
+The set constraint sequentialUnion has been renamed to sequence.
+
+[ENTRY]
+Module: example
+What:   change
+Rank:   minor
+[DESCRIPTION]
+The parameters of the Hamming Codes example are now configurable
+through command line options (instead of hard-coded).
+
+[ENTRY]
+Module: search
+What:   change
+Rank:   minor
+[DESCRIPTION]
+The stop function of stop objects now also takes a second argument
+of type Search::Options. This is in particular useful for
+decisions that involve the number of threads used for search.
+
+[ENTRY]
+Module: search
+What:   new
+Rank:   major
+[DESCRIPTION]
+Added parallel search engines for DFS, BAB, and Restart (but not
+LDS). Please make sure to read the section "Parallel search" in
+"Modeling with Gecode".
+[MORE]
+Parallel search is still experimental: creating and destroying a
+large number (more than 1000) of search engines (and hence a
+large number of threads) might raise exceptions on operating
+systems using pthreads as thread implementation. This will be
+fixed in a future release by using thread pools.
+
+[ENTRY]
+Module: support
+What:   new
+Rank:   minor
+[DESCRIPTION]
+Added a tiny portable thread package specifically tailored to the
+needs for parallel search. Unfortunately, other portable thread
+packages have just too many issues.
+
+[ENTRY]
+Module: gist
+What:   bug
+Rank:   minor
+[DESCRIPTION]
+Fixed a dead lock that could occur when closing the Gist main window while 
+search is still running.
+
+[ENTRY]
+Module: gist
+What:   bug
+Rank:   minor
+[DESCRIPTION]
+The inspectors are finalized before Gist exits. This fixes a bug
+where (at least on Mac OS) some memory was not freed in the
+correct order.
+
+[ENTRY]
+Module: gist
+What:   bug
+Rank:   minor
+[DESCRIPTION]
+Gist now correctly centers the current node after search has finished.
+
+[ENTRY]
+Module: gist
+What:   change
+Rank:   minor
+[DESCRIPTION]
+Small user interface changes: disable search from hidden nodes, add depth 
+information to status bar, and add statistics for subtrees (available from the 
+node context menu and the Node menu).
+
+[ENTRY]
+Module: gist
+What:   change
+Rank:   minor
+[DESCRIPTION]
+Easily add multiple inspectors to Gist. Inspectors are not
+exclusive any longer, you can select any combination of them to
+respond to clicks or solutions simultaneously.
+
+[ENTRY]
+Module: int
+What:   change
+Rank:   minor
+[DESCRIPTION]
+The INT_VAL_MED value selection now consistently selects the greatest element
+in the domain not greater than the median.
+
+[ENTRY]
+Module: driver
+What:   change
+Rank:   minor
+[DESCRIPTION]
+If Gist is not available, -mode gist is the same as -mode
+solution. Invocation with -help also prints information about how
+Gecode has been configured.
+
+[ENTRY]
+Module: example
+What:   new
+Rank:   minor
+[DESCRIPTION]
+Added new example for equidistant frequency permutation arrays (EFPA).
+
+[ENTRY]
+Module: kernel
+What:   performance
+Rank:   major
+[DESCRIPTION]
+Cache memory blocks from deleted spaces. This hardly increases
+peak memory consumption. It improves performance on Windows and
+Linux only by up to 5%, but on MacOS by 50% in some cases (this
+improvement is absolutely essential for parallel execution).
+
+[ENTRY]
+Module: set
+What:   new
+Rank:   minor
+[DESCRIPTION]
+Added a wait propagator: executes a function when a variable (or
+variables) become(s) assigned.
+
+[ENTRY]
+Module: int
+What:   new
+Rank:   minor
+[DESCRIPTION]
+Added a wait propagator: executes a function when a variable (or
+variables) become(s) assigned.
+
+[ENTRY]
+Module: driver
+What:   new
+Rank:   major
+[DESCRIPTION]
+Added a new module "driver" as a commandline driver for
+scripts. This is due to popular request: most people have been
+using the support functionality for examples anyway. This
+function is now wrapped into a proper module (and Example is
+now called Script to be more general). See "Modeling with Gecode" 
+for documentation.
+
+[ENTRY]
+Module: support
+What:   new
+Rank:   minor
+[DESCRIPTION]
+Support::quicksort and Support::insertion support using the less than
+operator for the sort order by leaving out the comparator object.
+
+
+[RELEASE]
+Version: 3.0.2
+Date: 2009-03-26
+[DESCRIPTION]
+This is a bug fix release fixing two more embarrassing
+bugs. However, this time we redesigned our tests carefully such
+that they cover all changes and optimizations done for the
+transition from 2.2.0 to 3.0.*. Please update asap.
+
+[ENTRY]
+Module: example
+What:   bug
+Rank:   minor
+Thanks: Håkan Kjellerstrand
+[DESCRIPTION]
+The radiotherapy example was missing in the Makefile.
+
+[ENTRY]
+Module: int
+What:   bug
+Rank:   major
+[DESCRIPTION]
+Fixed bug in optimization of extensional constraints with DFAs
+(hard to reproduce, almost impossible).
+
+[ENTRY]
+Module: minimodel
+What:   bug
+Rank:   major
+Thanks: Gustavo Guiterrez
+[DESCRIPTION]
+Fixed bug in posting of Boolean expressions including reified
+linear expressions. Again, that escaped our testsuite (also
+fixed).
+
+[ENTRY]
+Module: int
+What:   performance
+Rank:   minor
+[DESCRIPTION]
+Reoptimized element with integer values and created bizarre
+testcases.
+
+[ENTRY]
+Module: gist
+What:   change
+Rank:   minor
+[DESCRIPTION]
+A separator is printed between solutions in the TextInspector.
+
+
+[RELEASE]
+Version: 3.0.1
+Date: 2009-03-24
+[DESCRIPTION]
+This is a bug fix release fixing two embarrassing bugs that were
+not caught by our test infrastructure. Please update asap.
+
+
+[ENTRY]
+Module: int
+What:   bug
+Rank:   major
+Thanks: Vincent Barichard
+[DESCRIPTION]
+Fixed bug in element with integer values.
+
+[ENTRY]
+Module: int
+What:   bug
+Rank:   minor
+[DESCRIPTION]
+IntSetArgs no longer inherit from PrimArgArray, which was wrong
+as IntSet is no primitive type and hence does not support vararg
+initializers.
+
+[ENTRY]
+Module: example
+What:   bug
+Rank:   minor
+[DESCRIPTION]
+The examples now pass the c-d and a-d command line options correctly to Gist.
+
+[ENTRY]
+Module: int
+What:   bug
+Rank:   major
+Thanks: Alberto Delgado
+[DESCRIPTION]
+Fixed bug in reified Boolean linear constraints (an optimization
+is currently disabled and will be active in the next release: the
+optimization was incorrect and was never tested).
+
+[ENTRY]
+Module: example
+What:   bug
+Rank:   minor
+Bug:    56
+Thanks: Chris Mears
+[DESCRIPTION]
+The Steel Mill Slab Design example had two bugs in the search
+heuristic and a missing redundant constraint.
+
+[ENTRY]
+Module: example
+What:   new
+Rank:   minor
+[DESCRIPTION]
+Added new example for Radiotherapy.
+
+
+
+[RELEASE]
+Version: 3.0.0
+Date: 2009-03-13
+[DESCRIPTION]
+This release is a major consolidation release: interfaces have
+been cleaned up (consistent parameter passing, consistent naming,
+simpler Gist interface, namespaces for operator overloading);
+some functionality has been extended (propagators can be
+non-monotonic; branchings support tie-breaking and random
+variable and value selection); some functionality that did not
+meet our quality goals has been removed (complete set variables,
+reflection); usage has been simplified (auto-linking on Windows,
+more commonly used filename extensions); important aspects have
+been optimized (memory management, memory usage and efficiency on
+64bit machines). These cleanups were in particular necessary to
+make %Gecode easier to document (this release is the first to be
+accompanied by tutorial documentation explaining how to model
+with %Gecode).
+
+Apart from that, many small fixes and additions. Please see below
+for the details.
+
+As the interfaces have changed considerably, please consult \ref
+PageHowToChange_3 "How to Change to Gecode 3.0.0".
+
+[ENTRY]
+Module: example
+What:   performance
+Rank:   minor
+Thanks:	Håkan Kjellerstrand
+[DESCRIPTION]
+Improved branching for Nonogram examples.
+
+[ENTRY]
+Module: set
+What:   bug
+Rank:   minor
+Thanks:	Stefano Gualandi
+[DESCRIPTION]
+Fixed bug in creation of set variables.
+
+[ENTRY]
+Module: kernel
+What:   bug
+Rank:   major
+Thanks:	Vincent Barichard
+[DESCRIPTION]
+Updating of a council of advisors crashed if a propagator has no
+advisors (as we had no example of this kind of propagators).
+
+[ENTRY]
+Module: set
+What:   change
+Rank:   minor
+[DESCRIPTION]
+Element and convexity constraints on set variables have a more
+uniform interface, and the match constrained has been renamed to
+channel.
+
+[ENTRY]
+Module: gist
+What:   change
+Rank:   minor
+[DESCRIPTION]
+Gist now takes an optional argument specifying options for the
+search, including the inspectors to be used. The Qt interface has
+been cleaned up, so that Gist is easier to extend.
+
+[ENTRY]
+Module: gist
+What:   new
+Rank:   minor
+[DESCRIPTION]
+Added inspectors that react on every solution instead of a double
+click.
+
+[ENTRY]
+Module: int
+What:   change
+Rank:   minor
+[DESCRIPTION]
+A TupleSet must be finalized before an extensional constraint can
+be posted using it.
+
+[ENTRY]
+Module: set
+What:   removed
+Rank:   minor
+[DESCRIPTION]
+Removed automatically generated set projectors, they will come
+back eventually. This makes no change to the available
+functionality for set variables.
+
+[ENTRY]
+Module: cpltset
+What:   removed
+Rank:   major
+[DESCRIPTION]
+Complete sets have been removed (just not good enough).
+
+[ENTRY]
+Module: kernel
+What:   new
+Rank:   minor
+Author:	Filip Konvicka
+[DESCRIPTION]
+Integrated space and region-based allocators that work with STL
+classes.
+
+[ENTRY]
+Module: int
+What:   bug
+Rank:   minor
+[DESCRIPTION]
+Fixed bug in domain consistent min and max propagators.
+
+[ENTRY]
+Module: int
+What:   performance
+Rank:   major
+Author:	Tias Guns
+[DESCRIPTION]
+Integrated an efficient implementation of reified linear
+constraints over Boolean variables.
+
+[ENTRY]
+Module: example
+What:   bug
+Rank:   minor
+Thanks:	Stefano Gualandi
+[DESCRIPTION]
+A bug in the independent set example has been fixed (most edges
+were ignored).
+
+[ENTRY]
+Module: set
+What:   new
+Rank:   minor
+[DESCRIPTION]
+More set branching strategies have been added (for instance random variable 
+and value selection), as well as set assignment.
+
+[ENTRY]
+Module: other
+What:   removed
+Rank:   major
+[DESCRIPTION]
+All support for reflection has been removed: not clean enough,
+not powerful enough, too difficult, and too much trouble.
+
+[ENTRY]
+Module: kernel
+What:   new
+Rank:   minor
+Thanks:	Denys Duchier
+[DESCRIPTION]
+Added support for synchronized execution during branching
+(executes a function).
+
+[ENTRY]
+Module: kernel
+What:   change
+Rank:   major
+[DESCRIPTION]
+The specification of propagation cost has changed. It now must be
+computed by the static member functions of the class
+Gecode::PropCost.
+
+[ENTRY]
+Module: int
+What:   new
+Rank:   minor
+[DESCRIPTION]
+Added support for synchronized execution that executes a function
+or a static member function when a Boolean variable becomes
+assigned (called when).
+
+[ENTRY]
+Module: int
+What:   change
+Rank:   minor
+Thanks:	David Rijsman
+[DESCRIPTION]
+Make the variable deltas generated for minus_r more meaningful if
+possible.
+
+[ENTRY]
+Module: iter
+What:   documentation
+Rank:   minor
+Thanks:	Anden Blah, Morten Boysen
+[DESCRIPTION]
+Mention that arrays for Iter::Values::Arrays must be sorted.
+
+[ENTRY]
+Module: int
+What:   bug
+Rank:   major
+Thanks:	Roland Yap Hock Chuan
+[DESCRIPTION]
+Fixed off-by-one bug in extensional for DFAs.
+
+[ENTRY]
+Module: kernel
+What:   change
+Rank:   minor
+[DESCRIPTION]
+The clone operation on spaces is now const.
+
+[ENTRY]
+Module:	int
+What:	change
+Rank:	minor
+[DESCRIPTION]
+TupleSet now accepts duplicate tuples.
+
+[ENTRY]
+Module:	int
+What:	change
+Rank:	minor
+[DESCRIPTION]
+Renamed size() to ranges() for IntSet (returning the number of
+ranges). Added a size() and width() function that return the size
+and width of the set respectively.
+
+[ENTRY]
+Module: kernel
+What:   change
+Rank:   minor
+[DESCRIPTION]
+Introduced CopiedHandle as a new base class for SharedHandle. 
+[MORE]
+A copied handle provides access to an object that is used by
+entities in a space, and that is copied when then space is
+copied. This abstraction can be used e.g. to pass information
+between different entities in a space, such as between
+propagators and branchings.
+
+[ENTRY]
+Module: support
+What:   bug
+Rank:   minor
+Thanks:	Michal Dobrogost
+[DESCRIPTION]
+Sorting (quicksort and insertion) require strict orders and now
+work with arrays of more than 2^32 elements.
+
+[ENTRY]
+Module: int
+What:   new
+Rank:   minor
+[DESCRIPTION]
+Integer sets can now be initialized from integer argument arrays.
+
+[ENTRY]
+Module: other
+What:   bug
+Rank:   minor
+Thanks: Chris Mears
+[DESCRIPTION]
+Output operators (<<) now respect formatting width and work with
+output streams using arbitrary character types.
+
+[ENTRY]
+Module: kernel
+What:   change
+Rank:   minor
+Thanks: Denys Duchier
+[DESCRIPTION]
+Made macros semicolon-safe.
+
+[ENTRY]
+Module: set
+What:   bug
+Rank:   minor
+Thanks: Denys Duchier
+[DESCRIPTION]
+Fixed constructors for set variables. They now throw proper exceptions when 
+trying to create empty variable domains.
+
+[ENTRY]
+Module: set
+What:   new
+Rank:   minor
+Thanks: Denys Duchier
+[DESCRIPTION]
+Added reified propagators constraining an integer variable to be the minimum 
+or maximum element of a set variable.
+
+[ENTRY]
+Module: int
+What:   removed
+Rank:   minor
+[DESCRIPTION]
+Support for PropKind has been removed for all but extensional constraints.
+
+[ENTRY]
+Module: int
+What:   new
+Rank:   minor
+[DESCRIPTION]
+Domain constraints (dom) also accept integers now.
+
+[ENTRY]
+Module: other
+What:   change
+Rank:   major
+Thanks: Max
+[DESCRIPTION]
+All operators are now in their correct namespace.
+
+[ENTRY]
+Module: minimodel
+What:   change
+Rank:   minor
+[DESCRIPTION]
+LinExpr, LinRel, BoolExpr are now part of the Gecode namespace
+rather than Gecode::MiniModel (to support operator resolution).
+
+[ENTRY]
+Module: test
+What:   new
+Rank:   minor
+[DESCRIPTION]
+Tests for testing claims of bounds(Z) and bounds(D) consistency. These
+tests would have found the bug in the binary min and max propagators.
+[MORE]
+An integer test can enable these new tests by setting the contest member
+to CTL_BOUNDS_Z or CTL_BOUNDS_D. For domain-consistency propagators
+the contest member is set automatically to CTL_DOMAIN. If no
+consistency-testing should be done, contest should be set to CTL_NONE.
+
+[ENTRY]
+Module: search
+What:   new
+Rank:   minor
+[DESCRIPTION]
+The search engines now collect statistics for the number of nodes
+visited and the maximum depth of the search tree. The information
+for number of clone and commit operations has been removed as it
+was too confusing.
+
+[ENTRY]
+Module: search
+What:   new
+Rank:   major
+[DESCRIPTION]
+Search engines have been completely reimplemented.
+
+[ENTRY]
+Module: int
+What:   bug
+Rank:   minor
+Thanks: Jonathan Cederberg
+[DESCRIPTION]
+The binary min and max propagators did not do all pruning they
+should do.
+[MORE]
+Given the constraint x = max(y,z) with the store {x->{1,2,3},
+y->{1,2}, z->{3}}, propagation did not yield any new information
+(now it gives the correct result {x->{3}, y->{1,2}, z->{3}}).
+
+[ENTRY]
+Module: example
+What:   new
+Rank:   minor
+[DESCRIPTION]
+New example: the steel mill slab design problem (Problem 38 in <a
+href="http://csplib.org">CSPLib</a>).
+[MORE]
+The model used is from Gargani and Refalo, "An efficient model and
+strategy for the steel mill slab design problem.", CP 2007. The
+symmetry-breaking search is from Van Hentenryck and Michel, "The Steel
+Mill Slab Design Problem Revisited", CPAIOR 2008.
+
+[ENTRY]
+Module: iter
+What:   bug
+Rank:   minor
+Thanks: Stefano Gualandi
+[DESCRIPTION]
+Fixed init method of SingletonAppend range iterator.
+
+[ENTRY]
+Module: example
+What:   bug
+Rank:   minor
+[DESCRIPTION]
+Fixed a bug in the extensional propagation-version of the domino example.
+
+[ENTRY]
+Module: other
+What:   new
+Rank:   minor
+[DESCRIPTION]
+For the Microsoft compiler, auto-link information is added during
+compilation.
+[MORE]
+That is, by including %Gecode headers during
+compilation the right libraries will be found automatically
+during linking. To simplify development and deployment, the
+libraries (and DLLs) encode version, platform, and build type
+(release or debug) in their filename.
+
+[ENTRY]
+Module: minimodel
+What:   performance
+Rank:   minor
+[DESCRIPTION]
+Posting constraints according to Boolean expressions now uses a
+negation normalform and by this avoids any propagator for
+negation and uses fewer propagators due to the new clause constraint.
+
+[ENTRY]
+Module: other
+What:   change
+Rank:   major
+[DESCRIPTION]
+Changed naming scheme for files. 
+[MORE]
+All files with extension .cc have been renamed to .cpp, and .icc
+has become .hpp. This avoids conflicts as .icc is typically used
+for other file types. All include directives are now specified
+using <...> notation instead of "...", so that %Gecode headers do
+not clutter the include namespace of a client program.
+
+[ENTRY]
+Module: minimodel
+What:   change
+Rank:   minor
+[DESCRIPTION]
+The Matrix class is now in the Gecode namespace (and not in
+Gecode::MiniModel).
+
+[ENTRY]
+Module: set
+What:   change
+Rank:   minor
+[DESCRIPTION]
+Reorganized the internal data structures of set variables so that each 
+variable takes up 8 bytes less memory on 64 bit machines.
+
+[ENTRY]
+Module: kernel
+What:   change
+Rank:   minor
+[DESCRIPTION]
+The index structure for variable dependencies is now implemented using integers
+instead of pointers, saving memory on 64 bit machines.
+[MORE]
+For example, the index 
+structure of integer variables is now 40% smaller, for Boolean variables 
+(which have the smallest possible index structure) we still save 16%.
+
+[ENTRY]
+Module: int
+What:   new
+Rank:   minor
+[DESCRIPTION]
+Added a Boolean clause constraint that supports conjunction and
+disjunction of both positive and negative variables.
+
+[ENTRY]
+Module: int
+What:   performance
+Rank:   minor
+[DESCRIPTION]
+Now n-ary Boolean disjunction and conjunction are constant time
+(rather than linear time, as before), even when a variable for
+the result is used.
+
+[ENTRY]
+Module: kernel
+What:   change
+Rank:   major
+[DESCRIPTION]
+%Gecode now supports weakly monotonic propagators. 
+[MORE]
+A weakly monotonic propagator must only be able to decide for
+assignments whether they are solutions or not (which is a very
+natural property as it means the propagator must be a correct
+implementation of a constraint). Otherwise, the propagator does
+not have to be monotonic, it can even be indeterministic.
+
+Weakly monotonic but not monotonic propagators must notify a
+space about their existence: if a weakly monotonic propagator is
+created, it must execute "home.notice(*this,AP_WEAKLY)"; if it is
+disposed, it must execute "home.ignore(*this,AP_WEAKLY)".
+
+[ENTRY]
+Module: kernel
+What:   change
+Rank:   minor
+[DESCRIPTION]
+The functions force and unforce of an actor to force disposal
+have been removed. 
+[MORE]
+Now, the new interface based on notice and ignore using actor
+properties must be used instead. So, instead of "force(home)",
+write "home.notice(*this,AP_DISPOSE)" and, instead of
+"unforce(home)", write "home.ignore(*this,AP_DISPOSE)".
+
+[ENTRY]
+Module: int
+What:   performance
+Rank:   minor
+[DESCRIPTION]
+The incremental extensional propagator for tuplesets uses less
+memory (around 25%) and reports its size correctly.
+
+[ENTRY]
+Module: int
+What:   performance
+Rank:   minor
+[DESCRIPTION]
+The element propagator for integer arrays now chooses
+datastructures according to and the elements of the array.
+[MORE]
+This can save more than 80% memory on a 64 bit machine, and up to
+75% on a 32 bit machine. In common cases, one can expect a
+reduction by at least 50%.
+
+[ENTRY]
+Module: int
+What:   performance
+Rank:   minor
+[DESCRIPTION]
+The regular propagator now chooses datastructures according to
+the size of the DFA. This can save up to 80% memory on a 64 bit
+machine, and still up to 50% on a 32 bit machine.
+
+[ENTRY]
+Module: kernel
+What:   change
+Rank:   minor
+[DESCRIPTION]
+The home space is now also passed to the cost function of a propagator.
+
+[ENTRY]
+Module: other
+What:   change
+Rank:   major
+[DESCRIPTION]
+Now everything is passed as reference (Space, Propagator,
+ModEventDelta, Advisor, Branching, and BranchingDesc). 
+[MORE]
+The reason for this massive change is to be more C++ compliant
+and make the interfaces more consistent (at some places things
+were passed as references and at other places as pointers, for no
+obvious and explainable reason). Routines that create objects
+rather than pass them (such as copy, clone, or description) still
+return a pointer to an object (so that it can actually be
+deleted!).
+
+You will have to rewrite your models and other programs using
+%Gecode. For models this is easy enough:
+ - Replace "(Space* home" by "(Space& home".
+ - Replace "home->" by "home.".
+ - Replace "(this" by "(*this".
+ .
+That should do the trick for 99% of the models.
+
+For the other changes, just lookout for the changes in types and
+that "this" becomes "*this" now.
+
+[ENTRY]
+Module: other
+What:   change
+Rank:   major
+[DESCRIPTION]
+The memory management has been completely reworked. 
+[MORE]
+It is now more robust, more portable (does not use alloca any
+longer), more efficient, fits C++ better and is much easier too
+understand. There are now three memory areas: a single heap,
+spaces, and regions. Heap and spaces are as before. A region (an
+object of class Region) is a simple and very efficient memory
+manager for temporary memory managed in a stack fashion. These
+three memory managers provide uniform operations for allocation
+(alloc), deallocation (free), and reallocation (realloc). These
+operations use constructors, destructors, and assignment
+operators as required by C++ and are implemented with efficient
+specializations for basic data types.
+
+[ENTRY]
+Module: support
+What:   removed
+Rank:   minor
+[DESCRIPTION]
+PQueue has been removed (too specialized to be reused anyway).
+
+[ENTRY]
+Module: support
+What:   removed
+Rank:   minor
+[DESCRIPTION]
+GECODE_AUTOARRAY has been removed. Use a Region for memory
+management instead.
+
+[ENTRY]
+Module: support
+What:   removed
+Rank:   minor
+[DESCRIPTION]
+GECODE_AUTOSTACK and SentinelStack has been removed. Use
+StaticStack instead.
+
+[ENTRY]
+Module: int
+What:   performance
+Rank:   minor
+[DESCRIPTION]
+Simpler and more efficient memory management for element
+propagators (integer arrays).
+
+[ENTRY]
+Module: kernel
+What:   change
+Rank:   minor
+[DESCRIPTION]
+All functions for checking sharing for arrays (same, shared,
+unique) require a space argument (for memory management).
+
+[ENTRY]
+Module: minimodel
+What:   new
+Rank:   minor
+[DESCRIPTION]
+Added MinimizeSpace and MaximizeSpace classes for cost-based
+optimization (requires implementing a cost function returning an
+integer cost variable). Optimization can now be implemented by
+inheriting from these classes rather than from Space and by
+implementing a cost function.
+
+[ENTRY]
+Module: kernel
+What:   change
+Rank:   minor
+[DESCRIPTION]
+The description() member function of a space is not any longer
+const: it can be called at most once.
+
+[ENTRY]
+Module: kernel
+What:   change
+Rank:   major
+[DESCRIPTION]
+The constrain method used for best solution search must be
+virtual and takes an argument of type const Space& rather than
+Space* as argument.
+
+[ENTRY]
+Module: int
+What:   change
+Rank:   major
+[DESCRIPTION]
+Tie-breaking and random selection for branch is now supported.
+
+[ENTRY]
+Module: set
+What:   change
+Rank:   major
+[DESCRIPTION]
+The values for variable and value selection for branching have
+been made consistent and extended. 
+[MORE]
+The following values have been renamed:
+ - SET_VAR_MIN_CARD -> SET_VAR_SIZE_MIN
+ - SET_VAR_MAX_CARD -> SET_VAR_SIZE_MAX
+ - SET_VAR_MIN_UNKNOWN_ELEM -> SET_VAR_MIN_MIN
+ - SET_VAR_MAX_UNKNOWN_ELEM -> SET_VAR_MAX_MAX
+ - SET_VAL_MIN -> SET_VAL_MIN_INC
+ - SET_VAL_MAX -> SET_VAL_MAX_INC
+ .
+Tie-breaking and random selection is now supported.
+
+[ENTRY]
+Module: int
+What:   change
+Rank:   minor
+[DESCRIPTION]
+The variable selection INT_VAR_DEGREE_MIN and INT_VAR_DEGREE_MAX
+do not have tiebreaking with smallest domain size built in.
+[MORE]
+The old behavior can be reclaimed by explicit tiebreaking, for
+example replace INT_VAR_DEGREE_MAX by
+tiebreak(INT_VAR_DEGREE_MAX,INT_VAR_SIZE_MIN).
+
+[ENTRY]
+Module: kernel
+What:   change
+Rank:   major
+[DESCRIPTION]
+View and value branchings have been completely reimplemented to support
+tie-breaking and state (for randomized selection).
+
+[ENTRY]
+Module: kernel
+What:   removed
+Rank:   major
+[DESCRIPTION]
+View and value assignments have been removed as they now can be
+expressed by view and value branchings.
+
+
+[RELEASE]
+Version: 2.2.0
+Date: 2008-08-25
+[DESCRIPTION]
+This release adds many domain consistent propagators for
+arithmetic constraints and fixes a number of bugs. Some of these
+bugs fixed are potentially serious, in particular as they occur
+very seldom. Please change to 2.2.0 as soon as possible (in
+particular if you are using the 64bit Microsoft Visual C++
+compiler). And, of course, the usual small fixes and changes.
+
+[ENTRY]
+Module: kernel
+What:   bug
+Rank:   major
+[DESCRIPTION]
+Fixed a bug in the memory alignment on Windows 64bit (very hard to reproduce).
+	
+[ENTRY]
+Module: other
+What:   new
+Rank:   minor
+[DESCRIPTION]
+Added configure options for adding a prefix and a suffix to the names of the 
+compiled libraries.
+
+[ENTRY]
+Module: int
+What:   bug
+Rank:   major
+[DESCRIPTION]
+Fixed a bug in the domain consistent distinct propagator that would cause
+a stack overflow under rare circumstances.
+	
+[ENTRY]
+Module: set
+What:   bug
+Rank:   major
+[DESCRIPTION]
+The ternary intersection propagator was incorrect if any of the sets had a 
+maximum cardinality of Set::Limits::card.
+
+[ENTRY]
+Module: int
+What:   new
+Rank:   minor
+Thanks:	Raphael Reischuk
+[DESCRIPTION]
+The attempt to access the value of an unassigned integer or
+Boolean variable (IntVar or BoolVar) throws an exception now.
+
+[ENTRY]
+Module: int
+What:   new
+Rank:   minor
+[DESCRIPTION]
+Added bounds consistent division/modulo propagator.
+
+[ENTRY]
+Module: int
+What:   change
+Rank:   minor
+[DESCRIPTION]
+All functional linear and arithmetic constraints now put sharp
+bounds on the output variable (eases interfacing to modelling
+languages).
+
+[ENTRY]
+Module: int
+What:   new
+Rank:   minor
+[DESCRIPTION]
+The channel constraint now comes in a version that allows to specify offsets 
+to the array indices.
+
+[ENTRY]
+Module: example
+What:   removed
+Rank:   minor
+[DESCRIPTION]
+Example-based support for SAC (singleton arc consistency) has
+been removed. Might be reintroduced later in a more general
+fashion.
+
+[ENTRY]
+Module: other
+What:   new
+Rank:   minor
+[DESCRIPTION]
+The Makefile has a new target, check, which performs a minimal integrity check 
+using some tests from the test suite.
+
+[ENTRY]
+Module: set
+What:   change
+Rank:   minor
+[DESCRIPTION]
+The set selection constraints are now called element.
+
+[ENTRY]
+Module: int
+What:   bug
+Rank:   minor
+[DESCRIPTION]
+Fixed bug for domain-consistent distinct that never occurred in
+practice.
+
+[ENTRY]
+Module: kernel
+What:   bug
+Rank:   minor
+[DESCRIPTION]
+Fixed bug that could potentially have affected certain staged
+propagators.
+
+[ENTRY]
+Module: kernel
+What:   documentation
+Rank:   minor
+Thanks:	David Rijsman
+[DESCRIPTION]
+Fixed explanation of ES_FIX and ES_NOFIX for advisors
+(description was mixed up).
+
+[ENTRY]
+Module: other
+What:   change
+Rank:   minor
+[DESCRIPTION]
+The configure script now always uses the Microsoft compiler on Windows. Use
+the CC and CXX environment variables to override this if you want to use
+gcc.
+
+[ENTRY]
+Module: int
+What:   new
+Rank:   minor
+[DESCRIPTION]
+Added domain consistent multiplication propagator.
+
+[ENTRY]
+Module: kernel
+What:   bug
+Rank:   major
+Thanks: Filip Konvicka
+[DESCRIPTION]
+Generated variable stubs were wrong (could only be observed for
+new variable types).
+
+[ENTRY]
+Module: int
+What:   bug
+Rank:   minor
+Thanks: David Rijsman
+[DESCRIPTION]
+Cumulatives did not do all the pruning it should do.
+
+[ENTRY]
+Module: int
+What:   bug
+Rank:   minor
+[DESCRIPTION]
+Fixed bug in element with IntArgs and sharing between the two IntVars.
+
+[ENTRY]
+Module: int
+What:   bug
+Rank:   minor
+Thanks: Jaroslav Mlejnek
+[DESCRIPTION]
+Fixed bug in sqrt.
+
+[ENTRY]
+Module: int
+What:   bug
+Rank:   minor
+Thanks: David Rijsman
+[DESCRIPTION]
+Fixed bug in ValSplitMin::branchingSpec.
+
+[ENTRY]
+Module: kernel
+What:   removed
+Rank:   minor
+[DESCRIPTION]
+Removed ViewTuple. Just not useful enough...
+
+[ENTRY]
+Module: kernel
+What:   change
+Rank:   minor
+[DESCRIPTION]
+Cleaned up Reflection::Var type, overloading did not conform to the C++ 
+standard.
+
+[ENTRY]
+Module: int
+What:   new
+Rank:   minor
+[DESCRIPTION]
+Added domain consistent minimum (min) and maximum (max) propagators.
+
+[ENTRY]
+Module: int
+What:   new
+Rank:   minor
+[DESCRIPTION]
+Added domain consistent square root propagator (sqrt).
+
+[ENTRY]
+Module: int
+What:   new
+Rank:   minor
+[DESCRIPTION]
+Added domain consistent squaring propagator (sqr).
+
+[ENTRY]
+Module: int
+What:   documentation
+Rank:   minor
+[DESCRIPTION]
+Added documentation for domain consistent absolute value (abs) propagator.
+
+[ENTRY]
+Module: int
+What:   new
+Rank:   minor
+[DESCRIPTION]
+Added reified propagators for relations over Boolean variables.
+
+[RELEASE]
+Version: 2.1.1
+Date: 2008-03-06
+[DESCRIPTION]
+This is a bugfix release.
+
+[ENTRY]
+Module: int
+What:   bug
+Rank:   minor
+[DESCRIPTION]
+Non-shared copying of dfa was broken (matters only for parallel execution).
+
+[ENTRY]
+Module: kernel
+What:   bug
+Rank:   major
+[DESCRIPTION]
+The generated med_updated function was incorrect, resulting in potential
+crashes of programs that use SetVars.
+
+[ENTRY]
+Module: cpltset
+What:   documentation
+Rank:   minor
+[DESCRIPTION]
+The CpltSet variables are now in the correct documentation group.
+
+[ENTRY]
+Module: gist
+What:   bug
+Rank:   minor
+[DESCRIPTION]
+Fixed redraw artefacts on Windows.
+
+[ENTRY]
+Module: other
+What:   bug
+Rank:   minor
+[DESCRIPTION]
+Fixed boost serialization.
+
+[ENTRY]
+Module: kernel
+What:   bug
+Rank:   minor
+[DESCRIPTION]
+Made the constructor of Reflection::Var explicit, otherwise overloading for
+output stream operators does not work as expected.
+
+
+[RELEASE]
+Version: 2.1.0
+Date:    2008-02-29
+[DESCRIPTION]
+This release makes two essential contributions: a partly
+reimplemented kernel that is faster, is simpler, and uses less
+memory and lots of small and not so small fixes. This release is
+the first release where really everything that we can test
+(rather than everything that we initially believed to matter) has
+been systematically tested. So, better switch now to 2.1.0!
+
+Apart from that, the value range for variables has been increased
+(basically, 32 bits minus three values, so that is 32 bits), the reflection 
+API is now fully functional and no longer considered experimental, and we have
+the usual small additions.
+
+
+[ENTRY]
+Module: int
+What:   new
+Rank:   minor
+[DESCRIPTION]
+Added interface to extensional constraints defined by TupleSets with
+BoolVars.
+
+[ENTRY]
+Module: minimodel
+What:   bug
+Rank:   major
+[DESCRIPTION]
+Reimplemented linear expressions from scratch, they were just
+hopelessly screwed.
+
+[ENTRY]
+Module: minimodel
+What:   bug
+Rank:   minor
+[DESCRIPTION]
+Added work-around for compiler bug in MSVC.
+
+[ENTRY]
+Module: minimodel
+What:   new
+Rank:   minor
+[DESCRIPTION]
+Support reified linear expressions with Boolean variables.
+
+[ENTRY]
+Module: int
+What:   change
+Rank:   minor
+[DESCRIPTION]
+Throw an exception if variables occur multiply for array-based
+channel constraints.
+
+[ENTRY]
+Module: int
+What:   bug
+Rank:   minor
+[DESCRIPTION]
+Fixed multiplication propagator for x*y=x.
+
+[ENTRY]
+Module: search
+What:   change
+Rank:   major
+[DESCRIPTION]
+All search engines now take an option value for configuration
+instead of individual arguments for recomputation, stop objects,
+etc.
+
+[ENTRY]
+Module: minimodel
+What:   removed
+Rank:   minor
+[DESCRIPTION]
+Removed scheduling abstractions.
+
+[ENTRY]
+Module: int
+What:   removed
+Rank:   minor
+[DESCRIPTION]
+Removed extensional constraints with offset arguments.
+
+[ENTRY]
+Module: minimodel
+What:   new
+Rank:   minor
+[DESCRIPTION]
+All minimodel functionality now understands both IntConLevel and
+PropKind arguments.
+
+[ENTRY]
+Module: set
+What:   bug
+Rank:   major
+[DESCRIPTION]
+Fixed bugs in several set constraints:
+rel(Space*,SetVar,IntRelType irt,IntVar) for irt=IRT_NQ,
+rel(Space*,SetVar,SetOpType sot,const IntSet&,SetRelType srt,SetVar) for 
+sot=SOT_MINUS, srt=SRT_SUP, selectDisjoint, selectUnion with constant IntSet 
+arguments, dom with SRT_NQ.
+
+[ENTRY]
+Module: kernel
+What:   bug
+Rank:   minor
+[DESCRIPTION]
+Fixed bug in unreflection of empty VarArrays.
+
+[ENTRY]
+Module: linear
+What:   bug
+Rank:   major
+[DESCRIPTION]
+Fixed overflow checking error in linear constraints.
+
+[ENTRY]
+Module: minimodel
+What:   new
+Rank:   minor
+[DESCRIPTION]
+Added sqrt function.
+
+[ENTRY]
+Module: int
+What:   new
+Rank:   minor
+[DESCRIPTION]
+Added sqrt propagator.
+
+[ENTRY]
+Module: int
+What:   new
+Rank:   minor
+[DESCRIPTION]
+Added sqr post function.
+
+[ENTRY]
+Module: int
+What:   bug
+Rank:   minor
+[DESCRIPTION]
+The overloaded versions of dom for variable arrays could not be
+resolved automatically.
+
+[ENTRY]
+Module: int
+What:   new
+Rank:   minor
+[DESCRIPTION]
+Added missing branching for INT_VAR_SIZE_DEGREE_MIN and
+INT_VAR_SIZE_DEGREE_MAX for Boolean variables.
+
+[ENTRY]
+Module: minimodel
+What:   bug
+Rank:   major
+Thanks:	Stanimir Dragiev
+[DESCRIPTION]
+Fixed bug in posting linear expressions.
+
+[ENTRY]
+Module: int
+What:   performance
+Rank:   minor
+[DESCRIPTION]
+IntSet have been reimplemented for efficiency.
+
+[ENTRY]
+Module: other
+What:   documentation
+Rank:   minor
+Thanks: Martin Mann
+[DESCRIPTION]
+Function prototypes are now highlighted in the detailed function documentation.
+
+[ENTRY]
+Module: int
+What:   removed
+Rank:   minor
+[DESCRIPTION]
+The offset arguments for element constraints have been removed, as you can 
+simply add dummy elements to the array to achieve the same effect.
+
+[ENTRY]
+Module: set
+What:   removed
+Rank:   minor
+[DESCRIPTION]
+The offset arguments for selection constraints have been removed, as you can 
+simply add dummy elements to the array to achieve the same effect.
+
+[ENTRY]
+Module: other
+What:   new
+Rank:   major
+[DESCRIPTION]
+The serialization library now contains a registry of all the %Gecode post 
+functions. This makes interfacing to %Gecode much easier. The registry is 
+automatically generated from the post functions defined in gecode/int.hh and 
+gecode/set.hh.
+
+[ENTRY]
+Module: kernel
+What:   change
+Rank:   minor
+[DESCRIPTION]
+Cleaned up reflection. Unreflection is now part of the kernel instead of the 
+serialization library. Branchings now provide a human-readable description of 
+a BranchingDesc. The name function of a Propagator has been renamed to ati 
+(actor type identifier). All reflection is now const where possible. 
+Unreflection of variables now checks dynamically that the variable types 
+match. Unreflection of propagators checks the number of arguments. A 
+tutorial-style section on reflection has been added to the documentation.
+
+[ENTRY]
+Module: set
+What:   change
+Rank:   major
+[DESCRIPTION]
+The limits for set variables have been moved from Limits::Set to
+Set::Limits.
+
+The range of set variables has been adapted to the range of
+integer variables.  For example, on a standard machine
+(regardless of 32 or 64 bits), a set can hold values from -2^30+2
+to 2^30-2, its maximum cardinality therefore is 2^31-3.
+
+[ENTRY]
+Module: int
+What:   change
+Rank:   major
+[DESCRIPTION]
+The limits for set variables have been moved from Limits::Set to
+Set::Limits.
+
+The range of integer variables have been extended by one bit. For
+example, on a standard machine (regardless of 32 or 64 bits), the
+largest possible integer value for an integer variable is 2^31-2,
+the smallest -2^31+2. With other words, only the integer values
+2^31-1, -2^31, and -2^31+1 are missing from the two-complement
+representation (and we will never use these values for the sake
+of mental sanity. We promise.).
+
+[ENTRY]
+Module: int
+What:   bug
+Rank:   minor
+[DESCRIPTION]
+Distinct with integer offsets checks accurately for overflow now.
+
+[ENTRY]
+Module: int
+What:   performance
+Rank:   minor
+[DESCRIPTION]
+Boolean variables consume 20% less memory.
+
+[ENTRY]
+Module: kernel
+What:   change
+Rank:   major
+[DESCRIPTION]
+Only stable and non-failed spaces can be cloned, otherwise
+Space::clone raises an exception. This makes cloning and
+propagation fully orthogonal. To emulate the old behavior, just
+execute Space::status before Space::clone.
+
+[ENTRY]
+Module: kernel
+What:   change
+Rank:   minor
+[DESCRIPTION]
+The number of propagators and branchings can be accurately
+retrieved from both failed and non-stable spaces.
+
+[ENTRY]
+Module: examples
+What:   new
+Rank:   minor
+[DESCRIPTION]
+Added an example that interprets a JavaScript program and runs a search of the 
+model that the program encodes. This is an example of how to use the 
+JavaScript interpreter. A simple JavaScript model for n-Queens has been added, 
+too.
+
+[ENTRY]
+Module: kernel
+What:   new
+Rank:   minor
+[DESCRIPTION]
+A generic variable class has been added that can be used for interfacing. It 
+can store arbitrary %Gecode variables (e.g. IntVar and SetVar), and cast them 
+back using a run-time type check. The update, reflection, and output 
+operations are implemented through the reflection registry.
+
+[ENTRY]
+Module: other
+What:   new
+Rank:   major
+[DESCRIPTION]
+(De-)Serialization to and from JavaScript added.
+
+[ENTRY]
+Module: other
+What:   change
+Rank:   major
+[DESCRIPTION]
+Both the cost and propagate function of a propagator take the
+current modification event delta as input. Likewise,
+retrieving the modification event for a particular View must use
+the static function View::me with the passed
+modification event delta. Again, this feature committed the kernel to a
+particular implementation which might not be available in the
+future.
+
+[ENTRY]
+Module: kernel
+What:   change
+Rank:   minor
+[DESCRIPTION]
+Views and variables do not any longer reveal whether they have
+been modified: this feature committed the kernel to a particular
+implementation which might not be available in the future.
+
+[ENTRY]
+Module: example
+What:   new
+Rank:   minor
+[DESCRIPTION]
+Simple Singleton Arc Consistency pre-processing has been added as an
+optional step for examples.
+
+[ENTRY]
+Module: kernel
+What:   change
+Rank:   major
+[DESCRIPTION]
+The kernel has undergone some cleanups and improvements (much of
+it got actually reimplemented):
+ - Automatically generated stubs for variable implementations are directly
+   inlined into the kernel. This improves performance, but more
+   importantly, lifts some limits on the number of variables. Now, the
+   only limit is that the sum of the ceiling of the logarithms of the 
+   number of modification events of all variables does not exceed 32
+   (as an estimate, the kernel now can handle around 10 to 16 variable
+   types). Moreover, if the need for more variable types arises this is 
+   straightforward to do.
+ - The addition of new variable types for users has been simplified.
+ - The main propagation loop has been entirely rewritten (much much simpler).
+   Now, the kernel does not optimize any longer for the case that a
+   variable is modified more than once during propagator execution.
+   While this changes the asymptotic complexity, it reduces the propagator
+   execution overhead by up to 30%. And a propagator is still free
+   to make sure that a variable is modified only once (many propagators
+   do that already).
+ - Variable implementations became smaller by one word. Now variable
+   implementations are optimal in the sense that no additional memory
+   is needed for cloning or book-keeping, the memory required for 
+   propagation is sufficient.
+ - Spaces have lost some weight as memory for datastructures only used
+   during cloning or propagation are shared (saves some 25% of memory
+   per space).
+
+[ENTRY]
+Module: kernel
+What:   change
+Rank:   major
+[DESCRIPTION]
+Propagator modification events have been renamed to modification event
+deltas (because that is what they are).
+
+[ENTRY]
+Module: kernel
+What:   change
+Rank:   minor
+[DESCRIPTION]
+To not confuse variable implementations with variables, variable
+implementations are now always called VarImp, and not Variable.
+
+[ENTRY]
+Module: gist
+What:   new
+Rank:   major
+[DESCRIPTION]
+The %Gecode Interactive Search Tool (Gist), a Qt-based graphical search 
+engine, is now part of the main %Gecode distribution. It is currently included
+as an experimental beta preview and may not be completely stable yet.
+
+
+[RELEASE]
+Version: 2.0.1
+Date:    2008-02-07
+[DESCRIPTION]
+This is a bug-fix only release. Very unfortunately, it fixes
+three serious bugs in search (LDS, Restart, and assignment
+branchings). We highly encourage you to switch to Gecode 2.0.1 as
+soon as possible.
+
+[ENTRY]
+Module: test
+What:   bug
+Rank:   minor
+[DESCRIPTION]
+Fixed memory leak in reflection tests.
+
+[ENTRY]
+Module: set
+What:   bug
+Rank:   minor
+[DESCRIPTION]
+Fixed memory leak in set projection propagators.
+
+[ENTRY]
+Module: int
+What:   bug
+Rank:   minor
+[DESCRIPTION]
+Fixed memory leak in IntSet.
+
+[ENTRY]
+Module: test
+What:   new
+Rank:   major
+[DESCRIPTION]
+Added comprehensive tests for all search engines.
+
+[ENTRY]
+Module: search
+What:   bug
+Rank:   major
+[DESCRIPTION]
+Assignment branchings wrongly reported that they feature two alternatives
+rather than one.
+
+[ENTRY]
+Module: search
+What:   bug
+Rank:   major
+Thanks: Stefano Gualandi
+[DESCRIPTION]
+LDS had numerous quirks. It has been fixed and greatly improved:
+it detects when the entire search tree has been probed,
+independent of the maximal discrepancy.
+
+[ENTRY]
+Module: search
+What:   bug
+Rank:   major
+Thanks: Stefano Gualandi
+[DESCRIPTION]
+Restart was broken in case the problem failed immediately with
+propagation only, both when being initialized or when requesting
+a next solution.
+
+[ENTRY]
+Module: iter
+What:   bug
+Rank:   minor
+Thanks: David Barton
+[DESCRIPTION]
+Changed Ranges::Diff to make older versions of gcc happy.
+
+[ENTRY]
+Module: other
+What:   bug
+Rank:   minor
+Thanks: David Barton
+[DESCRIPTION]
+Fixed linking order so that static linking works again.
+
+[ENTRY]
+Module: int
+What:   new
+Rank:   minor
+Thanks:	Mohamad Rabbath
+[DESCRIPTION]
+Re-added reified linear constraints for Boolean variables.
+
+[ENTRY]
+Module: int
+What:   bug
+Rank:   minor
+[DESCRIPTION]
+Domain-consistent abs could crash in certain (extremely rare) border cases.
+
+[ENTRY]
+Module: kernel
+What:   bug
+Rank:   major
+[DESCRIPTION]
+Static initialization order was undefined, making reflection work unreliably. 
+In particular, linking Gecode statically did not work.
+
+[ENTRY]
+Module: int
+What:   bug
+Rank:   minor
+[DESCRIPTION]
+Initializing an IntVar with an empty IntSet did not throw the appropriate 
+exception but crashed.
+
+[ENTRY]
+Module: kernel
+What:   bug
+Rank:   minor
+[DESCRIPTION]
+Exceptions did not have rtti information when compiled with gcc and 
+visibility, which meant that they could not be caught.
+
+[ENTRY]
+Module: example
+What:   bug
+Rank:   minor
+Thanks:	Helmut Simonis
+[DESCRIPTION]
+Fixed a bug and quirk in %Kakuro puzzles.
+
+[ENTRY]
+Module: kernel
+What:   change
+Rank:   minor
+[DESCRIPTION]
+The VarMapIter can now return both a specification and the actual VarBase* of 
+the currently iterated variable.
+
+[ENTRY]
+Module: other
+What:   bug
+Rank:   minor
+[DESCRIPTION]
+Revived boost serialization.  The serialization functions will be compiled if 
+Gecode is configured with --with-boost.
+
+[ENTRY]
+Module: kernel
+What:   performance
+Rank:   minor
+[DESCRIPTION]
+Be less aggressive in increasing size of heap chunks.
+
+[ENTRY]
+Module: int
+What:   documentation
+Rank:   minor
+[DESCRIPTION]
+Fixed bug in documentation of table-based extensional constraint.
+
+[ENTRY]
+Module: kernel
+What:   bug
+Rank:   minor
+[DESCRIPTION]
+Fixed a bug in the hash function for pointers, which could return
+negative array indices.
+
+
+
+[RELEASE]
+Version: 2.0.0
+Date:    2007-11-14
+[DESCRIPTION]
+As witnessed by the version number change, this is a major
+release with too many changes, fixes, and additions to mention
+them all: please consult the changelog.
+
+The highlights are:
+ - New propagators: channeling between Integer variable and array
+   of Boolean variables, circuit, table constraint (extensional),
+   incremental regular constraint (extensional), incremental
+   Boolean linear constraints
+ - Boolean variables have a dedicated implementation: twice as
+   fast, half the memory
+ - Advisors for incremental propagation (see: Lagerkvist,
+   Schulte, Advisors for Incremental Propagation, CP 2007)
+ - Many crucial performance and scalability improvements: memory
+   management, memory footprint of propagators
+ - Many cleanups and more documentation, many new examples
+ - New set variables with complete domain representation
+   (CpltSetVar) [experimental]
+ - A reflection API to query spaces about their propagators
+   [experimental]
+
+The features marked as experimental are all functional, but might
+be revised in the next releases.
+ 
+As %Gecode 2.0.0 is a major release, you might have to adapt your
+programs:  \ref PageHowToChange_2 "How to Change to Gecode 2.0.0".
+
+[ENTRY]
+Module: int
+What:   new
+Rank:   major
+[DESCRIPTION]
+Added table-based extensional constraint.
+
+[ENTRY]
+Module: other
+What:   new
+Rank:   minor
+[DESCRIPTION]
+When compiling with gcc, the default visibility of symbols in the
+generated dynamic library is set to hidden.
+
+[ENTRY]
+Module: set
+What:   removed
+Rank:   minor
+[DESCRIPTION]
+Removed buggy distinct propagator for finite sets.
+
+[ENTRY]
+Module: example
+What:   new
+Rank:   minor
+Thanks:	Helmut Simonis
+[DESCRIPTION]
+New example: %Kakuro puzzles.
+
+[ENTRY]
+Module: other
+What:   new
+Rank:   minor
+Thanks: Martin Mann
+[DESCRIPTION]
+Added dist and distdir targets for creating source distribution.
+
+[ENTRY]
+Module: other
+What:   new
+Rank:   minor
+Thanks: Filip Konvicka
+[DESCRIPTION]
+On windows with MSVC, always build program database files to ease
+debugging of applications using %Gecode (files are also included in
+packages).
+
+[ENTRY]
+Module: int
+What:   new
+Rank:   minor
+[DESCRIPTION]
+Added new variable selection based on largest or smallest
+quotient of size and degree.
+
+[ENTRY]
+Module: other
+What:   new
+Rank:   minor
+[DESCRIPTION]
+Variable arrays, view arrays, and argument arrays can directly be
+printed on standard output streams.
+
+[ENTRY]
+Module: other
+What:   change
+Rank:   minor
+[DESCRIPTION]
+The structure of includes has been drastically
+simplified. Support for iterators ("gecode/iter.hh") is
+automatically included with integers ("gecode/int.hh") and sets
+("gecode/set.hh"). Likewise, all support functionality becomes
+available by including "gecode/support.hh" (one can assume that
+this is included in "gecode/kernel.hh").
+
+[ENTRY]
+Module: kernel
+What:   change
+Rank:   minor
+[DESCRIPTION]
+Shared arrays are now available in the kernel (where they properly
+belong). This entails that they are available in the Gecode
+namespace and not in Gecode::Support.
+
+[ENTRY]
+Module: int
+What:   change
+Rank:   minor
+[DESCRIPTION]
+The extensional constraint specified by a DFA or a regular
+expression (formerly known as regular) is now named "extensional"
+rather than "regular".
+
+[ENTRY]
+Module: minimodel
+What:   bug
+Rank:   minor
+[DESCRIPTION]
+Fixed small quirk in posting an absolute propagator via a function.
+
+[ENTRY]
+Module: set
+What:   new
+Rank:   minor
+[DESCRIPTION]
+Added channeling propagator between a SetVar and a BoolVarArray
+that propagates the characteristic function of the set to the
+Boolean variables.
+
+[ENTRY]
+Module: set
+What:   performance
+Rank:   minor
+[DESCRIPTION]
+Changed the datastructure for set variables to use singly-linked
+lists.
+
+[ENTRY]
+Module: other
+What:   change
+Rank:   minor
+[DESCRIPTION]
+The values (and types) for selecting how to branch have been made
+uniform for all variables types: they start with INT_ (or SET_ or
+CPLTSET_), followed by either VAL or VAR and the respective
+strategy.
+
+[ENTRY]
+Module: int
+What:   change
+Rank:   minor
+[DESCRIPTION]
+The interface for the global cardinality constraint has been simplified.
+The constraint is now called count.
+
+[ENTRY]
+Module: int
+What:   change
+Rank:   minor
+[DESCRIPTION]
+Regular expressions (REG) have been moved from the integer module to
+the minimodel module.
+
+[ENTRY]
+Module: example
+What:   change
+Rank:   major
+[DESCRIPTION]
+Most examples have been cleaned up.
+
+[ENTRY]
+Module: example
+What:   change
+Rank:   minor
+[DESCRIPTION]
+Parsing of commandline arguments has been completely redone and
+is much more extensible and flexible.
+
+[ENTRY]
+Module: other
+What:   change
+Rank:   minor
+[DESCRIPTION]
+All of %Gecode has been put under the MIT license (which the
+previous license was a simple rewording of).
+
+[ENTRY]
+Module: other
+What:   bug
+Rank:   minor
+[DESCRIPTION]
+Removed huge number of casts that could (only potentially)
+compromise portability.
+
+[ENTRY]
+Module: set
+What:   new
+Rank:   minor
+[DESCRIPTION]
+Finite set projectors can now be specified using formulas, in addition to
+set expressions.
+
+[ENTRY]
+Module: cpltset
+What:   new
+Rank:   major
+[DESCRIPTION]
+Finite integer set variables with complete domain representation,
+based on binary decision diagrams (BDDs), have been added as a
+new variable type.
+
+[ENTRY]
+Module: kernel
+What:   new
+Rank:   major
+[DESCRIPTION]
+A reflection API has been added, which allows querying spaces 
+about the variables and propagators they contain.
+
+[ENTRY]
+Module: kernel
+What:   bug
+Rank:   major
+[DESCRIPTION]
+Branching ids were not properly initialized. This was a serious
+problem if you posted branchings in spaces other than the root
+space.
+
+[ENTRY]
+Module: int
+What:   change
+Rank:   major
+[DESCRIPTION]
+Iterator-based domain operations have been renamed,
+reimplemented, and extended. Now operations for both range and
+value iterators are supported and the operations can be told to
+perform more efficient destructive updates.
+
+[ENTRY]
+Module: int
+What:   change
+Rank:   minor
+[DESCRIPTION]
+Sortedness constraints have been renamed to sorted constraints.
+
+[ENTRY]
+Module: kernel
+What:   change
+Rank:   minor
+[DESCRIPTION]
+VarArrays can now be resized dynamically.
+
+[ENTRY]
+Module: int
+What:   performance
+Rank:   major
+[DESCRIPTION]
+Boolean linear equations and inequalities with constant
+right-hand sides use constant time propagators whenever
+appropriate (linear time with less overhead and memory for
+propagators with few variables).
+
+[ENTRY]
+Module: kernel
+What:   new
+Rank:   major
+[DESCRIPTION]
+Added advisors as an abstraction for incremental propagation:
+advisors are executed for their propagator whenever their view
+changes. Advisors, when not being used, add one word of overhead
+to each variable and slow down the system in the worst case by
+less than 1%. In average, no slowdown can be observed.
+
+[ENTRY]
+Module: int
+What:   bug
+Rank:   minor
+[DESCRIPTION]
+Fixed a border-case bug for n-ary Boolean conjunction and disjunction.
+
+[ENTRY]
+Module: kernel
+What:   new
+Rank:   minor
+[DESCRIPTION]
+A new propagation condition PC_GEN_NONE (and hence, PC_INT_NONE,
+...) has been introduced. Propagator patterns with this
+propagation condition now do not create any subscriptions.
+
+[ENTRY]
+Module: int
+What:   performance
+Rank:   major
+[DESCRIPTION]
+The regular constraint has been reimplemented, the new version
+runs more than twice as fast.
+
+[ENTRY]
+Module: example
+What:   new
+Rank:   minor
+[DESCRIPTION]
+Added a model for the traveling salesman problem, mostly
+intended to exercise the new circuit constraint (as the model is not
+very competitive).
+
+[ENTRY]
+Module:	kernel
+What:	new
+Rank:	major
+[DESCRIPTION]
+Support for reference-counted shared objects added: they handle
+both reference counting as well as non-shared copying. This fixes
+some bugs with the handling of shared arrays, integer sets, and
+finite automata.
+
+
+[ENTRY]
+Module:	example
+What:	bug
+Rank:	minor
+[DESCRIPTION]
+Examples reported wrong number of propagator invocations (the
+invocations for problem setup were missing).
+
+[ENTRY]
+Module:	kernel
+What:	new
+Rank:	major
+[DESCRIPTION]
+Added classes for shared objects and handles. Handles to shared
+objects allow to either share copies among spaces when being
+copied or to create a new shared copy, if requested.
+
+[ENTRY]
+Module:	int
+What:	new
+Rank:	minor
+Thanks:	Martin Mann
+[DESCRIPTION]
+Added a new version of count (and also atleast, atmost, exactly)
+that counts the number of variables equal to integers in an
+array.
+
+[ENTRY]
+Module:	example
+What:	bug
+Rank:	minor
+Bug:	50
+[DESCRIPTION]
+The number of colors in graph-color was off by one.
+
+[ENTRY]
+Module:	int
+What:	new
+Rank:	major
+[DESCRIPTION]
+Added channel constraints that channel an integer variable to
+either a single or an array of Boolean variables.
+
+[ENTRY]
+Module:	int
+What:	bug
+Rank:	minor
+[DESCRIPTION]
+Fixed bug in copying of n-ary or-propagator for a special boundary case.
+
+[ENTRY]
+Module:	int
+What:	new
+Rank:	minor
+[DESCRIPTION]
+Relaxed sharing restrictions for channel, in particular 
+channel(this, x, x) is allowed.
+
+[ENTRY]
+Module:	int
+What:	new
+Rank:	major
+[DESCRIPTION]
+Added propagators for the circuit constraint.
+
+[ENTRY]
+Module:	kernel
+What:	performance
+Rank:	minor
+[DESCRIPTION]
+Improved automatic memory management on Windows platforms.
+
+[ENTRY]
+Module:	int
+What:	performance
+Rank:	minor
+[DESCRIPTION]
+Domain consistent distinct and channel allocate memory from the
+space heap now. Much simpler.
+
+[ENTRY]
+Module:	int
+What:	change
+Rank:	minor
+[DESCRIPTION]
+The Boolean tell operations one_none and zero_none now also
+return a ModEvent and hence must be checked for failure. This is
+needed for simpler advisors.
+
+[ENTRY]
+Module:	kernel
+What:	performance
+Rank:	major
+[DESCRIPTION]
+The memory management policies have been completely reworked. Now
+memory requests are much more regular. Hence, memory is much more
+likely to be returned to the operating system. Furthermore, the
+flush member functions for actors have been removed (they were
+unneeded) and actors and spaces now have allocated member
+functions for returning how much memory is allocated by a space.
+
+Moreover, the memory reported by some propagators has been
+ignored. Note that this flaw did not affect the benchmark figures
+on the %Gecode webpage.
+
+[ENTRY]
+Module:	int
+What:	performance
+Rank:	minor
+[DESCRIPTION]
+The multiplication uses integer precision if possible for better
+performance.
+
+[ENTRY]
+Module:	int
+What:	change
+Rank:	minor
+[DESCRIPTION]
+Integer and Boolean variables are now guaranteed to be
+inspectable (that is, all const member functions work on them),
+even though a space is failed. However, the variables might have
+been modified during a tell operation that has failed.
+
+[ENTRY]
+Module:	minimodel
+What:	change
+Rank:	major
+[DESCRIPTION]
+Linear expressions and relations can also be created from Boolean
+variables, with the restriction that Boolean relations cannot be
+reified.
+
+[ENTRY]
+Module:	int
+What:	change
+Rank:	major
+[DESCRIPTION]
+Boolean variables (and hence Boolean views) do not any longer
+share the implementation with integer variables. That has the
+following consequences:
+- Boolean variables are not any longer integer variables. The same
+  holds true for arrays of variables.
+- All constraints that make sense for both Boolean and integer
+  variables have post functions that support both integer and
+  Boolean variables.
+- Memory for Boolean variables is reduced by 50% and performance
+  increases in problems with many Boolean variables by up to 50%.
+
+[ENTRY]
+Module:	int
+What:	new
+Rank:	major
+[DESCRIPTION]
+Added propagators for linear constraints over Boolean variables,
+in particular specialized and efficient versions for non-unit
+coefficients.
+
+[ENTRY]
+Module:	int
+What:	change
+Rank:	minor
+[DESCRIPTION]
+The linear constraints are now more careful (that is, they will
+use more efficient versions more often if it is safe) to
+determine whether overflow occurs and which precision (integer or
+double) should be chosen.
+
+[ENTRY]
+Module:	int
+What:	change
+Rank:	minor
+[DESCRIPTION]
+The element constraints now accept an additional offset argument.
+
+[ENTRY]
+Module:	set
+What:	new
+Rank:	minor
+[DESCRIPTION]
+Added selection and reified relation constraints with constant sets.
+
+[ENTRY]
+Module:	set
+What:	change
+Rank:	minor
+[DESCRIPTION]
+Slightly stronger inferences for the finite set sequence and selection
+constraints.
+
+[ENTRY]
+Module: example
+What:   new
+Rank:   minor
+[DESCRIPTION]
+New example: the balanced academic curriculum problem (problem 030 from
+CSPlib).
+
+[ENTRY]
+Module: set
+What:   bug
+Rank:   minor
+[DESCRIPTION]
+Fixed the n-ary partition propagator to handle overflow of the sum of
+cardinalities correctly.
+
+[ENTRY]
+Module: kernel
+What: 	bug
+Rank: 	minor
+[DESCRIPTION]
+Subscription to constant views now should use the propagate
+member function from a variable implementation: it guarantees
+execution of a propagator at least once (int and set views have
+been adopted accordingly).
+
+[ENTRY]
+Module: int
+What: 	bug
+Rank: 	major
+Bug:	48
+[DESCRIPTION]
+Branching on maximum regret would always crash on non-range domains.
+
+[ENTRY]
+Module: set
+What: 	change
+Rank: 	minor
+[DESCRIPTION]
+The finite set selection propagators accept an additional
+argument that specifies where the indexing should start. It
+should make some models more natural to express, and helps in
+porting code from other systems, such as Prolog or Mozart.  In
+addition, the selectUnion propagator is now hand-written again,
+resulting in better performance.
+
+[ENTRY]
+Module: int
+What:   change
+Rank:   major
+[DESCRIPTION]
+All Boolean constraints got a new and regular interface. Rather
+than providing different post functions for the different
+constraints, the single post function rel is used: the Boolean
+operation then is described by a value of type BoolOpType. In
+addition, all Boolean propagators have been reimplemented for
+better performance and less memory use.
+
+[ENTRY]
+Module: test
+What:   new
+Rank:   minor
+[DESCRIPTION]
+Added simple testing for branchings.
+
+[ENTRY]
+Module: kernel
+What:   change
+Rank:   major
+[DESCRIPTION]
+The way how propagators report subsumption and partial fixpoints
+has changed. Now, a propagator must first call dispose (which
+then cancels subscriptions and possibly frees external resources)
+and only then can return that the propagator is subsumed. For
+that purpose a new function Gecode::ES_SUBSUMED has been
+defined. Likewise, ES_FIX_PARTIAL and ES_NOFIX_PARTIAL are
+functions rather than member functions of Gecode::Propagator. The
+benefit is that this saves memory and is more efficient.
+
+[ENTRY]
+Module: int
+What:   change
+Rank:   minor
+[DESCRIPTION]
+The use of the consistency options were a little confusing, now
+the rule is: the level of consistency increases from ICL_VAL to
+ICL_BND to ICL_DOM.
+
+[ENTRY]
+Module: minimodel
+What:   performance
+Rank:   minor
+[DESCRIPTION]
+Boolean expressions erroneously decomposed into ternary Boolean
+constraints, while not incorrect rather inefficient for large
+Boolean expressions.
+
+[ENTRY]
+Module: kernel
+What:   change
+Rank:   minor
+[DESCRIPTION]
+Made all macros type safe.
+
+[ENTRY]
+Module: kernel
+What:   new
+Rank:   major
+[DESCRIPTION]
+Added macro GECODE_REWRITE for rewriting propagators. It is strongly advised
+to always use this macro!
+
+[ENTRY]
+Module: example
+What:   bug
+Rank:   minor
+Bug:    46
+[DESCRIPTION]
+Orientation of Sudokus now match the orientation in the specification-file.
+
+[ENTRY]
+Module: example
+What:   new
+Rank:   minor
+[DESCRIPTION]
+New example: MineSweeper.
+
+[ENTRY]
+Module: example
+What:   new
+Rank:   minor
+[DESCRIPTION]
+New example: Domino.
+
+[ENTRY]
+Module: set
+What:   bug
+Rank:   minor
+[DESCRIPTION]
+Set projectors could subscribe with bogus propagation conditions.
+
+[ENTRY]
+Module: set
+What:   performance
+Rank:   minor
+[DESCRIPTION]
+Performance of the tell operations on finite set variables was
+improved.  Especially the intersect operation benefits from this.
+
+[ENTRY]
+Module: int
+What:   new
+Rank:   minor
+[DESCRIPTION]
+The element constraint now also supports integer values as result.
+
+[ENTRY]
+Module: kernel
+What:   new
+Rank:   minor
+[DESCRIPTION]
+Add a generic class for assignments during search (similar to
+generic branchings for views and values).
+
+[ENTRY]
+Module: int
+What:   change
+Rank:   minor
+[DESCRIPTION]
+All branching classes for value and view selection are now
+parametric.
+
+[ENTRY]
+Module: int
+What:   change
+Rank:   minor
+[DESCRIPTION]
+Boolean variables cannot longer be initialized from an integer 
+variable. If needed, a channel propagator must be posted (added).
+
+[ENTRY]
+Module: int
+What:   change
+Rank:   minor
+[DESCRIPTION]
+The equality constraints have been replaced by a variant of rel.
+
+[ENTRY]
+Module: kernel
+What:   change
+Rank:   minor
+[DESCRIPTION]
+The propagator abstractions Inhom* have been renamed to Mix*.
+
+[ENTRY]
+Module: int
+What:   change
+Rank:   minor
+[DESCRIPTION]
+The operations t_one, t_one_none, t_zero, t_zero_none for Boolean
+views have been renamed to one, one_none, zero, zero_none.
+
+[ENTRY]
+Module: kernel
+What:   performance
+Rank:   major
+[DESCRIPTION]
+Explicit disposal of actors has been reimplemented (the old
+design was nothing but darn stupid). The memory overhead of
+propagators is reduced by 40% for most propagators and 20% for
+all. That is, a binary propagator takes 30% less memory and a
+ternary propagator takes 25% less memory. Programs with many
+binary or ternary propagators can run up to 20% faster.
+
+[ENTRY]
+Module: kernel
+What:   change
+Rank:   minor
+[DESCRIPTION]
+Propagators and branchings that require disposal when a space is
+deleted must now be explicitly registered via a force function
+and explicitly deregistered by an unforce function.
+
+[ENTRY]
+Module: int
+What:   bug
+Rank:   minor
+[DESCRIPTION]
+Fixed memory leak in reified dom constraint.
+
+[ENTRY]
+Module: set
+What:   bug
+Rank:   minor
+[DESCRIPTION]
+Fixed memory leak in distinct constraint for sets.
+
+[ENTRY]
+Module: example
+What:   new
+Rank:   major
+[DESCRIPTION]
+New example: Pentominoes. The example uses extensional
+constraints specified as regular expressions to place
+irregular-shaped pieces on a board.
+
+
+
+[RELEASE]
+Version:	1.3.1
+Date:		2006-10-25
+[DESCRIPTION]
+This is a minor release which fixes a major bug (the first real
+serious bug). Please update as soon as possible.
+
+[ENTRY]
+Module: kernel
+What:   bug
+Rank:   major
+Thanks: Rafael Meneses
+[DESCRIPTION]
+Branch&Bound search with ViewValBranchings (all standard branchings) together 
+with batch recomputation was severely broken. The problems ranged from wrong 
+search trees (missing solutions) to segmentation faults. The fix changes the 
+way assigned variables are removed from the array in a ViewValBranching.
+
+[ENTRY]
+Module: int
+What:   bug
+Rank:   minor
+[DESCRIPTION]
+Bounds-consistent distinct catches border case when an assigned variable
+during bounds propagation leads to value removal for value propagation.
+
+[ENTRY]
+Module: int
+What:   performance
+Rank:   minor
+[DESCRIPTION]
+Bounds-consistent distinct eliminates assigned variables more 
+aggressively (can save up to 10% runtime in some cases).
+
+[ENTRY]
+Module: int
+What:   bug
+Rank:   minor
+Thanks:	Alejandro Arbelaez
+[DESCRIPTION]
+IntVar::init now also raises exceptions for illegal domain specifications.
+
+
+
+
+
+[RELEASE]
+Version:	1.3.0
+Date:		2006-09-19
+[DESCRIPTION]
+This release adds a compiler for finite set projectors and provides new
+infrastructure making it easier to add new variable domains. In addition,
+it contains recent bug fixes and minor improvements.
+
+[ENTRY]
+Module: set
+What:   new
+Rank:   major
+[DESCRIPTION]
+Compiler for finite set projectors. Given a specification of a finite set
+constraint as a projector set, it generates C++ code for the corresponding
+propagator. Together with the dynamic propagator for finite set projectors,
+this implements the backend of the technique described in the paper
+"Generating Propagators for Finite Set Constraints" (Tack, Schulte,
+Smolka; CP 2006.).
+
+[ENTRY]
+Module: other
+What:   new
+Rank:   minor
+Thanks:	Jorge Marques Pelizzoni
+[DESCRIPTION]
+Also pass options for linking standard libraries for MSVC.
+
+[ENTRY]
+Module: other
+What:   bug
+Rank:   minor
+[DESCRIPTION]
+The pkg-config files now contain the correct path if you configured to the
+default prefix (i.e. /usr/local).
+
+[ENTRY]
+Module: minimodel
+What:   new
+Rank:   minor
+[DESCRIPTION]
+Added aliases lex, atleast, atmost, and exactly for the count constraint.
+
+[ENTRY]
+Module: int
+What:   change
+Rank:   minor
+[DESCRIPTION]
+Renamed lex constraint to rel (as it also supports equality and disequality).
+
+[ENTRY]
+Module: int
+What:   performance
+Rank:   minor
+[DESCRIPTION]
+Make count constraints with integer number of equal occurrences
+more incremental using dynamic subscriptions (gives a 20-30%
+speedup).
+
+[ENTRY]
+Module: example
+What:   new
+Rank:   minor
+[DESCRIPTION]
+Added an example for solving Black Hole patience games.
+
+[ENTRY]
+Module: kernel
+What:   new
+Rank:	major
+[DESCRIPTION]
+Subscription to variables now features an additional and optional
+Boolean argument whether the propagator is to be processed. This
+allows dynamically creation of subscriptions during propagation.
+
+[ENTRY]
+Module: other
+What:   new
+Rank:	minor
+[DESCRIPTION]
+New configure switches: --enable-audit to include audit code, which may
+contain expensive checks of internal invariants or alternative, checked
+implementations of critical parts of %Gecode. --enable-universal and 
+--with-sdk, to support building universal binaries on Mac OS X.
+
+[ENTRY]
+Module: kernel
+What:	new
+Rank:	minor
+[DESCRIPTION]
+Variables can now be deallocated when the Space is deallocated (for example in 
+case of failure). This is important in case a variable implementation needs to 
+reference external resources. Deallocation can be switched on in the 
+high-level description used for generating the variable implementation.
+
+[ENTRY]
+Module: minimodel
+What:	bug
+Rank:	minor
+Thanks:	Rafael Meneses
+[DESCRIPTION]
+Under certain conditions (posting in a failed space), the post function 
+returned uninitialized variables.
+
+[ENTRY]
+Module: kernel
+What: 	performance
+Rank: 	major
+[DESCRIPTION]
+Variable implementations are now generated from a high-level
+description (taking care of all aspects relating to modification
+events and propagation conditions). While simplifying the
+implementation of new variable domains considerably, this also can, 
+in lucky cases, deliver a speed-up of 5%.
+
+[ENTRY]
+Module: kernel
+What: 	performance
+Rank: 	major
+[DESCRIPTION]
+Allocate subscriptions in separate memory area. Can speedup execution
+in some (but few) cases by up to 15-20%.
+
+[ENTRY]
+Module: int
+What: 	documentation
+Rank: 	minor
+Bug:	43
+[DESCRIPTION]
+Fixed documentation problem due to doxygen...
+
+[ENTRY]
+Module: search
+What: 	new
+Rank: 	major
+[DESCRIPTION]
+Branch-and-bound search now interleaves recomputation with adding
+bounding constraints. This can prune the search tree much
+earlier: instead of recomputing many nodes from the same copy
+node and then adding a constraint that fails all these nodes, it
+might be possible to already fail the copy node directly. In
+principle, the difference can be exponential, however for
+examples we tried the effect is minor.
+
+[ENTRY]
+Module: kernel
+What: 	bug
+Rank: 	minor
+[DESCRIPTION]
+Now commits can be interleaved with adding new constraints during
+batch recomputation. This also entails that commit does not raise
+an exception when applied to an already failed space (it is
+simply ignored). The bug could not be observed (unless you did
+some very fancy search engines yourself) and one could actually
+see it as an extension.
+
+
+
+
+[RELEASE]
+Version:	1.2.2
+Date:		2006-07-25
+[DESCRIPTION]
+This release switches recomputation back on and removes some
+experimental code that had sneaked into the system...
+
+[ENTRY]
+Module: kernel
+What: 	performance
+Rank: 	major
+[DESCRIPTION]
+Some experimental code had sneaked into the release, slowing down
+the system by more than 10%...
+
+[ENTRY]
+Module: search
+What: 	bug
+Rank: 	major
+[DESCRIPTION]
+With the changes to search in %Gecode 1.2.1 recomputation was
+actually almost switched off...
+
+[ENTRY]
+Module: int
+What: 	performance
+Rank: 	minor
+[DESCRIPTION]
+Improve performance of domain-consistent distinct (by providing
+special ternary version). Can reduce runtime by 10-20% for some
+examples.
+
+[ENTRY]
+Module: int
+What: 	performance
+Rank: 	minor
+[DESCRIPTION]
+Cut memory requirements for element (for integer arrays) by half.
+
+[ENTRY]
+Module: example
+What: 	new
+Rank: 	minor
+[DESCRIPTION]
+Added stress test for element constraint (originally due to Neng-Fa Zhou).
+
+[ENTRY]
+Module: example
+What: 	new
+Rank: 	minor
+[DESCRIPTION]
+Added stress test for min constraint.
+
+[ENTRY]
+Module: example
+What: 	new
+Rank: 	minor
+[DESCRIPTION]
+Added possibility to stop the search for solutions in examples based
+on the time taken, the number of fails, or both.
+
+[ENTRY]
+Module: example
+What: 	new
+Rank: 	minor
+[DESCRIPTION]
+Added an example for solving Peacable co-existing armies of %Queens.
+
+
+
+[RELEASE]
+Version:	1.2.1
+Date:		2006-07-19
+[DESCRIPTION]
+In addition to the usual fixes and improvements, the biggest
+change is that all branchings now must support branching
+descriptions. This also entails straightforward changes
+(simplifications) to search-related space operations and to the
+implementation of search engines.
+
+
+[ENTRY]
+Module: kernel
+What: 	new
+Rank: 	minor
+[DESCRIPTION]
+Added a macro GECODE_NEVER that assert that this command is never
+executed.  This is preferred over assert(false) as it is used for
+optimization, if supported by a compiler (for example, Microsoft
+Visual C++).
+
+[ENTRY]
+Module: int
+What: 	bug
+Rank: 	minor
+[DESCRIPTION]
+Fixed fixpoint detection bug in n-ary min and max propagators.
+
+[ENTRY]
+Module: int
+What: 	bug
+Rank: 	minor
+[DESCRIPTION]
+Min and max propagators now correctly handle cases such as min(x,y)=x.
+
+[ENTRY]
+Module: int
+What: 	removed
+Rank: 	minor
+[DESCRIPTION]
+Removed bounds-consistent propagation for count constraint (not worth
+the trouble, just use domain-consistent).
+
+[ENTRY]
+Module: kernel
+What: 	change
+Rank: 	minor
+Thanks:	Martin Mann
+[DESCRIPTION]
+The ViewValBranching class now passes the home space to all member
+functions used in selecting the view and the value.
+
+[ENTRY]
+Module: set
+What: 	bug
+Rank: 	minor
+[DESCRIPTION]
+Fixed fixpoint detection for n-ary partition propagator.
+
+[ENTRY]
+Module: set
+What: 	new
+Rank: 	major
+[DESCRIPTION]
+Added finite set projection propagators. They allow to propagate all
+finite set constraints expressible as finite set projectors, including
+negated and reified constraints.
+
+[ENTRY]
+Module: support
+What:   new
+Rank:   minor
+[DESCRIPTION]
+Added simple class encapsulating a linear congruential pseudo-random
+number generator.
+
+[ENTRY]
+Module: kernel
+What:   change
+Rank:   major
+[DESCRIPTION]
+The interface for branchings has changed considerably, reflecting
+the fact now that all branchings must support branching descriptions.
+This is also reflected in the Space::status operation which has its
+arguments reversed and corrected const qualifiers on its arguments.
+But the good news is that it is considerably simpler than before.
+
+[ENTRY]
+Module: int
+What:   bug
+Rank:   minor
+[DESCRIPTION]
+Assignment branchings (that is, branchings with a single alternative)
+could possibly take the wrong values for assignment during recomputation.
+
+[ENTRY]
+Module: kernel
+What:   change
+Rank:   major
+[DESCRIPTION]
+The status operation does not any longer accept an argument for
+the number of alternatives. The number of alternatives is now
+available from a branching description (where it is passed upon
+creation of the description). This reflects the fact that
+branching descriptions are mandatory now.
+
+[ENTRY]
+Module: search
+What:   bug
+Rank:   major
+[DESCRIPTION]
+Fixed a serious bug where during recomputation the search stack
+was always inspected behind the last element: the reason why
+recomputation never crashed has been that stacks always keep one
+element extra for optimization. So, serious bug but looks as if
+no one stumbled over this...
+
+[ENTRY]
+Module: kernel
+What:   bug
+Rank:   minor
+[DESCRIPTION]
+As Boolean variables can be derived from integer variables, the
+assumption that a not yet assigned Boolean variable can not be
+modified is wrong.
+
+[ENTRY]
+Module: other
+What:   documentation
+Rank:   minor
+[DESCRIPTION]
+Generate one page per version released in changelog.
+
+[ENTRY]
+Module: kernel
+What:   change
+Rank:   minor
+Bug:	41
+[DESCRIPTION]
+Change exceptions thrown by %Gecode to be compliant with C++
+exceptions.
+
+[ENTRY]
+Module: other
+What:   bug
+Rank:   minor
+Bug:	42
+[DESCRIPTION]
+Renamed macros so as to avoid nameclashes (all macros start with
+GECODE_).
+
+[ENTRY]
+Module: search
+What:   bug
+Rank:   minor
+[DESCRIPTION]
+Search engines now correctly count the number of propagation
+steps including propagation that occurs when adaptive
+recomputation creates additional clones.
+
+[ENTRY]
+Module: search
+What:   change
+Rank:   major
+[DESCRIPTION]
+Branchings now must return branching descriptions and commit
+operations also insist on being provided with branching
+descriptions.  This change reflects that batch recomputation is
+of vital importance for efficiency in %Gecode.
+
+[ENTRY]
+Module: int
+What:   performance
+Rank:   major
+[DESCRIPTION]
+Make Boolean linear constraints with constant right hand sides
+more incremental using dynamic subscriptions (gives a 20-30% speedup).
+
+[ENTRY]
+Module: minimodel
+What:   performance
+Rank:   minor
+[DESCRIPTION]
+Take advantage of specialized Boolean propagators in Boolean
+expressions and relations.
+
+[ENTRY]
+Module: int
+What:   performance
+Rank:   minor
+[DESCRIPTION]
+Made n-ary Boolean conjunction and disjunction more incremental by
+using dynamic subscriptions.
+
+[ENTRY]
+Module: int
+What:   performance
+Rank:   minor
+[DESCRIPTION]
+Provide special versions of Boolean propagators optimizing cases
+where n-ary disjunctions are true.
+
+[ENTRY]
+Module: int
+What:   performance
+Rank:   minor
+[DESCRIPTION]
+Change implementation of Boolean propagators from conjunction
+to disjunction so that disjunction can be used as special case
+for Boolean sum with inequalities.
+
+
+[RELEASE]
+Version:	1.2.0
+Date:		2006-06-20
+[DESCRIPTION]
+This release makes quite some drastic changes to how propagators
+and branchings are deleted: instead of using destructors they use
+a dispose method that allows passing a home space during deletion
+(we will use this infrastructure measure to speed up cloning
+considerably a little later). Moreover the directory structure
+has changed on popular request so that all include files are to
+be found in a gecode subdirectory. Apart from that, some small
+fixes and extensions due to requests.
+
+[ENTRY]
+Module: set
+What:   bug
+Rank:   minor
+Thanks: Luis Otero
+[DESCRIPTION]
+Fixed memory leak in finite set distinct propagator.
+
+[ENTRY]
+Module: int
+What:   bug
+Rank:   minor
+[DESCRIPTION]
+Fixed memory leak in global cardinality constraint.
+
+[ENTRY]
+Module: int
+What:   bug
+Rank:   minor
+Thanks: Martin Mann
+[DESCRIPTION]
+Fixed bug in equality tests that could lead to reified (dis)equality
+propagators not achieving domain consistency.
+
+[ENTRY]
+Module: test
+What:   new
+Rank:   minor
+[DESCRIPTION]
+Added --enable-leak-debug configure option. This option causes the test suite
+to call mtrace() under Linux, which can be used to test for memory leaks.
+
+[ENTRY]
+Module: kernel
+What:   performance
+Rank:   minor
+[DESCRIPTION]
+More aggressive inlining for canceling subscriptions.
+
+[ENTRY]
+Module: search
+What:   bug
+Rank:   minor
+Bug:	39
+[DESCRIPTION]
+Fixed linkage of BAB destructor under Cygwin.
+
+[ENTRY]
+Module: kernel
+What:   change
+Rank:   minor
+[DESCRIPTION]
+The branch member function for branchings now also takes a home space
+as argument.
+
+[ENTRY]
+Module: kernel
+What:   change
+Rank:   major
+[DESCRIPTION]
+Canceling subscriptions on views and variable implementations now
+require also a home space (this has become possible due to not using
+destructors but ordinary "dispose" member functions).
+
+[ENTRY]
+Module: kernel
+What:   change
+Rank:   major
+[DESCRIPTION]
+Actors (propagators and branchings) do not any longer use destructors
+but a "dispose" member function that takes a home space as argument
+and must return the size of the actor.
+Important: this requires that dispose member functions from super-classes
+and class members are called explicitly!
+	
+[ENTRY]
+Module: kernel
+What:   new
+Rank:   minor
+[DESCRIPTION]
+Spaces can be queried for number of propagators and branchings.
+	
+[ENTRY]
+Module: search
+What:   new
+Rank:   minor
+[DESCRIPTION]
+Search engines can now be checked whether they have been stopped.
+	
+[ENTRY]
+Module: int
+What:   documentation
+Rank:   minor
+Thanks:	Martin Mann
+[DESCRIPTION]
+Fixed bug in description of PC_INT_DOM.
+	
+[ENTRY]
+Module: other
+What:   change
+Rank:   major
+Thanks:	Martin Mann
+[DESCRIPTION]
+Moved library source code into gecode subdirectory. Facilitates cleaner
+installation. Programs compiling against %Gecode now need to include
+e.g. "gecode/int.hh".
+	
+[ENTRY]
+Module: example
+What:   change
+Rank:   minor
+[DESCRIPTION]
+Sudoku example generalized to arbitrarily sized Sudokus.
+
+[RELEASE]
+Version:	1.1.0
+Date:		2006-04-10
+[DESCRIPTION]
+This minor release adds some new constraints (see below), adds support
+for stopping search engines based on definable criteria, and some other
+small fixes. Most notably, the test infrastructure has been extended to
+also check whether propagators correctly claim that they have computed
+a fixpoint (now all invariants a propagator must obey in %Gecode are covered
+by the test infrastructure). This has lead to many small fixes.
+	
+[ENTRY]
+Module: other
+What:   bug
+Bug:    37
+Rank:   minor
+Thanks: Kari Pahula
+[DESCRIPTION]
+Added a configure switch --enable-doc-dot. If enabled, this checks for
+presence of the dot tool (used for generating graphs in the documentation)
+	
+[ENTRY]
+Module: example
+What:   new
+Rank:   minor
+[DESCRIPTION]
+Added all-interval series using distinct.
+
+[ENTRY]
+Module: minimodel
+What:   new
+Rank:   minor
+[DESCRIPTION]
+Added functions returning variables for arithmetic 
+(min, max, abs, mult, plus, minus).
+
+[ENTRY]
+Module: int
+What:   change
+Rank:   minor
+[DESCRIPTION]
+Support for shared views has been removed in 
+sortedness propagator and in the propagator 
+for global cardinality with fixed cardinalities. 
+
+[ENTRY]
+Module: int
+What:   bug
+Rank:   minor
+[DESCRIPTION]
+Fixed bug in fixpoint detection of sortedness and 
+global cardinality propagator.
+
+[ENTRY]
+Module: set
+What:   bug
+Rank:   minor
+Bug:	36
+Thanks: Javier Mena
+[DESCRIPTION]
+A non-debug version of %Gecode could not be linked to a program compiled with
+assertions switched on, as BndSet::isConsistent was missing from the library.
+
+[ENTRY]
+Module: int
+What:   change
+Rank:   minor
+[DESCRIPTION]
+Staged propagation for domain-consistent absolute value propagator
+
+[ENTRY]
+Module: int
+What:   change
+Rank:   minor
+[DESCRIPTION]
+EqBnd and EqDom now take two template parameters for their view types. This
+supports using different views, e.g. to express x0=-x1 using a MinusView.
+
+[ENTRY]
+Module: search
+What:   new
+Rank:   major
+Thanks:	Rafael Meneses
+[DESCRIPTION]
+Added functionality to interrupt search engines (introduced
+a Search::Stop class).
+
+[ENTRY]
+Module: search
+What:   change
+Rank:   major
+[DESCRIPTION]
+Removed search engines optimizing for copying only (after
+all, one should always use some recomputation).
+
+[ENTRY]
+Module: int
+What:   bug
+Rank:   minor
+[DESCRIPTION]
+Fixed bug in fixpoint detection of n-ary maximum/minimum
+propagator.
+
+[ENTRY]
+Module: kernel
+What:   change
+Rank:   minor
+[DESCRIPTION]
+The status member function now also allows the first
+argument to be optional.
+
+[ENTRY]
+Module: set
+What:   bug
+Rank:   minor
+[DESCRIPTION]
+Fixed bugs in fixpoint detection of several set propagators (match,
+convexity, sequence, n-ary (disjoint) union).
+
+[ENTRY]
+Module: int
+What:   bug
+Rank:   minor
+[DESCRIPTION]
+Fixed bug in fixpoint detection of bounds-consistent 
+element for variables propagator.
+
+[ENTRY]
+Module: int
+What:   bug
+Rank:   minor
+[DESCRIPTION]
+Fixed bug in fixpoint detection of bounds-consistent squaring
+propagator (mult with the same variable twice).
+
+[ENTRY]
+Module: int
+What:   bug
+Rank:   minor
+[DESCRIPTION]
+Fixed bug in fixpoint detection of bounds-consistent abs
+propagator.
+
+[ENTRY]
+Module: int
+What:   performance
+Rank:   minor
+[DESCRIPTION]
+Rewrite n-ary linear, min/max, and Boolean propagators to binary/ternary
+variants during cloning if possible (saves memory).
+
+[ENTRY]
+Module: int
+What:   bug
+Rank:   minor
+Thanks: Stefano Gualandi
+[DESCRIPTION]
+Fixed wrong assertion in gcc-bnd propagator.
+
+[ENTRY]
+Module: int
+What:   bug
+Rank:   major
+Thanks: Jean-Christophe Godart
+[DESCRIPTION]
+Fixed indexing bug in SupportSet (part of the domain consistent linear
+equation propagator). 
+
+[ENTRY]
+Module: int
+What:	new
+Rank:	major
+[DESCRIPTION]
+Added new constraint channel for variable/value channeling
+between two variable arrays.
+
+[ENTRY]
+Module: int
+What:	change
+Rank:	minor
+[DESCRIPTION]
+All distinct propagators raise an exception if a variable occurs
+multiply in its arguments.
+
+[ENTRY]
+Module: set
+What:	change
+Rank:	major
+[DESCRIPTION]
+Renamed the set propagators minElement to min, maxElement to max,
+and channelVarVal to channel.
+
+[ENTRY]
+Module: int
+What: 	performance
+Rank: 	major
+[DESCRIPTION]
+Improved initialization of domain-consistent distinct propagator,
+in common cases for distinct this can save up to 10% runtime.
+
+[ENTRY]
+Module: set
+What:	bug
+Rank:	minor
+Thanks: Patrick Pekczynski
+[DESCRIPTION]
+Fixed off-by-one bug in SetVarImp::lubMinN and SetVarImp::lubMaxN.
+
+[ENTRY]
+Module: minimodel
+What:   bug
+Rank:   minor
+Thanks: Olof Sivertsson
+[DESCRIPTION]
+(In-)Equations were still not correct with respect to the sign.
+
+[ENTRY]
+Module: minimodel
+What:   bug
+Rank:   minor
+Bug:    33
+Thanks: Olof Sivertsson
+[DESCRIPTION]
+Slice-operation now returns elements in right order.
+
+[ENTRY]
+Module: minimodel
+What:   bug
+Rank:   minor
+Bug:    32
+Thanks: Olof Sivertsson
+[DESCRIPTION]
+Possible array-out-of bounds access fixed for MiniModel::Matrix.
+
+[ENTRY]
+Module: example
+What:   performance
+Rank:   minor
+[DESCRIPTION]
+Added redundant constraint to social golfers example.
+
+
+
+
+[RELEASE]
+Version:	1.0.1
+Date:		2006-03-01
+[DESCRIPTION]
+Maintenance release including some additions of domain-consistent
+propagators and a fix for a serious bug in reified linear
+inequalities.
+
+[ENTRY]
+Module: search
+What:   change
+Rank:   minor
+[DESCRIPTION]
+Changed default copying recomputation distance to 8.
+
+[ENTRY]
+Module: minimodel
+What:   bug
+Rank:   minor
+Thanks: Olof Sivertsson
+[DESCRIPTION]
+(In-)Equations with an int on the left hand side (like 9==x) were
+translated with a wrong sign (as -9==x).
+
+[ENTRY]
+Module: other
+What:   bug
+Rank:   minor
+Bug:    31
+[DESCRIPTION]
+The preprocessor macro NDEBUG for disabling assertions is no longer
+put into config.hpp. Without this fix, user programs could not use
+assert if %Gecode was compiled with NDEBUG.
+
+[ENTRY]
+Module: minimodel
+What:   new
+Rank:   minor
+[DESCRIPTION]
+The post functions for linear expressions and relations also take
+an integer consistency level as optional argument.
+
+[ENTRY]
+Module: int
+What:   new
+Rank:   major
+[DESCRIPTION]
+Added domain-consistent linear equalities.
+
+[ENTRY]
+Module: int
+What:   bug
+Rank:   minor
+Bug:	30
+[DESCRIPTION]
+Fixed fixpoint detection for ternary min and max.
+
+[ENTRY]
+Module: int
+What:   bug
+Rank:   minor
+[DESCRIPTION]
+Fixed subsumption detection for regular with multiple variable occurences.
+
+[ENTRY]
+Module: int
+What:   change
+Rank:   minor
+[DESCRIPTION]
+Cost computation for sortedness has been changed from static to
+dynamic (taking into account the variable reduction the
+propagator can perform).
+
+[ENTRY]
+Module: int
+What:   change
+Rank:   major
+[DESCRIPTION]
+Global cardinality changed to non-staged version.  Further
+inference for cardinality variables added.  Parts of the graph
+structure for the domain-consistent propagator have been revised
+so as to avoid unnecessary propagation in case of fixed
+cardinalities and to allow better staging for the
+propagator. Revision of propagation for fixed cardinalities has
+also been applied to bounds-consistent propagator.
+
+[ENTRY]
+Module:		int
+What:		new
+Rank:		major
+[DESCRIPTION]
+Added domain-consistent version of the absolute value propagator.
+
+[ENTRY]
+Module:		other
+What:		performance
+Rank:		major
+[DESCRIPTION]
+Switch assertions off in optimized builds with Microsoft's C++ compiler.
+
+[ENTRY]
+Module:		int
+What:		bug
+Rank:		major
+Bug:		29
+Thanks:		Dominik Brill
+[DESCRIPTION]
+Fixed a very serious bug in the reified linear inequality propagator.
+
+[ENTRY]
+Module:		other
+What:		bug
+Rank:		minor
+Thanks:		Filip Konvicka
+[DESCRIPTION]
+Removed some compiler warnings for the Microsoft compiler with -W3.
+
+[ENTRY]
+Module:		int
+What:		bug
+Rank:		major
+Bug:		27
+[DESCRIPTION]
+The strongly connected components represented by the permutation
+variables in the extended version of Sortedness has been fixed
+restoring bounds consistency on the permutation variables.
+
+[ENTRY]
+Module:		other
+What:		change
+Rank:		minor
+Bug:		24
+[DESCRIPTION]
+The soname for libraries on Linux is now set properly, as well as the
+version information on Darwin (Mac OS).
+
+[ENTRY]
+Module:		other
+What:		change
+Rank:		minor
+Bug:		25
+[DESCRIPTION]
+The build system has been updated to support building both static and
+shared libraries at the same time on Unix-like systems.
+
+[ENTRY]
+Module:		example
+What:		change
+Rank:		minor
+[DESCRIPTION]
+Examples now use per default the recomputation settings as
+defined in the search module.
+
+[RELEASE]
+Version:	1.0.0
+Date:		2005-12-06
+[DESCRIPTION]
+Initial release.
+

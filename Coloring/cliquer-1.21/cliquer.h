@@ -41,7 +41,7 @@ extern set_t clique_unweighted_find_single(graph_t *g,int min_size,
 					   clique_options *opts);
 extern int clique_unweighted_find_all(graph_t *g, int min_size, int max_size,
 				      boolean maximal, clique_options *opts);
-
+extern void maximalize_clique(set_t s,graph_t *g);
 /* Time printing functions */
 extern boolean clique_print_time(int level, int i, int n, int max,
 				 double cputime, double realtime,

@@ -8,7 +8,7 @@ CC=gcc
 ## Compiler flags:
 
 # GCC:  (also -march=pentium etc, for machine-dependent optimizing)
-CFLAGS=-Wall -O3 -fomit-frame-pointer -funroll-loops
+CFLAGS=-Wall -O3 -fomit-frame-pointer -funroll-loops 
 
 # GCC w/ debugging:
 #CFLAGS=-Wall -g -DINLINE=
@@ -37,7 +37,7 @@ testcases: testcases.o cliquer.o graph.o reorder.o
 
 cl: cl.o cliquer.o graph.o reorder.o
 	$(CC) $(LDFLAGS) -o $@ cl.o cliquer.o graph.o reorder.o
-
+	ar rcs libcl.a cl.o
 
 cl.o testcases.o cliquer.o graph.o reorder.o: cliquer.h set.h graph.h misc.h reorder.h Makefile cliquerconf.h
 

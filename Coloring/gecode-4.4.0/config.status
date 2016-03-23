@@ -433,7 +433,7 @@ Copyright (C) 2012 Free Software Foundation, Inc.
 This config.status script is free software; the Free Software Foundation
 gives unlimited permission to copy, distribute and modify it."
 
-ac_pwd='/home/artsokol/Documents/HSE/Бацын/lab2/MyBlogEntries/Coloring/gecode-4.4.0'
+ac_pwd='/home/artsokol/Documents/HSE/Бацын/lab2/vcp/Coloring/gecode-4.4.0'
 srcdir='.'
 test -n "$AWK" || AWK=awk
 # The default lists apply if the user does not specify any file.
@@ -624,11 +624,11 @@ S["HAVE_FLEXBISON"]="no"
 S["HAVEFLEX"]=""
 S["enable_gist"]="yes"
 S["enable_qt"]="yes"
-S["QTLIBS"]=""
-S["QTDEFINES"]=""
-S["QTINCLUDES"]=""
+S["QTLIBS"]=" $(SUBLIBS)  -L/usr/lib/x86_64-linux-gnu -lQtGui -lQtCore -lpthread "
+S["QTDEFINES"]=" -DQT_NO_DEBUG -DQT_GUI_LIB -DQT_CORE_LIB"
+S["QTINCLUDES"]=" -I/usr/share/qt4/mkspecs/linux-g++-64 -I. -I/usr/include/qt4/QtCore -I/usr/include/qt4/QtGui -I/usr/include/qt4 -I."
 S["MOC"]="moc"
-S["QMAKE"]="qmake"
+S["QMAKE"]="qmake-qt4"
 S["enable_mpfr"]="no"
 S["MPFR_LINK"]="-lmpfr"
 S["MPFR_LIB_PATH"]=""

@@ -18,12 +18,12 @@ using std::vector;
 
 
 /// Use Cliquer to find all maximal clique in the conflict graph
-//extern "C" {
+extern "C" {
 #include "cliquer.h"
 #include "set.h"
 #include "graph.h"
 #include "reorder.h"
-//}
+}
 
 using namespace Gecode;
 using namespace Gecode::Int;
@@ -68,15 +68,15 @@ class MyCutoff : public Search::Stop {
 static double trampoline(const Space& home, IntVar x, int i); 
 
 /// Main Script
-class GraphColoring : public Script {
+class GraphColoring : public Gecode::Script {
    protected:
       /// Mapping vertices to colors
-      IntVarArray   x;  
+      Gecode::IntVarArray   x;  
    public:
       /// Actual model
-      GraphColoring( const graph_t*  g, int k, 
-            int n_c, const set_t* Cs, const vector<int>& init ) 
-         :  x ( *this, g->n, 0, k-1 )     /// Colors start from '1'                  
+      GraphColoring( const graph_t*  g, int k, int n_c, const set_t* Cs, const vector<int>& init, const SizeOptions& a_opt  )
+                  :  Gecode::Script(a_opt),
+                     x ( *this, g->n, 0, k-1 )     /// Colors start from '1'                  
       { 
          int n = g->n;
          if ( !init.empty() ) {
@@ -196,8 +196,8 @@ colorHeuristic ( const graph_t*    g,
    /// Search loop
    do {
       UB--; /// Find a coloring of better cost
-
-      GraphColoring* s = new GraphColoring ( g, UB, n_c, cliques, empty );
+      Gecode::SizeOptions opt("GraphColoring");
+      GraphColoring* s = new GraphColoring ( g, UB, n_c, cliques, empty, opt);
       elapsed = time - t.stop();
 
       if ( elapsed <= 1e-04 ) {
@@ -271,13 +271,16 @@ colorFinal ( const graph_t*    g,
    so.threads = n_threads;
    so.clone   = false;
 
-   GraphColoring* s = new GraphColoring ( g, UB, n_c, cliques, initial );
+   Gecode::SizeOptions opt("GraphColoring");
+   GraphColoring* s = new GraphColoring ( g, UB, n_c, cliques, initial,opt);
    DFS<GraphColoring> e(s, so);
    GraphColoring* ex = e.next();
+   
    if ( ex == NULL ) {
       printf("Puta!\n");
       exit(EXIT_FAILURE);
    }
+   
    ex->getColoring(certificate);
    delete ex;
    
@@ -374,11 +377,15 @@ int main(int argc, char **argv)
       s = clique_find_single ( g, 2, 0, TRUE, opts);
    else
       s = clique_find_single ( g, 0, 0, TRUE, opts);
+
    maximalize_clique(s,g);
+   
    if ( s != NULL && set_size(s) > LB ) {
       LB = set_size(s);
       set_copy(C,s);  /// C is the best maximal clique found
    }
+
+
    bool removed = true;
    int  n_r = 0;
    while ( removed ) {
@@ -401,11 +408,14 @@ int main(int argc, char **argv)
       bool flag = false;
       /// Find a maximal clique for every vertex, and store the largest
       float density = (float)graph_edge_count(h)/(n*(n-1)/2);
+     
       if ( density > 0.0 )
          s = clique_find_single ( h, 2, 0, TRUE, opts);
       else
          s = clique_find_single ( h, 0, 0, TRUE, opts);
+
       maximalize_clique(s,g);
+
       if ( s != NULL ) {
          if ( set_size(s) > LB ) {
             LB = set_size(s);

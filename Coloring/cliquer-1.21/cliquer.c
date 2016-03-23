@@ -948,7 +948,8 @@ static boolean store_clique(set_t clique, graph_t *g, clique_options *opts) {
  * Note: Not very optimized (uses a simple O(n^2) routine), but is called
  *       at maximum once per clique_xxx() call, so it shouldn't matter.
  */
-static void maximalize_clique(set_t s,graph_t *g) {
+//static void maximalize_clique(set_t s,graph_t *g) {
+void maximalize_clique(set_t s,graph_t *g) {
 	int i,j;
 	boolean add;
 

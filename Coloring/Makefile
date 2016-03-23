@@ -1,35 +1,34 @@
 # Stefano Gualandi, stefano.gualandi@gmail.com
 # last update, May, 2013
 
-OPTFLAG = -O2 -DNDEBUG  -ggdb -fPIC -Wno-sign-compare -fpermissive
-LDFLAGS = -O2 -DNDEBUG -lm -lpthread -ggdb
+CCX_FLAGS = -O2 -DNDEBUG -ggdb -fPIC -Wno-sign-compare -fpermissive
+LD_FLAGS = -lm -lpthread
 
-COMPILER    = g++ ${OPTFLAG}
-LINKER      = g++ ${LDFLAGS}
+CCX    = g++
 
 # Directory for my files
-MYHOME          = ${PWD}
-BIN             = ${MYHOME}
-INCLUDE         = ${MYHOME}
-LIB             = ${MYHOME}
-SRC             = ${MYHOME}
+#MYHOME          = ${PWD}
+#BIN             = ${MYHOME}
+#INCLUDE         = ${MYHOME}
+#LIB             = ${MYHOME}
+#SRC             = ${MYHOME}
 
 # Gecode directory
 GECODE_INCLUDE  = ./gecode-4.4.0/
-GECODE_LIB      = -L./gecode-4.4.0/gecode \
+GECODE_LIB      = -L./gecode-4.4.0/ \
    -lgecodedriver -lgecodeint -lgecodekernel -lgecodeminimodel \
    -lgecodesearch -lgecodeset -lgecodesupport -lgecodefloat
 
 # Cliquer
-CLIQUER_INC = ./cliquer-1.21
-CLIQUER_LIB = ${CLIQUER_INC}/cliquer.o ${CLIQUER_INC}/graph.o ${CLIQUER_INC}/reorder.o
-
+CLIQUER_DIR = ./cliquer-1.21
+CLIQUER_OBJ = ${CLIQUER_DIR}/reorder.o ${CLIQUER_DIR}/cliquer.o ${CLIQUER_DIR}/graph.o
+#CLIQUER_LIB = -L${CLIQUER_DIR}/ -lcl 
 # My Files
-GeCol: ${SRC}/GeCol.cc
-	${COMPILER} -c ${SRC}/GeCol.cc -o ${LIB}/GeCol.o -I${GECODE_INCLUDE} -I${INCLUDE} -I${CLIQUER_INC}
-	${LINKER} -o ${BIN}/GeCol ${LIB}/GeCol.o ${GECODE_LIB} ${CLIQUER_LIB}
+GeCol: GeCol.cc
+	${CCX} ${CCX_FLAGS} -c GeCol.cc -o GeCol.o -I${GECODE_INCLUDE} -I. -I${CLIQUER_DIR}
+	${CCX} -o GeCol.x GeCol.o ${CLIQUER_OBJ}  ${GECODE_LIB} ${LD_FLAGS}
 
 ## DSATUR by M.Trick
-dsatur: ${SRC}/dsatur.c
-	gcc -c ${SRC}/dsatur.c -funroll-loops -o ${LIB}/dsatur.o -I${CLIQUER_INC}
-	gcc -o ${BIN}/dsatur ${LIB}/dsatur.o ${CLIQUER_LIB}
+dsatur: dsatur.c
+	gcc -c dsatur.c -funroll-loops -o dsatur.o -I${CLIQUER_DIR}
+	gcc -o dsatur dsatur.o ${CLIQUER_OBJ}

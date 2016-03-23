@@ -73,8 +73,8 @@ export CXXFLAGS = $(CPPFLAGS) -fcx-limited-range -fno-signaling-nans -fno-roundi
 export CFLAGS = $(CPPFLAGS) -fcx-limited-range -fno-signaling-nans -fno-rounding-math -ffinite-math-only -fno-math-errno -fno-strict-aliasing -O3 -fvisibility=hidden -ggdb -pipe -Wall -Wextra -fPIC -pthread -DNDEBUG $(CUSR)
 export EXAMPLES_EXTRA_CXXFLAGS = 
 
-export QT_CPPFLAGS =  
-export LINKQT = 
+export QT_CPPFLAGS =  -DQT_NO_DEBUG -DQT_GUI_LIB -DQT_CORE_LIB  -I/usr/share/qt4/mkspecs/linux-g++-64 -I. -I/usr/include/qt4/QtCore -I/usr/include/qt4/QtGui -I/usr/include/qt4 -I.
+export LINKQT =  $(SUBLIBS)  -L/usr/lib/x86_64-linux-gnu -lQtGui -lQtCore -lpthread 
 export MPFR_CPPFLAGS =  
 ifeq "no" "yes"
 export LINKMPFR =   -lmpfr 

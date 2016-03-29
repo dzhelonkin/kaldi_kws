@@ -19,8 +19,8 @@ CCX    = g++
 # Gecode directory
 GECODE_INCLUDE  = ./gecode-4.4.0/
 GECODE_LIB      = -L./gecode-4.4.0/ \
-   -lgecodedriver -lgecodeint -lgecodekernel -lgecodeminimodel \
-   -lgecodesearch -lgecodeset -lgecodesupport -lgecodefloat
+   -lgecodedriver -lgecodeint -lgecodekernel -lgecodeminimodel -lgecodeflatzinc \
+   -lgecodesearch -lgecodeset -lgecodesupport -lgecodefloat -lgecodegist
 
 # Cliquer
 CLIQUER_DIR = ./cliquer-1.21

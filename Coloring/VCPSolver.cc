@@ -52,8 +52,8 @@ int main(int argc, char **argv)
     opt.iterations(20);
     opt.solutions(0);
     //opt.model(GraphColor::MODEL_NONE);
-    //opt.model(GraphColor::MODEL_NONE, "none", "no lower bound");
-    opt.model(GraphColor::MODEL_CLIQUE, "clique", "use maximal clique size as lower bound");
+    opt.model(GraphColor::MODEL_NONE, "none", "no lower bound");
+    //opt.model(GraphColor::MODEL_CLIQUE, "clique", "use maximal clique size as lower bound");
     //opt.branching(GraphColor::BRANCH_DEGREE);
     opt.branching(GraphColor::BRANCH_DEGREE, "degree");
     opt.branching(GraphColor::BRANCH_SIZE, "size");

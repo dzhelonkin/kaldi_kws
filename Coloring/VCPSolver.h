@@ -1,6 +1,9 @@
 #include <iostream>
 #include <fstream>
 #include <string>
+#include <vector>
+#include <iterator>
+#include <algorithm>
 
 extern "C" {
 #include "cliquer.h"
@@ -282,7 +285,7 @@ public:
 
   GraphColor(const SizeOptions& opt)
     : IntMinimizeScript(opt),
-      g(opt.size() == 1 ? g2 : g1),
+      g(opt.size() == 1 ? g2 : g2),
       v(*this,g.n_v,0,g.n_v-1),
       m(*this,0,g.n_v-1) 
     {
@@ -300,9 +303,12 @@ public:
         {
           int n = *c;
           IntVarArgs x(n); c++;
+
           for (int i = n; i--; c++)
             x[i] = v[*c];
+          
           distinct(*this, x, opt.icl());
+          
           if (opt.model() == MODEL_CLIQUE)
             rel(*this, m, IRT_GQ, n-1);
         }
@@ -359,27 +365,38 @@ public:
            }
         }
   }
-  virtual IntVar cost(void) const {
+
+  virtual IntVar cost(void) const 
+  {
     return m;
   }
-  GraphColor(bool share, GraphColor& s) : IntMinimizeScript(share,s), g(s.g) {
+
+  GraphColor(bool share, GraphColor& s) : IntMinimizeScript(share,s), g(s.g) 
+  {
     v.update(*this, share, s.v);
     m.update(*this, share, s.m);
   }
-  virtual Space*
-  copy(bool share) {
+
+  virtual Space* copy(bool share) 
+  {
     return new GraphColor(share,*this);
   }
-  virtual void
-  print(std::ostream& os) const {
-    os << "\tm = " << m << std::endl
-       << "\tv[] = {";
-    for (int i = 0; i < v.size(); i++) {
-      os << v[i] << ", ";
-      if ((i+1) % 15 == 0)
+
+  virtual void print(std::ostream& os) const {
+    std::vector<int> print_matrix[m.val()+1];
+
+    for (int i = 0; i < v.size(); ++i)
+        print_matrix[v[i].val()].push_back(i);
+
+    os << "\t colors = " << m.val()+1 << std::endl << "\t {";
+    
+    for (int i = 0; i < m.val()+1; ++i) 
+    {
         os << std::endl << "\t       ";
+        os << i << ") ";
+        std::copy(print_matrix[i].begin(), print_matrix[i].end(), std::ostream_iterator<int>(std::cout, ", "));
     }
-    os << "};" << std::endl;
+    os << std::endl << "\t };" << std::endl;
   }
 };
 

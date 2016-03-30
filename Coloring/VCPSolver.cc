@@ -80,7 +80,7 @@ void VCPSolver::graph2CliqueSet(graph_t* a_graph,int** a_set)
     graph_t* G;  
     set_t*   Cs;
     int n = a_graph->n;
-    int m = graph_edge_count(m_graph);
+    int m = graph_edge_count(a_graph);
     int n_c = 0;   /// Number of maximal cliques found
     int UB = n;
     int LB = 0;
@@ -91,15 +91,16 @@ void VCPSolver::graph2CliqueSet(graph_t* a_graph,int** a_set)
     g = graph_new(n);
     h = graph_new(n);
     G = graph_new(n);
+	table = reorder_by_degree(a_graph,FALSE);
     vector<int> inver(n,0);
     for ( int i = 0; i < n-1; ++i ) 
 		for ( int j = i+1; j < n ; ++j )
-			if ( GRAPH_IS_EDGE(m_graph,m_graph_matrix[i],m_graph_matrix[j]) ) {
+			if ( GRAPH_IS_EDGE(a_graph,table[i],table[j]) ) {
 				GRAPH_ADD_EDGE(g,i,j);
 				GRAPH_ADD_EDGE(h,i,j);
 				GRAPH_ADD_EDGE(G,i,j);
-				inver[m_graph_matrix[i]] = i;
-				inver[m_graph_matrix[j]] = j;
+				inver[table[i]] = i;
+				inver[table[j]] = j;
 			}
 
     Cs = (set_t*)malloc(m*sizeof(set_t));
@@ -199,7 +200,6 @@ void VCPSolver::graph2CliqueSet(graph_t* a_graph,int** a_set)
     *(*a_set + next_element++) = -1;
 
     std::copy(*a_set, *a_set + size+1, std::ostream_iterator<int>(std::cout, ", "));*/
-   // return Cs;
 }
 
 void VCPSolver::solveMatrix()

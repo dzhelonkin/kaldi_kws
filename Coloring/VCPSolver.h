@@ -404,9 +404,9 @@ public:
 class VCPSolver
 {
 private:
-//set 
     graph_t* m_graph;  
     int*     m_graph_matrix;
+    int*     m_clique_set;
 
 public:
     VCPSolver(const char* a_file_path);
@@ -423,6 +423,8 @@ public:
     void solveMatrix();
 
 private:
+    void graph2VertexMatrix(graph_t* a_graph,int** a_matrix);
+    void graph2CliqueSet(graph_t* a_graph,int** a_set);
     //addcolumn
     //removecolumn
 

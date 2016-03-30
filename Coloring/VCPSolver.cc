@@ -12,7 +12,7 @@ VCPSolver::VCPSolver(const char* a_file_path):
 
     graph2VertexMatrix(m_graph,&m_graph_matrix);
     graph2CliqueSet(m_graph,&m_clique_set);
-    //std::copy(m_graph_matrix, m_graph_matrix + m_graph->n, std::ostream_iterator<int>(std::cout, ", "));
+    
 }
 
 VCPSolver::~VCPSolver()
@@ -62,7 +62,7 @@ void VCPSolver::graph2VertexMatrix(graph_t* a_graph,int** a_matrix)
     //cout << next_element << endl;
 }
 
-void graph2CliqueSet(graph_t* a_graph,int** a_set)
+void VCPSolver::graph2CliqueSet(graph_t* a_graph,int** a_set)
 {
     // prepare optinons for cliquer
     clique_options* opts;
@@ -79,7 +79,7 @@ void graph2CliqueSet(graph_t* a_graph,int** a_set)
     graph_t* h;  
     graph_t* G;  
     set_t*   Cs;
-    int n = m_graph->n;
+    int n = a_graph->n;
     int m = graph_edge_count(m_graph);
     int n_c = 0;   /// Number of maximal cliques found
     int UB = n;
@@ -176,16 +176,7 @@ void graph2CliqueSet(graph_t* a_graph,int** a_set)
               }
            }
 
-    // test output
-    /*cout << "m: "<< m << endl;
-    for (int i=0; i<m; i++)
-    {
-        if (Cs[i] != NULL)
-        {   
-            cout << i << endl;
-            set_print(Cs[i]);
-        }
-    }*/
+  /*
 	
 	int size = 0;
     int num_of_sets = 0;
@@ -207,7 +198,8 @@ void graph2CliqueSet(graph_t* a_graph,int** a_set)
     }
     *(*a_set + next_element++) = -1;
 
-    return Cs;
+    std::copy(*a_set, *a_set + size+1, std::ostream_iterator<int>(std::cout, ", "));*/
+   // return Cs;
 }
 
 void VCPSolver::solveMatrix()

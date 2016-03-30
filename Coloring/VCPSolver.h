@@ -262,9 +262,9 @@ const GraphColorSpec g2(200, g2_e, g2_c);
 
 class GraphColor : public IntMinimizeScript {
 private:
-  const GraphColorSpec& g;
-  IntVarArray v;
-  IntVar m;
+    const GraphColorSpec& g;
+    IntVarArray v;
+    IntVar m;
 public:
   enum {
     MODEL_NONE,  
@@ -364,40 +364,41 @@ public:
                  break;
            }
         }
-  }
-
-  virtual IntVar cost(void) const 
-  {
-    return m;
-  }
-
-  GraphColor(bool share, GraphColor& s) : IntMinimizeScript(share,s), g(s.g) 
-  {
-    v.update(*this, share, s.v);
-    m.update(*this, share, s.m);
-  }
-
-  virtual Space* copy(bool share) 
-  {
-    return new GraphColor(share,*this);
-  }
-
-  virtual void print(std::ostream& os) const {
-    std::vector<int> print_matrix[m.val()+1];
-
-    for (int i = 0; i < v.size(); ++i)
-        print_matrix[v[i].val()].push_back(i);
-
-    os << "\t colors = " << m.val()+1 << std::endl << "\t {";
-    
-    for (int i = 0; i < m.val()+1; ++i) 
-    {
-        os << std::endl << "\t       ";
-        os << i << ") ";
-        std::copy(print_matrix[i].begin(), print_matrix[i].end(), std::ostream_iterator<int>(std::cout, ", "));
     }
-    os << std::endl << "\t };" << std::endl;
-  }
+
+    virtual IntVar cost(void) const 
+    {
+        return m;
+    }
+
+    GraphColor(bool share, GraphColor& s) : IntMinimizeScript(share,s), g(s.g) 
+    {
+        v.update(*this, share, s.v);
+        m.update(*this, share, s.m);
+    }
+
+    virtual Space* copy(bool share) 
+    {
+        return new GraphColor(share,*this);
+    }
+
+    virtual void print(std::ostream& os) const 
+    {
+        std::vector<int> print_matrix[m.val()+1];
+
+        for (int i = 0; i < v.size(); ++i)
+            print_matrix[v[i].val()].push_back(i);
+
+        os << "\t colors = " << m.val()+1 << std::endl << "\t {";
+
+        for (int i = 0; i < m.val()+1; ++i) 
+        {
+            os << std::endl << "\t       ";
+            os << i << ") ";
+            std::copy(print_matrix[i].begin(), print_matrix[i].end(), std::ostream_iterator<int>(std::cout, ", "));
+        }
+        os << std::endl << "\t };" << std::endl;
+    }
 };
 
 
@@ -416,7 +417,7 @@ public:
     VCPSolver& operator=(const VCPSolver&) = delete;
 
 
-    void readGraph();
+    //void readGraph();
     
     void preColoring();
 

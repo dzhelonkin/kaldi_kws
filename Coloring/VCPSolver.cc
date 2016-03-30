@@ -64,7 +64,150 @@ void VCPSolver::graph2VertexMatrix(graph_t* a_graph,int** a_matrix)
 
 void graph2CliqueSet(graph_t* a_graph,int** a_set)
 {
-    //todo
+    // prepare optinons for cliquer
+    clique_options* opts;
+    opts = (clique_options*) malloc (sizeof(clique_options));
+    opts->time_function=NULL;
+    opts->reorder_function=reorder_by_greedy_coloring;
+    opts->reorder_map=NULL;
+    opts->user_function=NULL;
+    opts->user_data=NULL;
+    opts->clique_list=NULL;
+    opts->clique_list_length=0;
+
+    graph_t* g;    
+    graph_t* h;  
+    graph_t* G;  
+    set_t*   Cs;
+    int n = m_graph->n;
+    int m = graph_edge_count(m_graph);
+    int n_c = 0;   /// Number of maximal cliques found
+    int UB = n;
+    int LB = 0;
+    set_t s = set_new(n);
+    float density = (float)m/(n*(n-1)/2);
+    
+	/// Reorder the graph
+    g = graph_new(n);
+    h = graph_new(n);
+    G = graph_new(n);
+    vector<int> inver(n,0);
+    for ( int i = 0; i < n-1; ++i ) 
+		for ( int j = i+1; j < n ; ++j )
+			if ( GRAPH_IS_EDGE(m_graph,m_graph_matrix[i],m_graph_matrix[j]) ) {
+				GRAPH_ADD_EDGE(g,i,j);
+				GRAPH_ADD_EDGE(h,i,j);
+				GRAPH_ADD_EDGE(G,i,j);
+				inver[m_graph_matrix[i]] = i;
+				inver[m_graph_matrix[j]] = j;
+			}
+
+    Cs = (set_t*)malloc(m*sizeof(set_t));
+    set_t C  = set_new(n);
+
+    /// Start with a maximal clique as lower bound
+    if ( density > 0.0 )
+       s = clique_find_single ( g, 2, 0, TRUE, opts);
+    else
+       s = clique_find_single ( g, 0, 0, TRUE, opts);
+
+    maximalize_clique(s,g);
+   
+    if ( s != NULL && set_size(s) > LB ) {
+       LB = set_size(s);
+       set_copy(C,s);  /// C is the best maximal clique found
+    }
+
+    bool removed = true;
+    int  n_r = 0;
+    while ( removed ) {
+       removed = false;
+       for ( int i = 0; i < n; ++i ) {
+           if ( graph_vertex_degree(g, i) < LB-1 ) { 
+             for ( int j = 0; j < n ; ++j )
+                if ( GRAPH_IS_EDGE(g,i,j) ) {
+                   GRAPH_DEL_EDGE(g,i,j);
+                   GRAPH_DEL_EDGE(h,i,j);
+                   n_r++;
+                   removed = true;
+                }
+            }
+        }
+    }
+
+    while ( graph_edge_count(h) > 0 ) {
+        bool flag = false;
+        /// Find a maximal clique for every vertex, and store the largest
+        float density = (float)graph_edge_count(h)/(n*(n-1)/2);
+     
+        if ( density > 0.0 )
+            s = clique_find_single ( h, 2, 0, TRUE, opts);
+        else
+            s = clique_find_single ( h, 0, 0, TRUE, opts);
+
+        maximalize_clique(s,g);
+
+        if ( s != NULL ) {
+            if ( set_size(s) > LB ) {
+            LB = set_size(s);
+            set_copy(C,s);  // C is the best maximal clique found
+            flag = true;
+        } 
+        Cs[n_c++]=set_duplicate(s);
+        for ( int j = 0; j < n; ++j )
+           if ( SET_CONTAINS_FAST(s,j) )
+              for ( int l = j+1; l < n; ++l )
+                 if ( SET_CONTAINS_FAST(s,l) && GRAPH_IS_EDGE(h,j,l) )
+                    GRAPH_DEL_EDGE(h,j,l);
+        }
+
+        /// Reduce the graph (if degree smaller than LB, then remove the vertex)
+        if ( flag )
+           for ( int i = 0; i < n; ++i ) {
+              if ( graph_vertex_degree(g, i) < LB-1 ) { 
+                 for ( int j = 0; j < n ; ++j )
+                    if ( GRAPH_IS_EDGE(g,i,j) ) {
+                       GRAPH_DEL_EDGE(g,i,j);
+                       if ( GRAPH_IS_EDGE(h,i,j) )
+                          GRAPH_DEL_EDGE(h,i,j);
+                       n_r++;
+                    }
+                 }
+              }
+           }
+
+    // test output
+    /*cout << "m: "<< m << endl;
+    for (int i=0; i<m; i++)
+    {
+        if (Cs[i] != NULL)
+        {   
+            cout << i << endl;
+            set_print(Cs[i]);
+        }
+    }*/
+	
+	int size = 0;
+    int num_of_sets = 0;
+    for (unsigned int i=0; i<m; ++i)
+        if (Cs[i] != NULL)
+        {
+            size += set_size(Cs[i])+1;
+            ++num_of_sets;
+        }
+    
+    *a_set = (int*)malloc((size+1)*sizeof(int));
+    
+    int next_element = 0;
+    for (int i=0; i<num_of_sets; i++)
+    {
+        *(*a_set + next_element++) = set_size(Cs[i]);
+        for (int j=0; j<set_size(Cs[i]); ++j)
+            *(*a_set + next_element++) = Cs[i][j];
+    }
+    *(*a_set + next_element++) = -1;
+
+    return Cs;
 }
 
 void VCPSolver::solveMatrix()

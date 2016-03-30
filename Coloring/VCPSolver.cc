@@ -64,28 +64,7 @@ void VCPSolver::graph2VertexMatrix(graph_t* a_graph,int** a_matrix)
 
 void graph2CliqueSet(graph_t* a_graph,int** a_set)
 {
-    unsigned int next_element = 0;
-    
-    *a_set = (int*)malloc((edge_count*2+2)*sizeof(int));
-
- for(int i = 0; i < a_graph->n; ++i)
-    {
-        //set_print(a_graph->edges[i]);
-        unsigned long current_set_size = SET_MAX_SIZE(a_graph->edges[i]);
-
-        for (int j=i; j<current_set_size; ++j)
-        {
-            if (j == i)
-                continue;
-            if (SET_CONTAINS(a_graph->edges[i],j))
-            {
-                *(*a_matrix + next_element++) = i;
-                *(*a_matrix + next_element++) = j; 
-            }
-           // cout << "current: " << next_element << endl;
-        }
-        
-    }
+    //todo
 }
 
 void VCPSolver::solveMatrix()

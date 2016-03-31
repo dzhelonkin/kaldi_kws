@@ -10,7 +10,7 @@ VCPSolver::VCPSolver(const char* a_file_path):
     m_graph = graph_read_dimacs_file(const_cast<char*>(a_file_path));
     //m_graph_matrix = reorder_by_degree(m_graph,FALSE);
 
-    graph2VertexMatrix(m_graph,&m_graph_matrix);
+   // graph2VertexMatrix(m_graph,&m_graph_matrix);
     graph2CliqueSet(m_graph,&m_clique_set);
     
 }
@@ -91,7 +91,7 @@ void VCPSolver::graph2CliqueSet(graph_t* a_graph,int** a_set)
     g = graph_new(n);
     h = graph_new(n);
     G = graph_new(n);
-	table = reorder_by_degree(a_graph,FALSE);
+	int* table = reorder_by_degree(a_graph,FALSE);
     vector<int> inver(n,0);
     for ( int i = 0; i < n-1; ++i ) 
 		for ( int j = i+1; j < n ; ++j )
@@ -177,7 +177,7 @@ void VCPSolver::graph2CliqueSet(graph_t* a_graph,int** a_set)
               }
            }
 
-  /*
+  
 	
 	int size = 0;
     int num_of_sets = 0;
@@ -199,7 +199,7 @@ void VCPSolver::graph2CliqueSet(graph_t* a_graph,int** a_set)
     }
     *(*a_set + next_element++) = -1;
 
-    std::copy(*a_set, *a_set + size+1, std::ostream_iterator<int>(std::cout, ", "));*/
+    std::copy(*a_set, *a_set + size+1, std::ostream_iterator<int>(std::cout, ", "));
 }
 
 void VCPSolver::solveMatrix()

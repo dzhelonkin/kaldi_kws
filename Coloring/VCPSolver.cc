@@ -2,6 +2,93 @@
 
 using namespace std;
 
+
+GraphColor::GraphColor(const SizeOptions& opt)
+    : IntMinimizeScript(opt),
+      g(g2),
+      v(*this,g.n_v,0,g.n_v-1),
+      m(*this,0,g.n_v-1) 
+{
+    rel(*this, v, IRT_LQ, m);
+
+    for (int i = 0; g.e[i] != -1; i += 2)
+      rel(*this, v[g.e[i]], IRT_NQ, v[g.e[i+1]]);
+
+    const int* c = g.c;
+    
+    for (int i = *c++; i--; c++)
+      rel(*this, v[*c], IRT_EQ, i);
+    
+    while (*c != -1) 
+    {
+      int n = *c;
+      IntVarArgs x(n); c++;
+
+      for (int i = n; i--; c++)
+        x[i] = v[*c];
+      
+      distinct(*this, x, opt.icl());
+      
+      if (opt.model() == MODEL_CLIQUE)
+        rel(*this, m, IRT_GQ, n-1);
+    }
+
+    branch(*this, m, INT_VAL_MIN());
+    
+    if (opt.symmetry() == SYMMETRY_NONE) 
+    {
+       switch (opt.branching()) 
+       {
+          case BRANCH_SIZE:
+             branch(*this, v, INT_VAR_SIZE_MIN(), INT_VAL_MIN());
+             break;
+          case BRANCH_DEGREE:
+             branch(*this, v, tiebreak(INT_VAR_DEGREE_MAX(),INT_VAR_SIZE_MIN()),
+                   INT_VAL_MIN());
+             break;
+          case BRANCH_SIZE_DEGREE:
+             branch(*this, v, INT_VAR_DEGREE_SIZE_MAX(), INT_VAL_MIN());
+             break;
+          case BRANCH_SIZE_AFC:
+             branch(*this, v, INT_VAR_AFC_SIZE_MAX(opt.decay()), INT_VAL_MIN());
+             break;
+          case BRANCH_SIZE_ACTIVITY:
+             branch(*this, v, INT_VAR_ACTIVITY_SIZE_MAX(opt.decay()), INT_VAL_MIN());
+             break;
+          default:
+             break;
+        }
+    } 
+    else 
+    { // opt.symmetry() == SYMMETRY_LDSB
+       Symmetries syms;
+       syms << ValueSymmetry(IntArgs::create(g.n_v,0));
+       switch (opt.branching()) {
+          case BRANCH_SIZE:
+             branch(*this, v, INT_VAR_SIZE_MIN(), INT_VAL_MIN(), syms);
+             break;
+          case BRANCH_DEGREE:
+             branch(*this, v, tiebreak(INT_VAR_DEGREE_MAX(),INT_VAR_SIZE_MIN()),
+                   INT_VAL_MIN(), syms);
+             break;
+          case BRANCH_SIZE_DEGREE:
+             branch(*this, v, INT_VAR_DEGREE_SIZE_MAX(), INT_VAL_MIN(), syms);
+             break;
+          case BRANCH_SIZE_AFC:
+             branch(*this, v, INT_VAR_AFC_SIZE_MAX(opt.decay()), INT_VAL_MIN(), syms);
+             break;
+          case BRANCH_SIZE_ACTIVITY:
+             branch(*this, v, INT_VAR_ACTIVITY_SIZE_MAX(opt.decay()), INT_VAL_MIN(), syms);
+             break;
+          default:
+             break;
+       }
+    }
+}
+
+
+
+
 VCPSolver::VCPSolver(const char* a_file_path):
         m_graph(NULL),
         m_graph_matrix(NULL),
@@ -10,7 +97,7 @@ VCPSolver::VCPSolver(const char* a_file_path):
     m_graph = graph_read_dimacs_file(const_cast<char*>(a_file_path));
     //m_graph_matrix = reorder_by_degree(m_graph,FALSE);
 
-   // graph2VertexMatrix(m_graph,&m_graph_matrix);
+    graph2VertexMatrix(m_graph,&m_graph_matrix);
     graph2CliqueSet(m_graph,&m_clique_set);
     
 }
@@ -31,16 +118,16 @@ void VCPSolver::graph2VertexMatrix(graph_t* a_graph,int** a_matrix)
 {
     unsigned int edge_count = 0;
     unsigned int next_element = 0;
-    //edge_count = graph_edge_count(a_graph);
+    edge_count = graph_edge_count(a_graph);
     
-    //cout << edge_count <<" " <<a_graph->n << endl;
+    cout << edge_count << " " << a_graph->n << endl;
 
     *a_matrix = (int*)malloc((edge_count*2+2)*sizeof(int));
 
     for(int i = 0; i < a_graph->n; ++i)
     {
         //set_print(a_graph->edges[i]);
-        unsigned long current_set_size = SET_MAX_SIZE(a_graph->edges[i]);
+        unsigned long current_set_size = set_size(a_graph->edges[i]);
 
         for (int j=i; j<current_set_size; ++j)
         {
@@ -62,7 +149,7 @@ void VCPSolver::graph2VertexMatrix(graph_t* a_graph,int** a_matrix)
     //cout << next_element << endl;
 }
 
-void VCPSolver::graph2CliqueSet(graph_t* a_graph,int** a_set)
+void VCPSolver::graph2CliqueSet(graph_t* a_graph, int** a_set)
 {
     // prepare optinons for cliquer
     clique_options* opts;
@@ -199,7 +286,7 @@ void VCPSolver::graph2CliqueSet(graph_t* a_graph,int** a_set)
     }
     *(*a_set + next_element++) = -1;
 
-    std::copy(*a_set, *a_set + size+1, std::ostream_iterator<int>(std::cout, ", "));
+    //std::copy(*a_set, *a_set + size+1, std::ostream_iterator<int>(std::cout, ", "));
 }
 
 void VCPSolver::solveMatrix()
@@ -219,10 +306,11 @@ void VCPSolver::solveMatrix()
     opt.branching(GraphColor::BRANCH_SIZE_ACTIVITY, "sizeact");
     opt.symmetry(GraphColor::SYMMETRY_NONE);
     opt.symmetry(GraphColor::SYMMETRY_NONE,"none");
+
     //opt.symmetry(GraphColor::SYMMETRY_LDSB,"ldsb","use value symmetry breaking");
     //opt.parse(argc,argv);
  
-    GraphColorSpec spec(graph_edge_count(m_graph), m_graph_matrix, g1_c);
+    GraphColorSpec spec(graph_edge_count(m_graph), m_graph_matrix, m_clique_set);
 
 
 

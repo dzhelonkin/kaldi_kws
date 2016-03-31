@@ -276,17 +276,25 @@ void VCPSolver::graph2CliqueSet(graph_t* a_graph, int** a_set)
         }
     
     *a_set = (int*)malloc((size+1)*sizeof(int));
-    
-    int next_element = 0;
-    for (int i=0; i<num_of_sets; i++)
+	
+    int next_element = 0;	
+	for(int i = 0; i < num_of_sets; ++i)
     {
-        *(*a_set + next_element++) = set_size(Cs[i]);
-        for (int j=0; j<set_size(Cs[i]); ++j)
-            *(*a_set + next_element++) = Cs[i][j];
+        unsigned long current_set_size = SET_MAX_SIZE(Cs[i]);
+		*(*a_set + next_element++) = set_size(Cs[i]);
+		for (int j=0; j<current_set_size; ++j)
+        {
+            if (SET_CONTAINS(Cs[i], j))
+            {
+                *(*a_set + next_element++) = j;
+            }
+        }
     }
+	
     *(*a_set + next_element++) = -1;
 
-    //std::copy(*a_set, *a_set + size+1, std::ostream_iterator<int>(std::cout, ", "));
+    std::copy(*a_set, *a_set + size+1, std::ostream_iterator<int>(std::cout, ", ")); 
+
 }
 
 void VCPSolver::solveMatrix()

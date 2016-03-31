@@ -20,11 +20,17 @@ using namespace Gecode;
 
 struct GraphColorSpec {
 public:
-  const int  n_v; 
-  const int* e;   
-  const int* c;   
-  GraphColorSpec(const int n_v0, const int* e0, const int* c0)
-    : n_v(n_v0), e(e0), c(c0) {}
+    int  n_v; 
+    int* e;   
+    int* c;   
+    
+    GraphColorSpec()
+        : n_v(0), e(NULL), c(NULL)
+    {}
+
+    GraphColorSpec(int n_v0, int* e0, int* c0)
+        : n_v(n_v0), e(e0), c(c0) 
+    {}
 };
 
 
@@ -136,7 +142,7 @@ const int g2_c[] = {
   5,  50,82,117,123,163,
   -1};
 
-GraphColorSpec g2(200, g2_e, g2_c);
+GraphColorSpec g2;//(200, g2_e, g2_c);
 
 
 class GraphColor : public IntMinimizeScript {

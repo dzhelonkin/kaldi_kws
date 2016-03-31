@@ -309,8 +309,10 @@ void VCPSolver::solveMatrix()
 
     //opt.symmetry(GraphColor::SYMMETRY_LDSB,"ldsb","use value symmetry breaking");
     //opt.parse(argc,argv);
- 
-    GraphColorSpec spec(graph_edge_count(m_graph), m_graph_matrix, m_clique_set);
+
+    g2.n_v = m_graph->n;
+    g2.e = m_graph_matrix;
+    g2.c = m_clique_set;
 
 
 

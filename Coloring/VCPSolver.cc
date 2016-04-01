@@ -120,7 +120,7 @@ void VCPSolver::graph2VertexMatrix(graph_t* a_graph,int** a_matrix)
     unsigned int next_element = 0;
     edge_count = graph_edge_count(a_graph);
     
-    cout << edge_count << " " << a_graph->n << endl;
+    //cout << edge_count << " " << a_graph->n << endl;
 
     *a_matrix = (int*)malloc((edge_count*2+2)*sizeof(int));
 
@@ -277,8 +277,11 @@ void VCPSolver::graph2CliqueSet(graph_t* a_graph, int** a_set)
     
     *a_set = (int*)malloc((size+1)*sizeof(int));
 	
-    int next_element = 0;	
-	for(int i = 0; i < num_of_sets; ++i)
+    int next_element = 0;
+    int magic_number = 20;
+
+	//for(int i = 0; i < std::min(magic_number,num_of_sets); ++i)
+    for(int i = 0; i < num_of_sets; ++i)
     {
         unsigned long current_set_size = SET_MAX_SIZE(Cs[i]);
 		*(*a_set + next_element++) = set_size(Cs[i]);
@@ -293,7 +296,7 @@ void VCPSolver::graph2CliqueSet(graph_t* a_graph, int** a_set)
 	
     *(*a_set + next_element++) = -1;
 
-    std::copy(*a_set, *a_set + size+1, std::ostream_iterator<int>(std::cout, ", ")); 
+    //std::copy(*a_set, *a_set + size+1, std::ostream_iterator<int>(std::cout, ", ")); 
 
 }
 

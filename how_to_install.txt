@@ -40,6 +40,7 @@ curl https://phon.ioc.ee/~tanela/tedlium_nnet_ms_sp_online.tgz | tar zxv1
 
 cd models/english/tedlium_nnet_ms_sp_online/conf
 # Заменить во всех конфигурационных файлах пути на действительные для текущей системы в этой папке
+# то есть слово test в пути заменить на полный действительный путь до папки tedlium_nnet_ms_sp_online
 
 cd /path_to/gst-kaldi-nnet2-online/demo
 # Заменить значение перменной path в скрипте transcribe-audio_TED.sh 

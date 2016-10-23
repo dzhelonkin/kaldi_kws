@@ -1,0 +1,49 @@
+# Склонировать следующие репозитории в разные папки
+git clone https://github.com/kaldi-asr/kaldi
+git clone https://github.com/alumae/gst-kaldi-nnet2-online
+
+cd /path_to_original_kaldi/kaldi/src/
+# Выполнить все рекомендации из вывода
+./configure --shared
+
+cd /path_to_original_kaldi/kaldi/tools/
+# Выполнить все рекомендации из вывода
+extras/check_dependencies.sh
+
+# В файле /path_to_original_kaldi/kaldi/tools/Makefile change
+# OPENFST_VERSION = 1.3.4
+# на
+# OPENFST_VERSION = 1.4.1
+# в начале файла
+
+# Собрать tools
+make
+
+# Собрать kaldi целиком
+cd /path_to_original_kaldi/kaldi/src/
+make depend
+make
+
+# Выполнить make для второго репозитория
+cd /path_to/gst-kaldi-nnet2-online/src
+KALDI_ROOT=/path_to_original_kaldi/kaldi/ make depend
+KALDI_ROOT=/path_to_original_kaldi/kaldi/ make
+
+# Проверить, что все хорошо. В выводе не должно быть ошибок или стэктрейсов
+GST_PLUGIN_PATH=. gst-inspect-1.0 kaldinnet2onlinedecoder
+
+# Склонировать этот проект в /path_to/gst-kaldi-nnet2-online/demo
+git clone https://github.com/dzhelonkin/kaldi_kws.git
+
+# Скачать обученную нейронную сеть
+curl https://phon.ioc.ee/~tanela/tedlium_nnet_ms_sp_online.tgz | tar zxv1
+
+cd models/english/tedlium_nnet_ms_sp_online/conf
+# Заменить во всех конфигурационных файлах пути на действительные для текущей системы в этой папке
+
+cd /path_to/gst-kaldi-nnet2-online/demo
+# Заменить значение перменной path в скрипте transcribe-audio_TED.sh 
+# на действительные для текущей системы до папки tedlium_nnet_ms_sp_online
+
+# Выполнить перед выполнением примеров для каждой новой консоли
+export LC_ALL="C"

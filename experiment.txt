@@ -1,0 +1,43 @@
+В этом эксперименте будут сравнены два подхода для решения задачи speech-to-text:
+* Gaussian mixture model, обученная на корпусе voxforge 2013 года (gmm)
+* Нейронная сеть nnet2 из kaldi, обученная на корпусе tedlium 2013 года (nnet2)
+
+
+Корпус для сравнения - части из двух аудиосказок на английском языке:
+https://librivox.org/american-fairy-tales-by-l-frank-baum/ часть 1
+https://librivox.org/andersens-fairy-tales-version-2-by-hans-christian-andersen/ части 1 и 18
+всего около 40 минут речи. В рассказах использованы как мужские, так и женские голоса, изменения интонаций, различные акценты.
+
+
+После распознования из полученного текста были удалены фрагменты с представлением автора, чтеца и так далее, а также из всех текстов были удалены все не буквы для удобства сравнения
+
+
+Оценка WER и WRR производилась при помощи:
+https://github.com/belambert/asr-evaluation
+
+
+Результаты по каждому тексту:
+https://librivox.org/american-fairy-tales-by-l-frank-baum/ часть 1 gmm
+WRR: 71.494498 % (      2014 /       2817)
+WER: 30.280440 % (       853 /       2817)
+https://librivox.org/american-fairy-tales-by-l-frank-baum/ часть 1 nnet2
+WRR: 87.646432 % (      2469 /       2817)
+WER: 14.625488 % (       412 /       2817)
+
+https://librivox.org/andersens-fairy-tales-version-2-by-hans-christian-andersen/ часть 1 gmm
+WRR: 63.936170 % (      1202 /       1880)
+WER: 40.106383 % (       754 /       1880)
+https://librivox.org/andersens-fairy-tales-version-2-by-hans-christian-andersen/ часть 1 nnet2
+WRR: 84.361702 % (      1586 /       1880)
+WER: 19.787234 % (       372 /       1880)
+
+https://librivox.org/andersens-fairy-tales-version-2-by-hans-christian-andersen/ часть 18 gmm
+WRR: 64.489311 % (       543 /        842)
+WER: 37.173397 % (       313 /        842)
+https://librivox.org/andersens-fairy-tales-version-2-by-hans-christian-andersen/ часть 18 nnet2
+WRR: 78.503563 % (       661 /        842)
+WER: 24.584323 % (       207 /        842)
+
+
+Используемые модели не являются лучшими представителями своих подходов, но показывают общую тенденцию, что нейронные сети лучше в распозновании речи.
+

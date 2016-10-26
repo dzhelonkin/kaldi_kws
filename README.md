@@ -36,6 +36,8 @@ GST_PLUGIN_PATH=. ./transcribe-audio_TED.sh bill_gates-TED.mp3
 считывание потока, нужно нажать на кнопку 'stop'. Программа закончит вычисления по цепочкам и все результаты будут 
 выведены в окне.
 
+## Лицензии
 
+Открытым кодом Kaldi можно пользоваться в рамках Apache License v2.0 (http://kaldi-asr.org/doc/about.html)
 
 

@@ -1,0 +1,158 @@
+Подготовлено 3 аудио файла Track03.mp3, Track04.mp3, Track05.mp3 - уроки по английскому языку.
+
+Потготовлено 2 скрипта run.sh принимающий 2 параметра:
+1 параметр - файл содержащий имя аудио файла в формате mp3
+2 параметр - файл содержащий имя текстового файла, включающий содержание аудио файла в текстовом виде.
+
+Пример запуска:
+./run.sh Track03.mp3 Track03.txt
+
+В результате будет получена следующая информация:
+Список распознанных слов.
+Список нераспознанных слов.
+Список неизвестных слов.
+Процент распознанных слов в аудио фрагменте.
+***
+
+Пример запуска скриптов представлен ниже:
+
+aleksandr@aleksandr-labs:~/gst-kaldi-nnet2-online/demo$ ./run.sh Track03.mp3 Track03.txt
+Words in audio file - Track03.mp3:
+['do', 'you', 'known', 'recording', 'three', 'oh', 'zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten']
++++Recognised words+++
+do
+you
+three
+oh
+zero
+two
+three
+six
+seven
+eight
+nine
+ten
+---Unrecognised words---
+known
+recording
+one
+four
+five
+***Unknown words***
+knew
+recordings
+won
+too
+full
+fine
+he's
+[noise]
+Percent of recognised words -  70.5882352941
+
+*********************************************
+
+aleksandr@aleksandr-labs:~/gst-kaldi-nnet2-online/demo$ ./run.sh Track04.mp3 Track04.txt
+Words in audio file - Track04.mp3:
+['do', 'you', 'known', 'recording', 'four', 'eleven', 'twelve', 'thirteen', 'fourteen', 'fifteen', 'sixteen', 'seventeen', 'eighteen', 'nineteen', 'twenty', 'twenty', 'one', 'twenty', 'two', 'thirty', 'forty', 'fifty', 'sixty', 'seventy', 'eighty', 'ninety', 'one', 'hundred']
++++Recognised words+++
+do
+you
+recording
+fourteen
+fifteen
+sixteen
+seventeen
+eighteen
+nineteen
+twenty
+twenty
+one
+twenty
+two
+fifty
+sixty
+seventy
+one
+hundred
+---Unrecognised words---
+known
+four
+eleven
+twelve
+thirteen
+thirty
+forty
+eighty
+ninety
+***Unknown words***
+knew
+fool
+n.
+as
+in
+trials
+the
+teens
+that
+she
+a
+[laughter]
+Percent of recognised words -  67.8571428571
+
+*********************************************
+
+aleksandr@aleksandr-labs:~/gst-kaldi-nnet2-online/demo$ ./run.sh Track05.mp3 Track05.txt
+Words in audio file - Track05.mp3:
+['do', 'you', 'known', 'recording', 'five', 'one', 'look', 'at', 'page', 'two', 'listen', 'three', 'ask', 'an', 'answer', 'four', 'read', 'five', 'right', 'six', 'complete', 'seven', 'match', 'eight', 'repeat', 'nine', 'correct', 'ten', 'check', 'your', 'answers']
++++Recognised words+++
+do
+you
+recording
+one
+page
+listen
+read
+right
+six
+complete
+match
+repeat
+nine
+correct
+ten
+check
+your
+---Unrecognised words---
+known
+five
+look
+at
+two
+three
+ask
+an
+answer
+four
+five
+seven
+eight
+answers
+***Unknown words***
+know
+fives
+looking
+to
+too
+to
+me
+off
+and
+on
+so
+fool
+size
+doesn't
+ounces
+[laughter]
+Percent of recognised words -  54.8387096774
+
